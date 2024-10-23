@@ -32,15 +32,17 @@ int main() {
 
     // Tạo danh sách lớp
     ClassList classList;  
-    Lop newClass;
     
     // Nhập thông tin lớp
+    string malop, tenlop;
     cout << "Nhập mã lớp: ";
-    cin >> newClass.MALOP;
+    cin >> malop;
     cout << "Nhập tên lớp: ";
     cin.ignore(); // Để loại bỏ newline
-    getline(cin, newClass.TENLOP);
+    getline(cin, tenlop);
 
+    // Khởi tạo lớp với thông tin vừa nhập
+    Lop newClass(malop, tenlop);
     classList.addClass(newClass); // Thêm lớp vào danh sách
 
     // In danh sách lớp

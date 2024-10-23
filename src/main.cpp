@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "../include/Course.h"
 #include "../include/Class.h"
 #include "../include/Student.h"
@@ -48,6 +49,15 @@ int main() {
     // In danh sách lớp
     cout << "Danh sách lớp:" << endl;
     classList.printClasses();
+
+    // In bảng điểm sinh viên
+    cout << left; // Căn trái
+    cout << setw(5) << "STT" << setw(15) << "MASV" << setw(25) << "HO TEN" << setw(10) << "DIEM" << endl;
+    cout << "-------------------------------------------------------" << endl;
+
+    // In dữ liệu sinh viên (giả sử có 2 sinh viên)
+    cout << setw(5) << 1 << setw(15) << "SV001" << setw(25) << "Nguyen Van A" << setw(10) << "8.5" << endl;
+    cout << setw(5) << 2 << setw(15) << "SV002" << setw(25) << "Tran Thi B" << setw(10) << "9.0" << endl;
 
     return 0;
 }

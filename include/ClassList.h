@@ -13,8 +13,8 @@ public:
     ClassList();
     void addClass(const Lop& newClass); // Thêm lớp
     void printClasses(); // In danh sách lớp
-    void addStudentToClass(const string& malop, const SinhVien& newStudent); // Thêm sinh viên vào lớp
-    void updateClass(const string& malop, const Lop& updatedClass); // Cập nhật lớp
+    void addStudentToClass(const std::string& malop, const SinhVien& newStudent); // Thêm sinh viên vào lớp
+    void updateClass(const std::string& malop, const Lop& updatedClass); // Cập nhật lớp
 };
 
-#endif
+#endif // CLASSLIST_H

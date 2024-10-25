@@ -2,6 +2,7 @@
 #define STUDENT_H
 
 #include <string>
+#include <iostream> // Thêm thư viện iostream nếu cần in thông tin
 
 using namespace std;
 
@@ -27,6 +28,9 @@ public:
     // Hàm in thông tin sinh viên
     void inThongTin() const;
 
+    // Hàm in thông tin sinh viên (cần thêm)
+    void printInfo() const;
+
     // Hàm lấy mã sinh viên
     string getMaSV() const;
 
@@ -34,4 +38,4 @@ public:
     void capNhatDiem(float diemMoi);
 };
 
-#endif
+#endif // STUDENT_H

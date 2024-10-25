@@ -1,10 +1,9 @@
 #include "Student.h"
 #include <iostream>
-
 using namespace std;
 
-// Constructor không tham số
-SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0) {}
+// Constructor mặc định
+SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
 
 // Constructor có tham số
 SinhVien::SinhVien(const string& masv, const string& ho, const string& ten, const string& gioiTinh, const string& cmnd, float diem)
@@ -14,22 +13,21 @@ SinhVien::SinhVien(const string& masv, const string& ho, const string& ten, cons
 void SinhVien::nhapThongTin() {
     cout << "Nhập mã sinh viên: ";
     cin >> MASV;
-    cout << "Nhập họ sinh viên: ";
-    cin.ignore();
-    getline(cin, HO);
-    cout << "Nhập tên sinh viên: ";
-    getline(cin, TEN);
+    cout << "Nhập họ: ";
+    cin >> HO;
+    cout << "Nhập tên: ";
+    cin >> TEN;
     cout << "Nhập giới tính: ";
-    getline(cin, GIOITINH);
-    cout << "Nhập số CMND: ";
-    getline(cin, CMND);
+    cin >> GIOITINH;
+    cout << "Nhập CMND: ";
+    cin >> CMND;
     cout << "Nhập điểm: ";
     cin >> DIEM;
 }
 
 // Hàm in thông tin sinh viên
 void SinhVien::inThongTin() const {
-    cout << "Mã SV: " << MASV << ", Họ tên: " << HO << " " << TEN
+    cout << "Mã sinh viên: " << MASV << ", Họ: " << HO << ", Tên: " << TEN
          << ", Giới tính: " << GIOITINH << ", CMND: " << CMND
          << ", Điểm: " << DIEM << endl;
 }
@@ -43,4 +41,3 @@ string SinhVien::getMaSV() const {
 void SinhVien::capNhatDiem(float diemMoi) {
     DIEM = diemMoi;
 }
-

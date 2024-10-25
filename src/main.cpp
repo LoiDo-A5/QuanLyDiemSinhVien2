@@ -1,63 +1,99 @@
 #include <iostream>
-#include <iomanip>
-#include "../include/Course.h"
-#include "../include/Class.h"
-#include "../include/Student.h"
-#include "../include/CreditClass.h"
-#include "../include/CourseList.h"
-#include "../include/ClassList.h"
+#include "ClassList.h"
+#include "CourseList.h"
+#include "Student.h"
 
 using namespace std;
 
 int main() {
-    // Tạo danh sách môn học
-    CourseList courseList;  
-    MonHoc newCourse;
-    
-    // Nhập môn học
-    cout << "Nhập mã môn học: ";
-    cin >> newCourse.MAMH;
-    cout << "Nhập tên môn học: ";
-    cin.ignore(); // Để loại bỏ newline
-    getline(cin, newCourse.TENMH);
-    cout << "Nhập số tín chỉ lý thuyết: ";
-    cin >> newCourse.STCLT;
-    cout << "Nhập số tín chỉ thực hành: ";
-    cin >> newCourse.STCTH;
+    ClassList classList; // Danh sách lớp
+    CourseList courseList; // Danh sách môn học
 
-    courseList.insert(newCourse); // Thêm môn học vào danh sách
+    int choice;
+    do {
+        cout << "==== MENU ====" << endl;
+        cout << "1. Thêm lớp" << endl;
+        cout << "2. In danh sách lớp" << endl;
+        cout << "3. Thêm sinh viên vào lớp" << endl;
+        cout << "4. Thêm môn học" << endl;
+        cout << "5. In danh sách môn học" << endl;
+        cout << "6. Cập nhật thông tin lớp" << endl;
+        cout << "7. Cập nhật thông tin môn học" << endl;
+        cout << "0. Thoát" << endl;
+        cout << "Chọn chức năng: ";
+        cin >> choice;
 
-    // In danh sách môn học
-    cout << "Danh sách môn học:" << endl;
-    courseList.printInOrder(courseList.getRoot());
-
-    // Tạo danh sách lớp
-    ClassList classList;  
-    
-    // Nhập thông tin lớp
-    string malop, tenlop;
-    cout << "Nhập mã lớp: ";
-    cin >> malop;
-    cout << "Nhập tên lớp: ";
-    cin.ignore(); // Để loại bỏ newline
-    getline(cin, tenlop);
-
-    // Khởi tạo lớp với thông tin vừa nhập
-    Lop newClass(malop, tenlop);
-    classList.addClass(newClass); // Thêm lớp vào danh sách
-
-    // In danh sách lớp
-    cout << "Danh sách lớp:" << endl;
-    classList.printClasses();
-
-    // In bảng điểm sinh viên
-    cout << left; // Căn trái
-    cout << setw(5) << "STT" << setw(15) << "MASV" << setw(25) << "HO TEN" << setw(10) << "DIEM" << endl;
-    cout << "-------------------------------------------------------" << endl;
-
-    // In dữ liệu sinh viên (giả sử có 2 sinh viên)
-    cout << setw(5) << 1 << setw(15) << "SV001" << setw(25) << "Nguyen Van A" << setw(10) << "8.5" << endl;
-    cout << setw(5) << 2 << setw(15) << "SV002" << setw(25) << "Tran Thi B" << setw(10) << "9.0" << endl;
+        switch (choice) {
+            case 1: {
+                string malop, tenlop;
+                cout << "Nhập mã lớp: ";
+                cin >> malop;
+                cout << "Nhập tên lớp: ";
+                cin.ignore();
+                getline(cin, tenlop);
+                Lop newClass(malop, tenlop);
+                classList.addClass(newClass);
+                break;
+            }
+            case 2: {
+                classList.printClasses();
+                break;
+            }
+            case 3: {
+                string malop;
+                cout << "Nhập mã lớp: ";
+                cin >> malop;
+                SinhVien newStudent;
+                cout << "Nhập thông tin sinh viên:" << endl;
+                newStudent.nhapThongTin();
+                classList.addStudentToClass(malop, newStudent);
+                break;
+            }
+            case 4: {
+                MonHoc newCourse;
+                cout << "Nhập mã môn học: ";
+                cin >> newCourse.MAMH;
+                cout << "Nhập tên môn học: ";
+                cin.ignore();
+                getline(cin, newCourse.TENMH);
+                cout << "Nhập số tín chỉ lý thuyết: ";
+                cin >> newCourse.STCLT;
+                cout << "Nhập số tín chỉ thực hành: ";
+                cin >> newCourse.STCTH;
+                courseList.insert(newCourse);
+                break;
+            }
+            case 5: {
+                courseList.printInOrder(courseList.getRoot());
+                break;
+            }
+            case 6: {
+                string malop;
+                Lop updatedClass;
+                cout << "Nhập mã lớp cần cập nhật: ";
+                cin >> malop;
+                cout << "Nhập thông tin lớp mới:" << endl;
+                updatedClass.nhapThongTin(); // Gọi hàm nhập thông tin
+                classList.updateClass(malop, updatedClass);
+                break;
+            }
+            case 7: {
+                string mamh;
+                MonHoc updatedCourse;
+                cout << "Nhập mã môn học cần cập nhật: ";
+                cin >> mamh;
+                cout << "Nhập thông tin môn học mới:" << endl;
+                // Nhập thông tin môn học mới
+                courseList.updateCourse(mamh, updatedCourse);
+                break;
+            }
+            case 0:
+                cout << "Thoát chương trình!" << endl;
+                break;
+            default:
+                cout << "Lựa chọn không hợp lệ. Vui lòng thử lại." << endl;
+        }
+    } while (choice != 0);
 
     return 0;
 }

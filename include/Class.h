@@ -1,19 +1,62 @@
 #ifndef CLASS_H
 #define CLASS_H
 
-#include "Node.h"  // Sử dụng Node cho danh sách sinh viên
+#include <iostream>
 #include <string>
-
-using namespace std;
+#include <vector>
+#include "Student.h" // Bao gồm tệp định nghĩa lớp SinhVien nếu cần
 
 class Lop {
-public:
-    string MALOP;   // Mã lớp
-    string TENLOP;  // Tên lớp
-    Node* danhSachSinhVien;  // Danh sách sinh viên trong lớp (dùng Node*)
+private:
+    std::string MALOP; // Mã lớp
+    std::string TENLOP; // Tên lớp
+    std::vector<SinhVien> danhSachSinhVien; // Danh sách sinh viên trong lớp
 
-    // Constructor
-    Lop(const string& malop, const string& tenlop) : MALOP(malop), TENLOP(tenlop), danhSachSinhVien(nullptr) {}
+public:
+    // Hàm khởi tạo mặc định
+    Lop() : MALOP(""), TENLOP("") {}
+
+    // Hàm khởi tạo có tham số
+    Lop(const std::string& malop, const std::string& tenlop) : MALOP(malop), TENLOP(tenlop) {}
+
+    // Phương thức để nhập thông tin lớp
+    void nhapThongTin() {
+        std::cout << "Nhập mã lớp: ";
+        std::cin >> MALOP;
+        std::cout << "Nhập tên lớp: ";
+        std::cin.ignore();
+        std::getline(std::cin, TENLOP);
+    }
+
+    // Phương thức để thêm sinh viên vào danh sách
+    void addStudent(const SinhVien& student) {
+        danhSachSinhVien.push_back(student);
+    }
+
+    // Phương thức để in thông tin lớp
+    void printClassInfo() const {
+        std::cout << "Mã lớp: " << MALOP << ", Tên lớp: " << TENLOP << std::endl;
+        std::cout << "Danh sách sinh viên: " << std::endl;
+        for (const auto& student : danhSachSinhVien) {
+            student.inThongTin(); // Giả sử lớp SinhVien có phương thức inThongTin()
+        }
+    }
+
+    // Getter cho MALOP và TENLOP
+    std::string getClassID() const {
+        return MALOP;
+    }
+
+    std::string getClassName() const {
+        return TENLOP;
+    }
+
+    // Getter cho danh sách sinh viên (nếu cần, nhưng không khuyến khích truy cập trực tiếp)
+    const std::vector<SinhVien>& getStudents() const {
+        return danhSachSinhVien;
+    }
+
+    // Thêm các phương thức khác nếu cần...
 };
 
-#endif
+#endif // CLASS_H

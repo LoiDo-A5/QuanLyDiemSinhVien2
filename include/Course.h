@@ -7,8 +7,8 @@ using namespace std;
 struct MonHoc {
     string MAMH;
     string TENMH;
-    int STCLT;
-    int STCTH;
+    int STCLT;  // Số tín chỉ lý thuyết
+    int STCTH;  // Số tín chỉ thực hành
 };
 
 #endif

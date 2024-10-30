@@ -2,6 +2,8 @@
 #include "ClassList.h"
 #include "CourseList.h"
 #include "Student.h"
+#include "CreditClass.h"
+#include "Class.h"
 
 using namespace std;
 
@@ -19,6 +21,7 @@ int main() {
         cout << "5. In danh sách môn học" << endl;
         cout << "6. Cập nhật thông tin lớp" << endl;
         cout << "7. Cập nhật thông tin môn học" << endl;
+        cout << "8. Mở lớp tín chỉ" << endl; // Thêm tùy chọn mở lớp tín chỉ
         cout << "0. Thoát" << endl;
         cout << "Chọn chức năng: ";
         cin >> choice;
@@ -83,8 +86,75 @@ int main() {
                 cout << "Nhập mã môn học cần cập nhật: ";
                 cin >> mamh;
                 cout << "Nhập thông tin môn học mới:" << endl;
-                // Nhập thông tin môn học mới
                 courseList.updateCourse(mamh, updatedCourse);
+                break;
+            }
+            case 8: { // Mở lớp tín chỉ
+                int subChoice;
+                do {
+                    cout << "==== MENU LỚP TÍN CHỈ ====" << endl;
+                    cout << "1. Thêm lớp tín chỉ" << endl;
+                    cout << "2. Xóa lớp tín chỉ" << endl;
+                    cout << "3. Hiệu chỉnh lớp tín chỉ" << endl;
+                    cout << "4. In danh sách lớp tín chỉ" << endl;
+                    cout << "0. Quay lại" << endl;
+                    cout << "Chọn chức năng: ";
+                    cin >> subChoice;
+
+                    switch (subChoice) {
+                        case 1: {
+                            string id, name;
+                            int credits;
+                            cout << "Nhập mã lớp tín chỉ: ";
+                            cin >> id;
+                            cout << "Nhập tên lớp tín chỉ: ";
+                            cin.ignore();
+                            getline(cin, name);
+                            cout << "Nhập số tín chỉ: ";
+                            cin >> credits;
+
+                            // Create a new CreditClass using the parameters
+                            CreditClass newCreditClass(id, name, credits);
+                            classList.addCreditClass(newCreditClass); // This should work now
+                            break;
+                        }
+                        case 2: {
+                            string classCode;
+                            cout << "Nhập mã lớp tín chỉ cần xóa: ";
+                            cin >> classCode;
+                            classList.removeCreditClass(classCode); // Gọi phương thức xóa lớp tín chỉ
+                            break;
+                        }
+                        case 3: {
+                            string classCode;
+                            string id, name;
+                            int credits;
+                            cout << "Nhập mã lớp tín chỉ cần hiệu chỉnh: ";
+                            cin >> classCode;
+                            cout << "Nhập thông tin lớp tín chỉ mới:" << endl;
+                            cout << "Nhập mã lớp tín chỉ: ";
+                            cin >> id;
+                            cout << "Nhập tên lớp tín chỉ: ";
+                            cin.ignore();
+                            getline(cin, name);
+                            cout << "Nhập số tín chỉ: ";
+                            cin >> credits;
+
+                            // Create a new CreditClass using the parameters
+                            CreditClass updatedClass(id, name, credits);
+                            classList.editCreditClass(classCode, updatedClass); // Gọi phương thức hiệu chỉnh lớp tín chỉ
+                            break;
+                        }
+                        case 4: {
+                            classList.printCreditClasses(); // Gọi phương thức in danh sách lớp tín chỉ
+                            break;
+                        }
+                        case 0:
+                            break;
+                        default:
+                            cout << "Lựa chọn không hợp lệ. Vui lòng thử lại." << endl;
+                    }
+                } while (subChoice != 0);
                 break;
             }
             case 0:

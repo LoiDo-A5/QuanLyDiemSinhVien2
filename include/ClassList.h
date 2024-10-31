@@ -4,17 +4,18 @@
 #include "Class.h"
 #include "Student.h" // Thêm thư viện Student.h nếu cần sử dụng SinhVien
 
-class ClassList {
+class ClassList
+{
 private:
-    Lop* classes[1000];  // Mảng lớp tối đa 1000 lớp
+    Lop *classes[1000]; // Mảng lớp tối đa 1000 lớp
     int classCount;
 
 public:
     ClassList();
-    void addClass(const Lop& newClass); // Thêm lớp
-    void printClasses(); // In danh sách lớp
-    void addStudentToClass(const std::string& malop, const SinhVien& newStudent); // Thêm sinh viên vào lớp
-    void updateClass(const std::string& malop, const Lop& updatedClass); // Cập nhật lớp
+    void addClass(const Lop &newClass);                                           // Thêm lớp
+    void printClasses();                                                          // In danh sách lớp
+    void addStudentToClass(const std::string &malop, const SinhVien &newStudent); // Thêm sinh viên vào lớp
+    void updateClass(const std::string &malop, Lop updatedClass);                 // Cập nhật lớp
 };
 
 #endif // CLASSLIST_H

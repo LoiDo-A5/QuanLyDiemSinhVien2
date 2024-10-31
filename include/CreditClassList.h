@@ -1,24 +1,22 @@
-#ifndef CREDITCLASSLIST_H
-#define CREDITCLASSLIST_H
+// CreditClassList.h
+#ifndef CREDIT_CLASS_LIST_H
+#define CREDIT_CLASS_LIST_H
 
+#include "CreditClass.h"
 #include <vector>
-#include <string>
-
-// Forward declaration
-class CreditClass; // Khai báo trước lớp CreditClass
 
 class CreditClassList {
 private:
-    std::vector<CreditClass> creditClasses; // Danh sách các lớp tín chỉ
+    std::vector<CreditClass*> creditClasses;
 
 public:
-    CreditClassList(); // Constructor
-    ~CreditClassList(); // Destructor
-
-    void addCreditClass(const CreditClass& creditClass); // Thêm lớp tín chỉ
-    void removeCreditClass(const std::string& classID); // Xóa lớp tín chỉ theo ID
-    CreditClass* findCreditClass(const std::string& classID); // Tìm lớp tín chỉ theo ID
-    void displayCreditClasses(); // Hiển thị danh sách lớp tín chỉ
+    CreditClassList();
+    
+    void addCreditClass(CreditClass* creditClass);
+    void displayCreditClasses();
+    void removeCreditClass(int malopTC);
+    CreditClass* findCreditClassByMAMH(const std::string& maMH); // Đảm bảo khai báo hàm
+    void cancelCreditClass(int malopTC);
 };
 
-#endif // CREDITCLASSLIST_H
+#endif // CREDIT_CLASS_LIST_H

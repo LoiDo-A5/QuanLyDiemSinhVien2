@@ -4,12 +4,14 @@
 #include "Student.h"
 #include "CreditClass.h"
 #include "Class.h"
+#include "CreditClassList.h"
 
 using namespace std;
 
 int main() {
     ClassList classList; // Danh sách lớp
     CourseList courseList; // Danh sách môn học
+    CreditClassList creditClassList; // Tạo một thể hiện của CreditClassList
 
     int choice;
     do {
@@ -76,7 +78,7 @@ int main() {
                 cout << "Nhập mã lớp cần cập nhật: ";
                 cin >> malop;
                 cout << "Nhập thông tin lớp mới:" << endl;
-                updatedClass.nhapThongTin(); // Gọi hàm nhập thông tin
+                updatedClass.nhapThongTin();
                 classList.updateClass(malop, updatedClass);
                 break;
             }
@@ -96,57 +98,50 @@ int main() {
                     cout << "1. Thêm lớp tín chỉ" << endl;
                     cout << "2. Xóa lớp tín chỉ" << endl;
                     cout << "3. Hiệu chỉnh lớp tín chỉ" << endl;
-                    cout << "4. In danh sách lớp tín chỉ" << endl;
+                    cout << "4. In danh sách sinh viên đăng ký" << endl;
                     cout << "0. Quay lại" << endl;
                     cout << "Chọn chức năng: ";
                     cin >> subChoice;
 
                     switch (subChoice) {
                         case 1: {
-                            string id, name;
-                            int credits;
+                            int malopTC, hocKy, nhom, soSvMin, soSvMax;
+                            string maMH, nienKhoa, tenLop;
                             cout << "Nhập mã lớp tín chỉ: ";
-                            cin >> id;
-                            cout << "Nhập tên lớp tín chỉ: ";
+                            cin >> malopTC;
+                            cout << "Nhập mã môn học: ";
+                            cin >> maMH;
+                            cout << "Nhập tên lớp: ";
                             cin.ignore();
-                            getline(cin, name);
-                            cout << "Nhập số tín chỉ: ";
-                            cin >> credits;
+                            getline(cin, tenLop);
+                            cout << "Nhập niên khóa: ";
+                            cin >> nienKhoa;
+                            cout << "Nhập học kỳ: ";
+                            cin >> hocKy;
+                            cout << "Nhập nhóm: ";
+                            cin >> nhom;
+                            cout << "Nhập số sinh viên tối thiểu: ";
+                            cin >> soSvMin;
+                            cout << "Nhập số sinh viên tối đa: ";
+                            cin >> soSvMax;
 
-                            // Create a new CreditClass using the parameters
-                            CreditClass newCreditClass(id, name, credits);
-                            classList.addCreditClass(newCreditClass); // This should work now
+                            CreditClass* newCreditClass = new CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
+                            creditClassList.addCreditClass(newCreditClass); // Sử dụng instance creditClassList
                             break;
                         }
                         case 2: {
-                            string classCode;
+                            int malopTC;
                             cout << "Nhập mã lớp tín chỉ cần xóa: ";
-                            cin >> classCode;
-                            classList.removeCreditClass(classCode); // Gọi phương thức xóa lớp tín chỉ
+                            cin >> malopTC;
+                            creditClassList.removeCreditClass(malopTC); // Sử dụng instance creditClassList
                             break;
                         }
                         case 3: {
-                            string classCode;
-                            string id, name;
-                            int credits;
-                            cout << "Nhập mã lớp tín chỉ cần hiệu chỉnh: ";
-                            cin >> classCode;
-                            cout << "Nhập thông tin lớp tín chỉ mới:" << endl;
-                            cout << "Nhập mã lớp tín chỉ: ";
-                            cin >> id;
-                            cout << "Nhập tên lớp tín chỉ: ";
-                            cin.ignore();
-                            getline(cin, name);
-                            cout << "Nhập số tín chỉ: ";
-                            cin >> credits;
-
-                            // Create a new CreditClass using the parameters
-                            CreditClass updatedClass(id, name, credits);
-                            classList.editCreditClass(classCode, updatedClass); // Gọi phương thức hiệu chỉnh lớp tín chỉ
+                            // Hiệu chỉnh lớp tín chỉ - cần viết logic tương tự như trên
                             break;
                         }
                         case 4: {
-                            classList.printCreditClasses(); // Gọi phương thức in danh sách lớp tín chỉ
+                            // In danh sách sinh viên đăng ký - cần viết logic tương tự như trên
                             break;
                         }
                         case 0:
@@ -158,7 +153,6 @@ int main() {
                 break;
             }
             case 0:
-                cout << "Thoát chương trình!" << endl;
                 break;
             default:
                 cout << "Lựa chọn không hợp lệ. Vui lòng thử lại." << endl;

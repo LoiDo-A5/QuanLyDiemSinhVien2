@@ -1,16 +1,51 @@
 #include "CreditClass.h"
+#include <iostream>
 
-CreditClass::CreditClass(const std::string& id, const std::string& name, int credits)
-    : classID(id), className(name), credits(credits) {}
-
-std::string CreditClass::getClassID() const {
-    return classID;
+// Constructor with automatic class ID
+CreditClass::CreditClass(int maLopTC, const std::string& maMH, const std::string& tenLop, 
+                         const std::string& nienKhoa, int hocKy, int nhom, int minSv, int maxSv)
+    : MALOPTC(maLopTC), MAMH(maMH), tenLop(tenLop), nienKhoa(nienKhoa), 
+      hocKy(hocKy), nhom(nhom), soSvMin(minSv), soSvMax(maxSv), huyLop(false) {
+    // Initialize array of pointers to registered students to nullptr
 }
 
-std::string CreditClass::getClassName() const {
-    return className;
+// Getters
+int CreditClass::getMALOPTC() const {
+    return MALOPTC;
 }
 
-int CreditClass::getCredits() const {
-    return credits;
+std::string CreditClass::getMAMH() const {
+    return MAMH;
+}
+
+std::string CreditClass::getTenLop() const {
+    return tenLop;
+}
+
+std::string CreditClass::getNienKhoa() const {
+    return nienKhoa;
+}
+
+int CreditClass::getHocKy() const {
+    return hocKy;
+}
+
+int CreditClass::getNhom() const {
+    return nhom;
+}
+
+int CreditClass::getSoSvMin() const {
+    return soSvMin;
+}
+
+int CreditClass::getSoSvMax() const {
+    return soSvMax;
+}
+
+bool CreditClass::isHuyLop() const {
+    return huyLop;
+}
+
+void CreditClass::setHuyLop(bool huy) {
+    huyLop = huy;
 }

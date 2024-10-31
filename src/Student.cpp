@@ -1,6 +1,4 @@
 #include "Student.h"
-#include <iostream>
-using namespace std;
 
 // Constructor mặc định
 SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
@@ -19,7 +17,7 @@ void SinhVien::nhapThongTin() {
     cin >> TEN;
     cout << "Nhập giới tính: ";
     cin >> GIOITINH;
-    cout << "Nhập CMND: ";
+    cout << "Nhập số CMND: ";
     cin >> CMND;
     cout << "Nhập điểm: ";
     cin >> DIEM;
@@ -28,13 +26,17 @@ void SinhVien::nhapThongTin() {
 // Hàm in thông tin sinh viên
 void SinhVien::inThongTin() const {
     cout << "Mã sinh viên: " << MASV << ", Họ: " << HO << ", Tên: " << TEN
-         << ", Giới tính: " << GIOITINH << ", CMND: " << CMND
-         << ", Điểm: " << DIEM << endl;
+         << ", Giới tính: " << GIOITINH << ", CMND: " << CMND << ", Điểm: " << DIEM << endl;
 }
 
 // Hàm lấy mã sinh viên
 string SinhVien::getMaSV() const {
     return MASV;
+}
+
+// Hàm lấy tên sinh viên (họ và tên)
+string SinhVien::getName() const {
+    return HO + " " + TEN; // Trả về họ và tên
 }
 
 // Hàm cập nhật điểm sinh viên

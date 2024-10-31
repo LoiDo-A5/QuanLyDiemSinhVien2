@@ -2,7 +2,7 @@
 #define STUDENT_H
 
 #include <string>
-#include <iostream> // Thêm thư viện iostream nếu cần in thông tin
+#include <iostream>
 
 using namespace std;
 
@@ -28,11 +28,11 @@ public:
     // Hàm in thông tin sinh viên
     void inThongTin() const;
 
-    // Hàm in thông tin sinh viên (cần thêm)
-    void printInfo() const;
-
     // Hàm lấy mã sinh viên
     string getMaSV() const;
+
+    // Hàm lấy tên sinh viên (họ và tên)
+    string getName() const;
 
     // Hàm cập nhật điểm sinh viên
     void capNhatDiem(float diemMoi);

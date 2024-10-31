@@ -25,12 +25,16 @@ void ClassList::printClasses()
     }
 }
 
-void ClassList::updateClass(const string &malop, const Lop &updatedClass)
+void ClassList::updateClass(const string &malop, Lop updatedClass)
 {
     for (int i = 0; i < classCount; i++)
     {
         if (classes[i]->getClassID() == malop)
-        {                               // Sử dụng getter
+        {
+            for (int j = 0; j < classes[i]->getStudents().size(); j++)
+            {
+                updatedClass.addStudent(classes[i]->getStudents()[j]);
+            }
             *classes[i] = updatedClass; // Cập nhật thông tin lớp
             cout << "Cập nhật lớp " << malop << " thành công!" << endl;
             return;

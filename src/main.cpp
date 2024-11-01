@@ -94,11 +94,9 @@ int main()
         case 7:
         {
             string mamh;
-            MonHoc updatedCourse;
             cout << "Nhập mã môn học cần cập nhật: ";
             cin >> mamh;
-            cout << "Nhập thông tin môn học mới:" << endl;
-            courseList.updateCourse(mamh, updatedCourse);
+            courseList.updateCourse(mamh);
             break;
         }
         case 8:

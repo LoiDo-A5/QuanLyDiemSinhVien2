@@ -151,7 +151,65 @@ int main()
                 }
                 case 3:
                 {
-                    // Hiệu chỉnh lớp tín chỉ - cần viết logic tương tự như trên
+                    int malopTC;
+                    cout << "Nhập mã lớp tín chỉ cần hiệu chỉnh: ";
+                    cin >> malopTC;
+
+                    // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
+                    CreditClass *creditClass = creditClassList.findCreditClassByMALOPTC(malopTC);
+                    if (creditClass == nullptr)
+                    {
+                        cout << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << endl;
+                        break;
+                    }
+
+                    // Hiển thị thông tin hiện tại của lớp tín chỉ
+                    cout << "Thông tin lớp tín chỉ hiện tại:" << endl;
+                    cout << "Mã lớp tín chỉ: " << creditClass->getMALOPTC() << endl;
+                    cout << "Mã môn học: " << creditClass->getMAMH() << endl;
+                    cout << "Tên lớp: " << creditClass->getTenLop() << endl;
+                    cout << "Niên khóa: " << creditClass->getNienKhoa() << endl;
+                    cout << "Học kỳ: " << creditClass->getHocKy() << endl;
+                    cout << "Nhóm: " << creditClass->getNhom() << endl;
+                    cout << "Số sinh viên tối thiểu: " << creditClass->getSoSvMin() << endl;
+                    cout << "Số sinh viên tối đa: " << creditClass->getSoSvMax() << endl;
+                    cout << "Trạng thái hủy lớp: " << (creditClass->isHuyLop() ? "Có" : "Không") << endl;
+
+                    // Cho phép người dùng nhập thông tin mới
+                    cout << "\nNhập thông tin mới cho lớp tín chỉ:" << endl;
+                    string maMH, tenLop, nienKhoa;
+                    int hocKy, nhom, soSvMin, soSvMax;
+                    bool huyLop;
+
+                    cout << "Nhập mã môn học: ";
+                    cin >> maMH;
+                    cout << "Nhập tên lớp: ";
+                    cin.ignore();
+                    getline(cin, tenLop);
+                    cout << "Nhập niên khóa: ";
+                    cin >> nienKhoa;
+                    cout << "Nhập học kỳ: ";
+                    cin >> hocKy;
+                    cout << "Nhập nhóm: ";
+                    cin >> nhom;
+                    cout << "Nhập số sinh viên tối thiểu: ";
+                    cin >> soSvMin;
+                    cout << "Nhập số sinh viên tối đa: ";
+                    cin >> soSvMax;
+                    cout << "Lớp này có bị hủy không? (1: Có, 0: Không): ";
+                    cin >> huyLop;
+
+                    // Cập nhật thông tin lớp tín chỉ
+                    creditClass->setMAMH(maMH);
+                    creditClass->setTenLop(tenLop);
+                    creditClass->setNienKhoa(nienKhoa);
+                    creditClass->setHocKy(hocKy);
+                    creditClass->setNhom(nhom);
+                    creditClass->setSoSvMin(soSvMin);
+                    creditClass->setSoSvMax(soSvMax);
+                    creditClass->setHuyLop(huyLop);
+
+                    cout << "Hiệu chỉnh lớp tín chỉ thành công!" << endl;
                     break;
                 }
                 case 4:

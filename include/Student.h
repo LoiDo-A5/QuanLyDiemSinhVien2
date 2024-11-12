@@ -34,6 +34,12 @@ public:
     // Hàm lấy tên sinh viên (họ và tên)
     string getName() const;
 
+    // Hàm lấy họ
+    string getHo() const;
+
+    // Hàm lấy tên
+    string getTen() const;
+
     // Hàm cập nhật điểm sinh viên
     void capNhatDiem(float diemMoi);
 };

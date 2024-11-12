@@ -2,18 +2,21 @@
 #define CREDIT_CLASS_H
 
 #include <string>
+#include <vector>
+#include "Student.h" // Assuming SinhVien class is in this header
 
 class CreditClass {
 private:
-    int MALOPTC;           // Mã lớp tín chỉ
-    std::string MAMH;      // Mã môn học
-    std::string tenLop;    // Tên lớp
-    std::string nienKhoa;  // Niên khóa
-    int hocKy;             // Học kỳ
-    int nhom;              // Nhóm
-    int soSvMin;           // Số sinh viên tối thiểu
-    int soSvMax;           // Số sinh viên tối đa
-    bool huyLop;           // Trạng thái hủy lớp
+    int MALOPTC;              // Mã lớp tín chỉ
+    std::string MAMH;         // Mã môn học
+    std::string tenLop;       // Tên lớp
+    std::string nienKhoa;     // Niên khóa
+    int hocKy;                // Học kỳ
+    int nhom;                 // Nhóm
+    int soSvMin;              // Số sinh viên tối thiểu
+    int soSvMax;              // Số sinh viên tối đa
+    bool huyLop;              // Trạng thái hủy lớp
+    std::vector<SinhVien> DSSVDK; // Danh sách sinh viên đăng ký lớp tín chỉ
 
 public:
     // Constructor
@@ -30,6 +33,7 @@ public:
     int getSoSvMin() const;
     int getSoSvMax() const;
     bool isHuyLop() const;
+    std::vector<SinhVien>& getDSSVDK(); // Getter for list of enrolled students
 
     // Setter methods
     void setMAMH(const std::string& maMH);
@@ -40,6 +44,9 @@ public:
     void setSoSvMin(int soSvMin);
     void setSoSvMax(int soSvMax);
     void setHuyLop(bool huy);
+
+    // Method to add a student to the class
+    void addStudent(const SinhVien& student);
 };
 
 #endif // CREDIT_CLASS_H

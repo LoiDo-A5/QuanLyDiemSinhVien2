@@ -6,27 +6,34 @@
 #include <vector>
 #include <string>
 
-class CreditClassList {
+class CreditClassList
+{
 private:
-    std::vector<CreditClass*> creditClasses; // Danh sách các lớp tín chỉ
+    std::vector<CreditClass *> creditClasses; // List of credit classes
 
 public:
-    CreditClassList();  // Hàm khởi tạo
-    
-    // Thêm một lớp tín chỉ vào danh sách
-    void addCreditClass(CreditClass* creditClass);
+    CreditClassList(); // Constructor
 
-    // Hiển thị tất cả các lớp tín chỉ trong danh sách
+    // Add a credit class to the list
+    void addCreditClass(CreditClass *creditClass);
+
+    // Display all credit classes in the list
     void displayCreditClasses();
 
-    // Xóa một lớp tín chỉ theo mã lớp tín chỉ (malopTC)
+    // Remove a credit class by its code (malopTC)
     void removeCreditClass(int malopTC);
 
-    // Tìm và trả về lớp tín chỉ theo mã lớp tín chỉ (malopTC)
-    CreditClass* findCreditClassByMALOPTC(int malopTC);
+    // Find and return a credit class by its code (malopTC)
+    CreditClass *findCreditClassByMALOPTC(int malopTC);
 
-    // Hủy một lớp tín chỉ theo mã lớp tín chỉ (malopTC)
+    // Cancel a credit class by its code (malopTC)
     void cancelCreditClass(int malopTC);
+
+    // Find credit classes based on various parameters (nienKhoa, hocKy, nhom, maMH)
+    std::vector<CreditClass *> findClassesByParams(const std::string &nienKhoa,
+                                                   int hocKy,
+                                                   int nhom,
+                                                   const std::string &maMH);
 };
 
 #endif // CREDIT_CLASS_LIST_H

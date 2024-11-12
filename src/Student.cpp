@@ -12,9 +12,10 @@ void SinhVien::nhapThongTin() {
     cout << "Nhập mã sinh viên: ";
     cin >> MASV;
     cout << "Nhập họ: ";
-    cin >> HO;
+    cin.ignore(); // To clear the newline character from previous input
+    getline(cin, HO);  // Using getline to capture multi-word names
     cout << "Nhập tên: ";
-    cin >> TEN;
+    getline(cin, TEN); // Using getline for full names
     cout << "Nhập giới tính: ";
     cin >> GIOITINH;
     cout << "Nhập số CMND: ";
@@ -37,6 +38,16 @@ string SinhVien::getMaSV() const {
 // Hàm lấy tên sinh viên (họ và tên)
 string SinhVien::getName() const {
     return HO + " " + TEN; // Trả về họ và tên
+}
+
+// Hàm lấy họ
+string SinhVien::getHo() const {
+    return HO;
+}
+
+// Hàm lấy tên
+string SinhVien::getTen() const {
+    return TEN;
 }
 
 // Hàm cập nhật điểm sinh viên

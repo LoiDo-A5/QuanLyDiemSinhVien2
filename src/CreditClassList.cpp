@@ -3,20 +3,21 @@
 #include "CreditClassList.h"
 #include "CreditClass.h"
 #include <iostream>
-#include <vector>
 
-// Constructor
 CreditClassList::CreditClassList() {}
 
-// Thêm lớp tín chỉ vào danh sách
 void CreditClassList::addCreditClass(CreditClass *creditClass)
 {
     creditClasses.push_back(creditClass);
 }
 
-// Hiển thị danh sách lớp tín chỉ
 void CreditClassList::displayCreditClasses()
 {
+    if (creditClasses.empty())
+    {
+        std::cout << "Danh sách lớp tín chỉ rỗng." << std::endl;
+        return;
+    }
     for (const auto &creditClass : creditClasses)
     {
         std::cout << "Mã lớp tín chỉ: " << creditClass->getMALOPTC()
@@ -32,14 +33,13 @@ void CreditClassList::displayCreditClasses()
     }
 }
 
-// Xóa lớp tín chỉ theo mã lớp tín chỉ
 void CreditClassList::removeCreditClass(int malopTC)
 {
     for (auto it = creditClasses.begin(); it != creditClasses.end(); ++it)
     {
         if ((*it)->getMALOPTC() == malopTC)
         {
-            delete *it; // Giải phóng bộ nhớ
+            delete *it; // Free memory
             creditClasses.erase(it);
             std::cout << "Lớp tín chỉ với mã " << malopTC << " đã được xóa." << std::endl;
             return;
@@ -48,7 +48,6 @@ void CreditClassList::removeCreditClass(int malopTC)
     std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
 }
 
-// Tìm kiếm lớp tín chỉ theo mã lớp tín chỉ
 CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
 {
     for (const auto &creditClass : creditClasses)
@@ -58,20 +57,38 @@ CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
             return creditClass;
         }
     }
-    return nullptr; // Trả về nullptr nếu không tìm thấy
+    return nullptr; // Return nullptr if not found
 }
 
-// Phương thức hủy lớp
 void CreditClassList::cancelCreditClass(int malopTC)
 {
     for (auto &creditClass : creditClasses)
     {
         if (creditClass->getMALOPTC() == malopTC)
         {
-            creditClass->setHuyLop(true); // Cập nhật trạng thái hủy lớp
+            creditClass->setHuyLop(true); // Set cancellation status
             std::cout << "Lớp tín chỉ với mã " << malopTC << " đã được hủy." << std::endl;
             return;
         }
     }
     std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
+}
+
+std::vector<CreditClass *> CreditClassList::findClassesByParams(const std::string &nienKhoa,
+                                                               int hocKy,
+                                                               int nhom,
+                                                               const std::string &maMH)
+{
+    std::vector<CreditClass *> result;
+    for (auto &creditClass : creditClasses)
+    {
+        if ((nienKhoa.empty() || creditClass->getNienKhoa() == nienKhoa) &&
+            (hocKy == 0 || creditClass->getHocKy() == hocKy) &&
+            (nhom == 0 || creditClass->getNhom() == nhom) &&
+            (maMH.empty() || creditClass->getMAMH() == maMH))
+        {
+            result.push_back(creditClass);
+        }
+    }
+    return result;
 }

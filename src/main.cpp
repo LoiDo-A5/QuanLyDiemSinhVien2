@@ -18,14 +18,11 @@ int main()
     do
     {
         cout << "==== MENU ====" << endl;
-        cout << "1. Thêm lớp" << endl;
-        cout << "2. In danh sách lớp" << endl;
-        cout << "3. Thêm sinh viên vào lớp" << endl;
-        cout << "4. Thêm môn học" << endl;
-        cout << "5. In danh sách môn học" << endl;
-        cout << "6. Cập nhật thông tin lớp" << endl;
-        cout << "7. Cập nhật thông tin môn học" << endl;
-        cout << "8. Mở lớp tín chỉ" << endl; // Thêm tùy chọn mở lớp tín chỉ
+        cout << "1. Menu lớp" << endl;
+        cout << "2. Thêm môn học" << endl;
+        cout << "3. In danh sách môn học" << endl;
+        cout << "4. Cập nhật thông tin môn học" << endl;
+        cout << "5. Mở lớp tín chỉ" << endl; // Thêm tùy chọn mở lớp tín chỉ
         cout << "0. Thoát" << endl;
         cout << "Chọn chức năng: ";
         cin >> choice;
@@ -34,33 +31,74 @@ int main()
         {
         case 1:
         {
-            string malop, tenlop;
-            cout << "Nhập mã lớp: ";
-            cin >> malop;
-            cout << "Nhập tên lớp: ";
-            cin.ignore();
-            getline(cin, tenlop);
-            Lop newClass(malop, tenlop);
-            classList.addClass(newClass);
+            int subChoice;
+            do
+            {
+                cout << "==== MENU LỚP ====" << endl;
+                cout << "1. Thêm lớp" << endl;
+                cout << "2. Xóa lớp" << endl;
+                cout << "3. Chỉnh sửa lớp" << endl;
+                cout << "4. In danh sách lớp" << endl;
+                cout << "5. Thêm sinh viên" << endl;
+                cout << "6. Xóa sinh viên" << endl;
+                cout << "7. Chỉnh sửa sinh viên" << endl;
+                cout << "0. Quay lại" << endl;
+                cout << "Chọn chức năng: ";
+                cin >> subChoice;
+                switch (subChoice)
+                {
+                case 1:
+                {
+                    string malop, tenlop;
+                    cout << "Nhập mã lớp: ";
+                    cin >> malop;
+                    cout << "Nhập tên lớp: ";
+                    cin.ignore();
+                    getline(cin, tenlop);
+                    Lop newClass(malop, tenlop);
+                    classList.addClass(newClass);
+                    break;
+                }
+                case 2:
+                {
+                    break;
+                }
+                case 3:
+                {
+                    string malop;
+                    Lop updatedClass;
+                    cout << "Nhập mã lớp cần cập nhật: ";
+                    cin >> malop;
+                    cout << "Nhập thông tin lớp mới:" << endl;
+                    updatedClass.nhapThongTin();
+                    classList.updateClass(malop, updatedClass);
+                    break;
+                }
+
+                case 4:
+                {
+                    classList.printClasses();
+                    break;
+                }
+                case 5:
+                {
+                    string malop;
+                    cout << "Nhập mã lớp: ";
+                    cin >> malop;
+                    SinhVien newStudent;
+                    cout << "Nhập thông tin sinh viên:" << endl;
+                    newStudent.nhapThongTin();
+                    classList.addStudentToClass(malop, newStudent);
+                    break;
+                }
+
+                default:
+                    break;
+                }
+            } while (subChoice != 0); // Kết thúc vòng lặp con cho lớp tín chỉ
             break;
         }
         case 2:
-        {
-            classList.printClasses();
-            break;
-        }
-        case 3:
-        {
-            string malop;
-            cout << "Nhập mã lớp: ";
-            cin >> malop;
-            SinhVien newStudent;
-            cout << "Nhập thông tin sinh viên:" << endl;
-            newStudent.nhapThongTin();
-            classList.addStudentToClass(malop, newStudent);
-            break;
-        }
-        case 4:
         {
             MonHoc newCourse;
             cout << "Nhập mã môn học: ";
@@ -75,23 +113,12 @@ int main()
             courseList.insert(newCourse);
             break;
         }
-        case 5:
+        case 3:
         {
             courseList.printInOrder(courseList.getRoot());
             break;
         }
-        case 6:
-        {
-            string malop;
-            Lop updatedClass;
-            cout << "Nhập mã lớp cần cập nhật: ";
-            cin >> malop;
-            cout << "Nhập thông tin lớp mới:" << endl;
-            updatedClass.nhapThongTin();
-            classList.updateClass(malop, updatedClass);
-            break;
-        }
-        case 7:
+        case 4:
         {
             string mamh;
             cout << "Nhập mã môn học cần cập nhật: ";
@@ -99,7 +126,7 @@ int main()
             courseList.updateCourse(mamh);
             break;
         }
-        case 8:
+        case 5:
         { // Mở lớp tín chỉ
             int subChoice;
             do

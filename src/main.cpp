@@ -103,7 +103,7 @@ int main()
                     cin >> maSV;
 
                     // Tìm lớp theo mã lớp
-                    Lop *lop = classList.findClassByCode(malop); // Giả sử classList có phương thức tìm lớp theo mã lớp
+                    Lop *lop = classList.findClassByCode(malop);
 
                     if (lop == nullptr)
                     {
@@ -112,7 +112,7 @@ int main()
                     }
 
                     // Tìm sinh viên trong lớp
-                    bool removed = lop->removeStudent(maSV); // Giả sử Lop có phương thức removeStudent để xóa sinh viên
+                    bool removed = lop->removeStudent(maSV);
 
                     if (removed)
                     {
@@ -124,41 +124,41 @@ int main()
                     }
                     break;
                 }
-                    // case 7: // Chỉnh sửa sinh viên
-                    // {
-                    //     string malop;
-                    //     cout << "Nhập mã lớp: ";
-                    //     cin >> malop;
+                case 7: // Chỉnh sửa sinh viên
+                {
+                    string malop;
+                    cout << "Nhập mã lớp: ";
+                    cin >> malop;
 
-                    //     string maSV;
-                    //     cout << "Nhập mã sinh viên cần chỉnh sửa: ";
-                    //     cin >> maSV;
+                    string maSV;
+                    cout << "Nhập mã sinh viên cần chỉnh sửa: ";
+                    cin >> maSV;
 
-                    //     // Tìm lớp theo mã lớp
-                    //     Lop *lop = classList.findClassByCode(malop); // Giả sử classList có phương thức tìm lớp theo mã lớp
+                    // Tìm lớp theo mã lớp
+                    Lop *lop = classList.findClassByCode(malop); // Giả sử classList có phương thức tìm lớp theo mã lớp
 
-                    //     if (lop == nullptr)
-                    //     {
-                    //         cout << "Lớp không tồn tại!" << endl;
-                    //         break;
-                    //     }
+                    if (lop == nullptr)
+                    {
+                        cout << "Lớp không tồn tại!" << endl;
+                        break;
+                    }
 
-                    //     // Tìm sinh viên trong lớp
-                    //     SinhVien *student = lop->findStudent(maSV); // Giả sử Lop có phương thức findStudent để tìm sinh viên theo mã sinh viên
+                    // Tìm sinh viên trong lớp
+                    SinhVien *student = lop->findStudent(maSV); // Giả sử Lop có phương thức findStudent để tìm sinh viên theo mã sinh viên
 
-                    //     if (student == nullptr)
-                    //     {
-                    //         cout << "Không tìm thấy sinh viên với mã: " << maSV << endl;
-                    //         break;
-                    //     }
+                    if (student == nullptr)
+                    {
+                        cout << "Không tìm thấy sinh viên với mã: " << maSV << endl;
+                        break;
+                    }
 
-                    //     // Chỉnh sửa thông tin sinh viên
-                    //     cout << "Nhập thông tin sinh viên mới:" << endl;
-                    //     student->nhapThongTin(); // Nhập lại thông tin sinh viên
+                    // Chỉnh sửa thông tin sinh viên
+                    cout << "Nhập thông tin sinh viên mới:" << endl;
+                    student->nhapThongTin(); // Nhập lại thông tin sinh viên
 
-                    //     cout << "Chỉnh sửa sinh viên thành công!" << endl;
-                    //     break;
-                    // }
+                    cout << "Chỉnh sửa sinh viên thành công!" << endl;
+                    break;
+                }
 
                 default:
                     break;

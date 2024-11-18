@@ -1,3 +1,4 @@
+// Class.h
 #ifndef CLASS_H
 #define CLASS_H
 
@@ -64,17 +65,31 @@ public:
         return danhSachSinhVien;
     }
 
+    // Phương thức xóa sinh viên theo mã sinh viên
     bool removeStudent(const std::string &maSV)
     {
         for (auto it = danhSachSinhVien.begin(); it != danhSachSinhVien.end(); ++it)
         {
-            if (it->getMaSV() == maSV)
-            {                               // Tìm sinh viên theo mã
+            if (it->getMaSV() == maSV) // Tìm sinh viên theo mã
+            {
                 danhSachSinhVien.erase(it); // Xóa sinh viên khỏi danh sách
                 return true;
             }
         }
         return false; // Không tìm thấy sinh viên
+    }
+
+    // Phương thức tìm sinh viên theo mã sinh viên
+    SinhVien *findStudent(const std::string &maSV)
+    {
+        for (auto &student : danhSachSinhVien)
+        {
+            if (student.getMaSV() == maSV)
+            {
+                return &student; // Trả về con trỏ đến sinh viên
+            }
+        }
+        return nullptr; // Không tìm thấy sinh viên
     }
 };
 

@@ -56,3 +56,41 @@ void ClassList::addStudentToClass(const string &malop, const SinhVien &newStuden
     }
     cout << "Không tìm thấy lớp " << malop << "." << endl;
 }
+
+Lop *ClassList::findClassByCode(const string &malop)
+{
+    for (int i = 0; i < classCount; i++)
+    {
+        if (classes[i]->getClassID() == malop) // So sánh mã lớp
+        {
+            return classes[i]; // Trả về con trỏ đến lớp tìm được
+        }
+    }
+    return nullptr; // Không tìm thấy lớp, trả về nullptr
+}
+
+bool ClassList::removeStudent(const string &malop, const string &maSV)
+{
+    // Tìm lớp theo mã lớp
+    Lop *lop = findClassByCode(malop);
+
+    if (lop == nullptr)
+    {
+        cout << "Lớp không tồn tại!" << endl;
+        return false;
+    }
+
+    // Xóa sinh viên trong lớp
+    bool removed = lop->removeStudent(maSV);
+
+    if (removed)
+    {
+        cout << "Xóa sinh viên thành công!" << endl;
+        return true;
+    }
+    else
+    {
+        cout << "Không tìm thấy sinh viên với mã: " << maSV << endl;
+        return false;
+    }
+}

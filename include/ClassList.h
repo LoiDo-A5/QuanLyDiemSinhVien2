@@ -12,12 +12,14 @@ private:
 
 public:
     ClassList();
+    int getClassCount();
     void addClass(const Lop &newClass);                                           // Thêm lớp
     void printClasses();                                                          // In danh sách lớp
     void addStudentToClass(const std::string &malop, const SinhVien &newStudent); // Thêm sinh viên vào lớp
     void updateClass(const std::string &malop, Lop updatedClass);                 // Cập nhật lớp
     bool removeStudent(const std::string &malop, const std::string &maSV);        // Xóa sinh viên khỏi lớp
-    Lop *findClassByCode(const std::string &malop); // Tìm lớp theo mã lớp
+    Lop *findClassByCode(const std::string &malop);                               // Tìm lớp theo mã lớp
+    bool removeClassByCode(const std::string &malop);                             // Xóa lớp bằng mã lớp
 };
 
 #endif // CLASSLIST_H

@@ -21,6 +21,11 @@ public:
     // Hàm khởi tạo có tham số
     Lop(const std::string &malop, const std::string &tenlop) : MALOP(malop), TENLOP(tenlop) {}
 
+    string getCode()
+    {
+        return MALOP;
+    }
+
     // Phương thức để nhập thông tin lớp
     void nhapThongTin()
     {

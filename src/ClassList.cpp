@@ -6,6 +6,11 @@ using namespace std;
 
 ClassList::ClassList() : classCount(0) {}
 
+int ClassList::getClassCount()
+{
+    return classCount;
+}
+
 void ClassList::addClass(const Lop &newClass)
 {
     if (classCount < 1000)
@@ -94,4 +99,23 @@ bool ClassList::removeStudent(const string &malop, const string &maSV)
         cout << "Không tìm thấy sinh viên với mã: " << maSV << endl;
         return false;
     }
+}
+
+bool ClassList::removeClassByCode(const std::string &malop)
+{
+    for (int i = 0; i < classCount; ++i)
+    {
+        if (classes[i] && classes[i]->getCode() == malop)
+        {
+            delete classes[i]; // Free the memory for the class object
+            for (int j = i; j < classCount - 1; ++j)
+            {
+                classes[j] = classes[j + 1]; // Shift the remaining classes
+            }
+            classes[classCount - 1] = nullptr; // Clear the last pointer
+            --classCount;                      // Decrease the class count
+            return true;                       // Indicate success
+        }
+    }
+    return false; // Return false if the class was not found
 }

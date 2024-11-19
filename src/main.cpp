@@ -61,6 +61,19 @@ int main()
                 }
                 case 2:
                 {
+                    if (classList.getClassCount() == 0)
+                    {
+                        cout << "Không có lớp để xóa!" << endl;
+                        break;
+                    }
+                    string malop;
+                    classList.printClasses();
+                    cout << "Nhập mã lớp cần xoá: ";
+                    cin >> malop;
+                    if (classList.removeClassByCode(malop))
+                    {
+                        cout << "Đã xóa thành công lớp có mã lớp là " << malop;
+                    }
                     break;
                 }
                 case 3:

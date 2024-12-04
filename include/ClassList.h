@@ -20,6 +20,7 @@ public:
     bool removeStudent(const std::string &malop, const std::string &maSV);        // Xóa sinh viên khỏi lớp
     Lop *findClassByCode(const std::string &malop);                               // Tìm lớp theo mã lớp
     bool removeClassByCode(const std::string &malop);                             // Xóa lớp bằng mã lớp
+    SinhVien *findSinhVienById(const std::string &maSV);                          // Lấy thông tin sinh viên bằng mã sinh viên
 };
 
 #endif // CLASSLIST_H

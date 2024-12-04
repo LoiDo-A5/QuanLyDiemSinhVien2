@@ -119,3 +119,16 @@ bool ClassList::removeClassByCode(const std::string &malop)
     }
     return false; // Return false if the class was not found
 }
+
+SinhVien *ClassList::findSinhVienById(const std::string &maSV)
+{
+    for (int i = 0; i < classCount; ++i)
+    {
+        SinhVien *found = classes[i]->findStudent(maSV);
+        if (found != nullptr)
+        {
+            return found;
+        }
+    }
+    return nullptr; // Return nullptr if not found in any class
+}

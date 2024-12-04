@@ -5,23 +5,24 @@
 #include <vector>
 #include "Student.h" // Assuming SinhVien class is in this header
 
-class CreditClass {
+class CreditClass
+{
 private:
-    int MALOPTC;              // Mã lớp tín chỉ
-    std::string MAMH;         // Mã môn học
-    std::string tenLop;       // Tên lớp
-    std::string nienKhoa;     // Niên khóa
-    int hocKy;                // Học kỳ
-    int nhom;                 // Nhóm
-    int soSvMin;              // Số sinh viên tối thiểu
-    int soSvMax;              // Số sinh viên tối đa
-    bool huyLop;              // Trạng thái hủy lớp
+    int MALOPTC;                  // Mã lớp tín chỉ
+    std::string MAMH;             // Mã môn học
+    std::string tenLop;           // Tên lớp
+    std::string nienKhoa;         // Niên khóa
+    int hocKy;                    // Học kỳ
+    int nhom;                     // Nhóm
+    int soSvMin;                  // Số sinh viên tối thiểu
+    int soSvMax;                  // Số sinh viên tối đa
+    bool huyLop;                  // Trạng thái hủy lớp
     std::vector<SinhVien> DSSVDK; // Danh sách sinh viên đăng ký lớp tín chỉ
 
 public:
     // Constructor
-    CreditClass(int malopTC, const std::string& maMH, const std::string& tenLop, 
-                const std::string& nienKhoa, int hocKy, int nhom, int soSvMin, int soSvMax);
+    CreditClass(int malopTC, const std::string &maMH, const std::string &tenLop,
+                const std::string &nienKhoa, int hocKy, int nhom, int soSvMin, int soSvMax);
 
     // Getter methods
     int getMALOPTC() const;
@@ -33,12 +34,12 @@ public:
     int getSoSvMin() const;
     int getSoSvMax() const;
     bool isHuyLop() const;
-    std::vector<SinhVien>& getDSSVDK(); // Getter for list of enrolled students
+    std::vector<SinhVien> &getDSSVDK(); // Getter for list of enrolled students
 
     // Setter methods
-    void setMAMH(const std::string& maMH);
-    void setTenLop(const std::string& tenLop);
-    void setNienKhoa(const std::string& nienKhoa);
+    void setMAMH(const std::string &maMH);
+    void setTenLop(const std::string &tenLop);
+    void setNienKhoa(const std::string &nienKhoa);
     void setHocKy(int hocKy);
     void setNhom(int nhom);
     void setSoSvMin(int soSvMin);
@@ -46,7 +47,7 @@ public:
     void setHuyLop(bool huy);
 
     // Method to add a student to the class
-    void addStudent(const SinhVien& student);
+    void addStudent(const SinhVien &student);
 };
 
 #endif // CREDIT_CLASS_H

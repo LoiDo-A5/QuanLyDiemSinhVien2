@@ -72,7 +72,7 @@ int main()
                     cin >> malop;
                     if (classList.removeClassByCode(malop))
                     {
-                        cout << "Đã xóa thành công lớp có mã lớp là " << malop;
+                        cout << "Đã xóa thành công lớp có mã lớp là " << malop << endl;
                     }
                     break;
                 }
@@ -218,6 +218,7 @@ int main()
                 cout << "3. Hiệu chỉnh lớp tín chỉ" << endl;
                 cout << "4. In danh sách sinh viên đăng ký theo lớp" << endl;
                 cout << "5. In danh sách lớp tín chỉ" << endl;
+                cout << "6. Đăng ký tín chỉ" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -398,6 +399,55 @@ int main()
                 {
                     creditClassList.displayCreditClasses();
                     break;
+                }
+
+                case 6:
+                {
+                    string maSV;
+                    cout << "Nhập mã sinh viên để đăng ký tín chỉ: ";
+                    cin >> maSV;
+                    SinhVien *sv = classList.findSinhVienById(maSV);
+                    if (sv == nullptr)
+                    {
+                        cout << "Không tìm thấy sinh viên" << endl;
+                    }
+                    else
+                    {
+                        sv->inThongTin();
+                        string nienKhoa;
+                        int hocKy;
+                        cout << "Nhập niên khóa, học kỳ để tìm môn học phù hợp: ";
+                        cin >> nienKhoa >> hocKy;
+                        vector<CreditClass *> classes = creditClassList.findClassesByParams(nienKhoa, hocKy);
+                        if (classes.size() == 0)
+                        {
+                            cout << "Không tìm thấy lớp tín chỉ phù hợp!" << endl;
+                        }
+                        else
+                        {
+                            for (const auto &creditClass : classes)
+                            {
+                                cout << "Mã môn học: " << creditClass->getMAMH()
+                                     << ", Tên môn học: " << creditClass->getTenLop()
+                                     << ", Nhóm: " << creditClass->getNhom()
+                                     << ", Số sinh viên đã đăng ký: " << creditClass->getDSSVDK().size()
+                                     << ", Số slot còn trống: " << creditClass->getSoSvMax() - creditClass->getDSSVDK().size()
+                                     << endl;
+                            }
+                            string maMH;
+                            cout << "Nhập mã môn học cần đăng ký: ";
+                            cin >> maMH;
+                            bool ketQuaDangKy = creditClassList.registerStudent(maMH, *sv);
+                            if (ketQuaDangKy == true)
+                            {
+                                cout << "Đăng ký thành công" << endl;
+                            }
+                            else
+                            {
+                                cout << "Mã môn học không hợp lệ!" << endl;
+                            }
+                        }
+                    }
                 }
 
                 default:

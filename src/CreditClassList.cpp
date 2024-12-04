@@ -75,20 +75,30 @@ void CreditClassList::cancelCreditClass(int malopTC)
 }
 
 std::vector<CreditClass *> CreditClassList::findClassesByParams(const std::string &nienKhoa,
-                                                               int hocKy,
-                                                               int nhom,
-                                                               const std::string &maMH)
+                                                                int hocKy)
 {
     std::vector<CreditClass *> result;
     for (auto &creditClass : creditClasses)
     {
         if ((nienKhoa.empty() || creditClass->getNienKhoa() == nienKhoa) &&
-            (hocKy == 0 || creditClass->getHocKy() == hocKy) &&
-            (nhom == 0 || creditClass->getNhom() == nhom) &&
-            (maMH.empty() || creditClass->getMAMH() == maMH))
+            (hocKy == 0 || creditClass->getHocKy() == hocKy))
         {
             result.push_back(creditClass);
         }
     }
     return result;
+}
+
+bool CreditClassList::registerStudent(const std::string &maMH, const SinhVien &sinhVien)
+{
+    bool daDangKy = false;
+    for (auto &creditClass : creditClasses)
+    {
+        if (maMH == creditClass->getMAMH())
+        {
+            creditClass->addStudent(sinhVien);
+            daDangKy = true;
+        }
+    }
+    return daDangKy;
 }

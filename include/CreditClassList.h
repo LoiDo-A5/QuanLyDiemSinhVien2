@@ -31,9 +31,9 @@ public:
 
     // Find credit classes based on various parameters (nienKhoa, hocKy, nhom, maMH)
     std::vector<CreditClass *> findClassesByParams(const std::string &nienKhoa,
-                                                   int hocKy,
-                                                   int nhom,
-                                                   const std::string &maMH);
+                                                   int hocKy);
+
+    bool registerStudent(const std::string &maMH, const SinhVien &sinhVien);
 };
 
 #endif // CREDIT_CLASS_LIST_H

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Student.h" // Bao gồm tệp định nghĩa lớp SinhVien nếu cần
+#include "Student.h"
 
 class Lop
 {
@@ -32,8 +32,8 @@ public:
         std::cout << "Nhập mã lớp: ";
         std::cin >> MALOP;
         std::cout << "Nhập tên lớp: ";
-        std::cin.ignore();
-        std::getline(std::cin, TENLOP);
+        std::cin.ignore();              // Xóa bỏ ký tự newline còn lại trong bộ đệm
+        std::getline(std::cin, TENLOP); // Đọc toàn bộ dòng văn bản, bao gồm cả khoảng trắng
     }
 
     // Phương thức để thêm sinh viên vào danh sách

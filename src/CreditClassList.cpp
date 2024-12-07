@@ -66,7 +66,7 @@ void CreditClassList::cancelCreditClass(int malopTC)
     {
         if (creditClass->getMALOPTC() == malopTC)
         {
-            creditClass->setHuyLop(true); // Set cancellation status
+            creditClass->setHuyLop(true); // Đặt trạng thái hủy
             std::cout << "Lớp tín chỉ với mã " << malopTC << " đã được hủy." << std::endl;
             return;
         }

@@ -148,7 +148,7 @@ int main()
                     cin >> maSV;
 
                     // Tìm lớp theo mã lớp
-                    Lop *lop = classList.findClassByCode(malop); // Giả sử classList có phương thức tìm lớp theo mã lớp
+                    Lop *lop = classList.findClassByCode(malop);
 
                     if (lop == nullptr)
                     {
@@ -157,7 +157,7 @@ int main()
                     }
 
                     // Tìm sinh viên trong lớp
-                    SinhVien *student = lop->findStudent(maSV); // Giả sử Lop có phương thức findStudent để tìm sinh viên theo mã sinh viên
+                    SinhVien *student = lop->findStudent(maSV);
 
                     if (student == nullptr)
                     {

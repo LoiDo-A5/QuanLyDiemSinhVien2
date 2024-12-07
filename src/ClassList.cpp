@@ -15,7 +15,7 @@ void ClassList::addClass(const Lop &newClass)
 {
     if (classCount < 1000)
     {
-        classes[classCount++] = new Lop(newClass); // Assume Lop has a copy constructor
+        classes[classCount++] = new Lop(newClass);
     }
     else
     {
@@ -27,7 +27,7 @@ void ClassList::printClasses()
 {
     for (int i = 0; i < classCount; i++)
     {
-        classes[i]->printClassInfo(); // Print class information
+        classes[i]->printClassInfo();
     }
 }
 
@@ -107,17 +107,17 @@ bool ClassList::removeClassByCode(const std::string &malop)
     {
         if (classes[i] && classes[i]->getCode() == malop)
         {
-            delete classes[i]; // Free the memory for the class object
+            delete classes[i]; // Giải phóng bộ nhớ cho đối tượng lớp
             for (int j = i; j < classCount - 1; ++j)
             {
-                classes[j] = classes[j + 1]; // Shift the remaining classes
+                classes[j] = classes[j + 1]; // Chuyển các lớp còn lại
             }
-            classes[classCount - 1] = nullptr; // Clear the last pointer
-            --classCount;                      // Decrease the class count
-            return true;                       // Indicate success
+            classes[classCount - 1] = nullptr; // Xóa con trỏ cuối cùng
+            --classCount;                      // Giảm số lượng lớp
+            return true;                       // Cho biết thành công
         }
     }
-    return false; // Return false if the class was not found
+    return false; // Trả về false nếu không tìm thấy lớp
 }
 
 SinhVien *ClassList::findSinhVienById(const std::string &maSV)

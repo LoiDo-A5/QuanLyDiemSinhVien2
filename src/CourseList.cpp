@@ -5,13 +5,17 @@ CourseList::CourseList() : root(nullptr) {}
 
 void CourseList::insert(MonHoc course)
 {
+    // Tạo nút mới để chứa dữ liệu của môn học
     CourseNode *newNode = new CourseNode{course, nullptr, nullptr};
+    // Nếu cây trống (root == nullptr), gán gốc của cây là newNode
+    // chưa có phần tử nào trong cây), sẽ gán root bằng newNode.
     if (root == nullptr)
     {
         root = newNode;
     }
     else
     {
+        // biến con trỏ trỏ đến một đối tượng CourseNode.
         CourseNode *current = root;
         CourseNode *parent = nullptr;
 
@@ -20,10 +24,11 @@ void CourseList::insert(MonHoc course)
             parent = current;
             if (course.MAMH < current->data.MAMH)
             {
-                current = current->left;
+                current = current->left; // giá trị nhỏ hơn giá trị của nút , thì sẽ được chèn vào nhánh trái.
+
                 if (current == nullptr)
                 {
-                    parent->left = newNode;
+                    parent->left = newNode; // parent là nút cha của current. Nếu current là nullptr, ta biết rằng parent chính là nút có thể chứa con trái trống.
                     return;
                 }
             }

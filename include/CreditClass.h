@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "Student.h" // Assuming SinhVien class is in this header
+#include "Student.h"
 
 class CreditClass
 {
@@ -24,7 +24,6 @@ public:
     CreditClass(int malopTC, const std::string &maMH, const std::string &tenLop,
                 const std::string &nienKhoa, int hocKy, int nhom, int soSvMin, int soSvMax);
 
-    // Getter methods
     int getMALOPTC() const;
     std::string getMAMH() const;
     std::string getTenLop() const;
@@ -34,9 +33,8 @@ public:
     int getSoSvMin() const;
     int getSoSvMax() const;
     bool isHuyLop() const;
-    std::vector<SinhVien> &getDSSVDK(); // Getter for list of enrolled students
+    std::vector<SinhVien> &getDSSVDK();
 
-    // Setter methods
     void setMAMH(const std::string &maMH);
     void setTenLop(const std::string &tenLop);
     void setNienKhoa(const std::string &nienKhoa);
@@ -46,7 +44,6 @@ public:
     void setSoSvMax(int soSvMax);
     void setHuyLop(bool huy);
 
-    // Method to add a student to the class
     void addStudent(const SinhVien &student);
 };
 

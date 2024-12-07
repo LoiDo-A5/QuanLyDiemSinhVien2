@@ -1,7 +1,7 @@
 #ifndef REGISTRATION_H
 #define REGISTRATION_H
 
-#include "Student.h" // Thêm thư viện Student.h để sử dụng lớp SinhVien
+#include "Student.h"
 
 class SinhVienDK {
 private:

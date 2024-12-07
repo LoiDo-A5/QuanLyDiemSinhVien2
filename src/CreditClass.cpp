@@ -1,16 +1,16 @@
 #include "CreditClass.h"
 #include <iostream>
 
-// Constructor with automatic class ID
+// Constructor với ID lớp tự động
 CreditClass::CreditClass(int maLopTC, const std::string &maMH, const std::string &tenLop,
                          const std::string &nienKhoa, int hocKy, int nhom, int minSv, int maxSv)
     : MALOPTC(maLopTC), MAMH(maMH), tenLop(tenLop), nienKhoa(nienKhoa),
       hocKy(hocKy), nhom(nhom), soSvMin(minSv), soSvMax(maxSv), huyLop(false)
 {
-    // Initialize DSSVDK as an empty list of students
+    // Khởi tạo DSSVDK dưới dạng danh sách sinh viên rỗng
 }
 
-// Getter for DSSVDK (list of enrolled students)
+// Getter cho DSSVDK (danh sách sinh viên đã đăng ký)
 std::vector<SinhVien> &CreditClass::getDSSVDK()
 {
     return DSSVDK;

@@ -21,6 +21,7 @@ public:
     Lop *findClassByCode(const std::string &malop);                               // Tìm lớp theo mã lớp
     bool removeClassByCode(const std::string &malop);                             // Xóa lớp bằng mã lớp
     SinhVien *findSinhVienById(const std::string &maSV);                          // Lấy thông tin sinh viên bằng mã sinh viên
+    void saveToFile(const std::string &filename);
 };
 
 #endif // CLASSLIST_H

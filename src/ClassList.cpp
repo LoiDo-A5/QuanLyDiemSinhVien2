@@ -2,6 +2,7 @@
 #include "ClassList.h"
 #include "Node.h"
 #include <iostream>
+#include <fstream> // Để sử dụng ofstream
 using namespace std;
 
 ClassList::ClassList() : classCount(0) {}
@@ -131,4 +132,35 @@ SinhVien *ClassList::findSinhVienById(const std::string &maSV)
         }
     }
     return nullptr; // Return nullptr if not found in any class
+}
+
+// Remove 'const' here
+void ClassList::saveToFile(const std::string &filename)
+{
+    std::ofstream outFile(filename); // Use the filename parameter to open the file
+
+    if (!outFile)
+    {
+        std::cerr << "Không thể mở file để lưu!" << std::endl;
+        return;
+    }
+
+    // Lưu danh sách lớp
+    for (int i = 0; i < classCount; ++i)
+    {
+        const Lop &classItem = *classes[i];
+        outFile << classItem.getClassID() << " " << classItem.getClassName() << std::endl;
+
+        // Lưu thông tin sinh viên trong lớp (nếu có)
+        const auto &students = classItem.getStudents();
+        for (const auto &student : students)
+        {
+            outFile << student.getMaSV() << " " << student.getHo() << " " << student.getTen() << std::endl;
+        }
+
+        outFile << "====" << std::endl; // Đánh dấu kết thúc thông tin lớp
+    }
+
+    outFile.close();
+    std::cout << "Danh sách lớp và sinh viên đã được lưu thành công!" << std::endl;
 }

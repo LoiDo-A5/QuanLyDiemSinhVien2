@@ -57,9 +57,11 @@ int main()
                     getline(cin, tenlop);
                     Lop newClass(malop, tenlop);
                     classList.addClass(newClass);
+
+                    classList.saveToFile("classList.txt");
                     break;
                 }
-                case 2:
+                case 2: // Xóa lớp
                 {
                     if (classList.getClassCount() == 0)
                     {
@@ -73,10 +75,11 @@ int main()
                     if (classList.removeClassByCode(malop))
                     {
                         cout << "Đã xóa thành công lớp có mã lớp là " << malop << endl;
+                        classList.saveToFile("classList.txt"); // Lưu sau khi xóa lớp
                     }
                     break;
                 }
-                case 3:
+                case 3: // Chỉnh sửa lớp
                 {
                     string malop;
                     Lop updatedClass;
@@ -85,15 +88,17 @@ int main()
                     cout << "Nhập thông tin lớp mới:" << endl;
                     updatedClass.nhapThongTin();
                     classList.updateClass(malop, updatedClass);
+
+                    classList.saveToFile("classList.txt"); // Lưu sau khi chỉnh sửa lớp
                     break;
                 }
 
-                case 4:
+                case 4: // In danh sách lớp
                 {
                     classList.printClasses();
                     break;
                 }
-                case 5:
+                case 5: // Thêm sinh viên
                 {
                     string malop;
                     cout << "Nhập mã lớp: ";
@@ -102,9 +107,10 @@ int main()
                     cout << "Nhập thông tin sinh viên:" << endl;
                     newStudent.nhapThongTin();
                     classList.addStudentToClass(malop, newStudent);
+
+                    classList.saveToFile("classList.txt"); // Lưu sau khi thêm sinh viên
                     break;
                 }
-
                 case 6: // Xóa sinh viên
                 {
                     string malop;
@@ -130,6 +136,7 @@ int main()
                     if (removed)
                     {
                         cout << "Xóa sinh viên thành công!" << endl;
+                        classList.saveToFile("classList.txt"); // Lưu sau khi xóa sinh viên
                     }
                     else
                     {
@@ -170,6 +177,7 @@ int main()
                     student->nhapThongTin(); // Nhập lại thông tin sinh viên
 
                     cout << "Chỉnh sửa sinh viên thành công!" << endl;
+                    classList.saveToFile("classList.txt"); // Lưu sau khi chỉnh sửa sinh viên
                     break;
                 }
 

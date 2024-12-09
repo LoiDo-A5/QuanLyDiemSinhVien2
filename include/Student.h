@@ -6,21 +6,22 @@
 
 using namespace std;
 
-class SinhVien {
+class SinhVien
+{
 private:
-    string MASV;      // Mã sinh viên
-    string HO;        // Họ sinh viên
-    string TEN;       // Tên sinh viên
-    string GIOITINH;  // Giới tính
-    string CMND;      // Số chứng minh nhân dân
-    float DIEM;       // Điểm của sinh viên
+    string MASV;     // Mã sinh viên
+    string HO;       // Họ sinh viên
+    string TEN;      // Tên sinh viên
+    string GIOITINH; // Giới tính
+    string CMND;     // Số chứng minh nhân dân
+    float DIEM;      // Điểm của sinh viên
 
 public:
     // Constructor mặc định
     SinhVien();
 
     // Constructor có tham số
-    SinhVien(const string& masv, const string& ho, const string& ten, const string& gioiTinh, const string& cmnd, float diem);
+    SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd, float diem);
 
     // Hàm nhập thông tin sinh viên
     void nhapThongTin();
@@ -40,8 +41,11 @@ public:
     // Hàm lấy tên
     string getTen() const;
 
+    float getDiem() const; //  phương thức lấy điểm
+
     // Hàm cập nhật điểm sinh viên
     void capNhatDiem(float diemMoi);
+    
 };
 
 #endif // STUDENT_H

@@ -134,10 +134,9 @@ SinhVien *ClassList::findSinhVienById(const std::string &maSV)
     return nullptr; // Return nullptr if not found in any class
 }
 
-// Remove 'const' here
 void ClassList::saveToFile(const std::string &filename)
 {
-    std::ofstream outFile(filename); // Use the filename parameter to open the file
+    std::ofstream outFile(filename); // Open file to save data
 
     if (!outFile)
     {
@@ -155,7 +154,8 @@ void ClassList::saveToFile(const std::string &filename)
         const auto &students = classItem.getStudents();
         for (const auto &student : students)
         {
-            outFile << student.getMaSV() << " " << student.getHo() << " " << student.getTen() << std::endl;
+            // Sử dụng phương thức toString() để lưu tất cả thông tin sinh viên
+            outFile << student.toString() << std::endl;
         }
 
         outFile << "====" << std::endl; // Đánh dấu kết thúc thông tin lớp

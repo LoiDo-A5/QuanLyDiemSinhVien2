@@ -56,14 +56,32 @@ string SinhVien::getTen() const
     return TEN;
 }
 
+// Hàm lấy điểm của sinh viên
+float SinhVien::getDiem() const
+{
+    return DIEM; // Trả về điểm của sinh viên
+}
+
 // Hàm cập nhật điểm sinh viên
 void SinhVien::capNhatDiem(float diemMoi)
 {
     DIEM = diemMoi;
 }
 
-// Hàm lấy điểm của sinh viên
-float SinhVien::getDiem() const
+// Hàm lấy giới tính
+string SinhVien::getGioiTinh() const
 {
-    return DIEM; // Trả về điểm của sinh viên
+    return GIOITINH; // Trả về giới tính
+}
+
+// Hàm lấy CMND
+string SinhVien::getCMND() const
+{
+    return CMND; // Trả về CMND
+}
+
+// Hàm chuyển thông tin sinh viên thành chuỗi
+string SinhVien::toString() const
+{
+    return MASV + " " + HO + " " + TEN + " " + GIOITINH + " " + CMND + " " + to_string(DIEM);
 }

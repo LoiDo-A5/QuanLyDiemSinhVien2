@@ -41,11 +41,20 @@ public:
     // Hàm lấy tên
     string getTen() const;
 
-    float getDiem() const; //  phương thức lấy điểm
+    // Hàm lấy điểm của sinh viên
+    float getDiem() const;
 
     // Hàm cập nhật điểm sinh viên
     void capNhatDiem(float diemMoi);
-    
+
+    // Hàm lấy giới tính
+    string getGioiTinh() const;
+
+    // Hàm lấy CMND
+    string getCMND() const;
+
+    // Hàm chuyển thông tin sinh viên thành chuỗi
+    string toString() const;
 };
 
 #endif // STUDENT_H

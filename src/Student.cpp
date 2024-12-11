@@ -13,10 +13,10 @@ void SinhVien::nhapThongTin()
     cout << "Nhập mã sinh viên: ";
     cin >> MASV;
     cout << "Nhập họ: ";
-    cin.ignore();     // To clear the newline character from previous input
-    getline(cin, HO); // Using getline to capture multi-word names
+    cin.ignore();     // Để xóa ký tự xuống dòng từ mục nhập trước đó
+    getline(cin, HO); // Sử dụng getline để lấy tên nhiều từ
     cout << "Nhập tên: ";
-    getline(cin, TEN); // Using getline for full names
+    getline(cin, TEN); 
     cout << "Nhập giới tính: ";
     cin >> GIOITINH;
     cout << "Nhập số CMND: ";

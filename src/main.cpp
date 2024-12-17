@@ -5,6 +5,7 @@
 #include "CreditClass.h"
 #include "Class.h"
 #include "CreditClassList.h"
+#include "IsValid.h"
 
 using namespace std;
 
@@ -52,12 +53,12 @@ int main()
                     string malop, tenlop;
                     cout << "Nhập mã lớp: ";
                     cin >> malop;
+                    isValidCode(malop);
                     cout << "Nhập tên lớp: ";
                     cin.ignore();
                     getline(cin, tenlop);
                     Lop newClass(malop, tenlop);
                     classList.addClass(newClass);
-
                     classList.saveToFile("classList.txt");
                     break;
                 }
@@ -72,6 +73,7 @@ int main()
                     classList.printClasses();
                     cout << "Nhập mã lớp cần xoá: ";
                     cin >> malop;
+                    isValidCode(malop);
                     if (classList.removeClassByCode(malop))
                     {
                         cout << "Đã xóa thành công lớp có mã lớp là " << malop << endl;
@@ -85,6 +87,7 @@ int main()
                     Lop updatedClass;
                     cout << "Nhập mã lớp cần cập nhật: ";
                     cin >> malop;
+                    isValidCode(malop);
                     cout << "Nhập thông tin lớp mới:" << endl;
                     updatedClass.nhapThongTin();
                     classList.updateClass(malop, updatedClass);

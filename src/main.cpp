@@ -54,9 +54,10 @@ int main()
                     cout << "Nhập mã lớp: ";
                     cin >> malop;
                     isValidCode(malop);
-                    cout << "Nhập tên lớp: ";
+
                     cin.ignore();
-                    getline(cin, tenlop);
+                    cout << "Nhập tên lớp: ";
+                    isValidString(tenlop);
                     Lop newClass(malop, tenlop);
                     classList.addClass(newClass);
                     classList.saveToFile("classList.txt");

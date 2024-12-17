@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "Student.h"
+#include "IsValid.h"
 
 class Lop
 {
@@ -31,6 +32,7 @@ public:
     {
         std::cout << "Nhập mã lớp: ";
         std::cin >> MALOP;
+        isValidCode(MALOP);
         std::cout << "Nhập tên lớp: ";
         std::cin.ignore();              // Xóa bỏ ký tự newline còn lại trong bộ đệm
         std::getline(std::cin, TENLOP); // Đọc toàn bộ dòng văn bản, bao gồm cả khoảng trắng

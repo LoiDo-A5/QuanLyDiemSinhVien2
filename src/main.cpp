@@ -106,6 +106,8 @@ int main()
                     string malop;
                     cout << "Nhập mã lớp: ";
                     cin >> malop;
+                    isValidCode(malop);
+
                     SinhVien newStudent;
                     cout << "Nhập thông tin sinh viên:" << endl;
                     newStudent.nhapThongTin();
@@ -119,6 +121,7 @@ int main()
                     string malop;
                     cout << "Nhập mã lớp: ";
                     cin >> malop;
+                    isValidCode(malop);
 
                     string maSV;
                     cout << "Nhập mã sinh viên cần xóa: ";

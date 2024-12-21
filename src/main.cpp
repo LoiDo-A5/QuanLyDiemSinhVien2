@@ -238,6 +238,7 @@ int main()
                 cout << "4. In danh sách sinh viên đăng ký theo lớp" << endl;
                 cout << "5. In danh sách lớp tín chỉ" << endl;
                 cout << "6. Đăng ký tín chỉ" << endl;
+                cout << "7. Huỷ các lớp tín chỉ không đủ sinh viên" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -269,34 +270,6 @@ int main()
                     // Tạo lớp tín chỉ mới
                     CreditClass *newCreditClass = new CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
                     creditClassList.addCreditClass(newCreditClass); // Thêm lớp tín chỉ vào danh sách
-
-                    // // Nhập sinh viên vào lớp tín chỉ
-                    // char addMoreStudents = 'y'; // Variable to control adding more students
-                    // while (addMoreStudents == 'y' || addMoreStudents == 'Y')
-                    // {
-                    //     SinhVien newStudent;
-                    //     cout << "Nhập thông tin sinh viên:" << endl;
-                    //     newStudent.nhapThongTin();              // Nhập thông tin sinh viên (mã, họ tên, giới tính, CMND, điểm)
-                    //     newCreditClass->addStudent(newStudent); // Thêm sinh viên vào lớp tín chỉ
-
-                    //     cout << "Bạn có muốn thêm sinh viên khác không? (y/n): ";
-                    //     cin >> addMoreStudents; // Ask user if they want to add another student
-                    // }
-
-                    // // Hiển thị danh sách sinh viên đăng ký sau khi thêm sinh viên
-                    // vector<SinhVien> &students = newCreditClass->getDSSVDK(); // Giả sử đây là danh sách sinh viên
-                    // if (students.empty())
-                    // {
-                    //     cout << "Danh sách sinh viên đăng ký: Chưa có sinh viên nào." << endl;
-                    // }
-                    // else
-                    // {
-                    //     cout << "Danh sách sinh viên đăng ký: " << endl;
-                    //     for (const auto &student : students)
-                    //     {
-                    //         cout << student.getMaSV() << " - " << student.getHo() << " " << student.getTen() << endl;
-                    //     }
-                    // }
                     break;
                 }
 
@@ -467,6 +440,12 @@ int main()
                             }
                         }
                     }
+                }
+
+                case 7:
+                {
+                    creditClassList.cancelCreditClasses();
+                    break;
                 }
 
                 default:

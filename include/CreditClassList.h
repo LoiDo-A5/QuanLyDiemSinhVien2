@@ -26,8 +26,8 @@ public:
     // Tìm và trả về một lớp tín dụng theo mã của nó (malopTC)
     CreditClass *findCreditClassByMALOPTC(int malopTC);
 
-    // Hủy một lớp tín chỉ theo mã của nó (malopTC)
-    void cancelCreditClass(int malopTC);
+    // Hủy các lớp tín chỉ không đủ sinh viên đăng ký
+    void cancelCreditClasses();
 
     // Tìm lớp tín chỉ dựa trên các tham số khác nhau (nienKhoa, hocKy, nhom, maMH)
     std::vector<CreditClass *> findClassesByParams(const std::string &nienKhoa,

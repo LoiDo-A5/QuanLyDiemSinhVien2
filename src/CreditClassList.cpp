@@ -60,18 +60,22 @@ CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
     return nullptr; // Return nullptr if not found
 }
 
-void CreditClassList::cancelCreditClass(int malopTC)
+void CreditClassList::cancelCreditClasses()
 {
+    int soLopHuy = 0;
     for (auto &creditClass : creditClasses)
     {
-        if (creditClass->getMALOPTC() == malopTC)
+        if (creditClass->getDSSVDK().size() < creditClass->getSoSvMin())
         {
+            soLopHuy++;
             creditClass->setHuyLop(true); // Đặt trạng thái hủy
-            std::cout << "Lớp tín chỉ với mã " << malopTC << " đã được hủy." << std::endl;
-            return;
+            std::cout << "Lớp tín chỉ với mã " << creditClass->getMALOPTC() << " đã được hủy." << std::endl;
         }
     }
-    std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
+    if (soLopHuy == 0)
+    {
+        std::cout << "Không tìm được lớp không đủ điều kiện để hủy!" << std::endl;
+    }
 }
 
 std::vector<CreditClass *> CreditClassList::findClassesByParams(const std::string &nienKhoa,

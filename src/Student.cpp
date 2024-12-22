@@ -1,4 +1,5 @@
 #include "Student.h"
+#include "IsValid.h"
 
 // Constructor mặc định
 SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
@@ -12,17 +13,20 @@ void SinhVien::nhapThongTin()
 {
     cout << "Nhập mã sinh viên: ";
     cin >> MASV;
+    isValidCode(MASV);
     cout << "Nhập họ: ";
     cin.ignore();     // Để xóa ký tự xuống dòng từ mục nhập trước đó
     getline(cin, HO); // Sử dụng getline để lấy tên nhiều từ
     cout << "Nhập tên: ";
-    getline(cin, TEN); 
+    getline(cin, TEN);
     cout << "Nhập giới tính: ";
     cin >> GIOITINH;
     cout << "Nhập số CMND: ";
     cin >> CMND;
+    isValidCMND(CMND);
     cout << "Nhập điểm: ";
     cin >> DIEM;
+    isValidFloat(DIEM);
 }
 
 // Hàm in thông tin sinh viên

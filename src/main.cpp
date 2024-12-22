@@ -127,6 +127,7 @@ int main()
                     string maSV;
                     cout << "Nhập mã sinh viên cần xóa: ";
                     cin >> maSV;
+                    isValidCode(maSV);
 
                     // Tìm lớp theo mã lớp
                     Lop *lop = classList.findClassByCode(malop);
@@ -156,10 +157,12 @@ int main()
                     string malop;
                     cout << "Nhập mã lớp: ";
                     cin >> malop;
+                    isValidCode(malop);
 
                     string maSV;
                     cout << "Nhập mã sinh viên cần chỉnh sửa: ";
                     cin >> maSV;
+                    isValidCode(maSV);
 
                     // Tìm lớp theo mã lớp
                     Lop *lop = classList.findClassByCode(malop);
@@ -199,6 +202,7 @@ int main()
             MonHoc newCourse;
             cout << "Nhập mã môn học: ";
             cin >> newCourse.MAMH;
+            isValidCode(newCourse.MAMH);
             cout << "Nhập tên môn học: ";
             cin.ignore();
             getline(cin, newCourse.TENMH);

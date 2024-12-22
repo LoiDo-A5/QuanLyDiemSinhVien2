@@ -67,9 +67,18 @@ void CreditClassList::cancelCreditClasses()
     {
         if (creditClass->getDSSVDK().size() < creditClass->getSoSvMin())
         {
-            soLopHuy++;
-            creditClass->setHuyLop(true); // Đặt trạng thái hủy
-            std::cout << "Lớp tín chỉ với mã " << creditClass->getMALOPTC() << " đã được hủy." << std::endl;
+            std::string luaChon;
+            do
+            {
+                cout << "Đồng ý hủy lớp " << creditClass->getMALOPTC() << "?(Y/N)" << endl;
+                cin >> luaChon;
+                if (luaChon == "Y")
+                {
+                    soLopHuy++;
+                    creditClass->setHuyLop(true); // Đặt trạng thái hủy
+                    std::cout << "Lớp tín chỉ với mã " << creditClass->getMALOPTC() << " đã được hủy." << std::endl;
+                }
+            } while (luaChon != "Y" && luaChon != "N");
         }
     }
     if (soLopHuy == 0)

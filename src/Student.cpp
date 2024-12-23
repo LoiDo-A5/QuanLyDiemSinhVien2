@@ -1,5 +1,6 @@
 #include "Student.h"
 #include "IsValid.h"
+#include <sstream>
 
 // Constructor mặc định
 SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
@@ -88,4 +89,17 @@ string SinhVien::getCMND() const
 string SinhVien::toString() const
 {
     return MASV + " " + HO + " " + TEN + " " + GIOITINH + " " + CMND + " " + to_string(DIEM);
+}
+
+void SinhVien::fromString(const std::string &data)
+{
+    std::istringstream stream(data);
+
+    // Extract each field from the string
+    stream >> MASV >> HO >> TEN >> GIOITINH >> CMND >> DIEM;
+
+    if (stream.fail())
+    {
+        throw std::runtime_error("Invalid data format for SinhVien");
+    }
 }

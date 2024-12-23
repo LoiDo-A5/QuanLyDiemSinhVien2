@@ -55,6 +55,8 @@ public:
 
     // Hàm chuyển thông tin sinh viên thành chuỗi
     string toString() const;
+
+    void fromString(const string &data);
 };
 
 #endif // STUDENT_H

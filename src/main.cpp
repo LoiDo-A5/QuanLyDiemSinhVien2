@@ -14,7 +14,7 @@ int main()
     ClassList classList;             // Danh sách lớp
     CourseList courseList;           // Danh sách môn học
     CreditClassList creditClassList; // Tạo một thể hiện của CreditClassList
-
+    classList.readFromFile("classList.txt");
     int choice;
     do
     {

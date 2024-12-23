@@ -3,6 +3,7 @@
 #include "Node.h"
 #include <iostream>
 #include <fstream> // Để sử dụng ofstream
+#include <sstream>
 using namespace std;
 
 ClassList::ClassList() : classCount(0) {}
@@ -158,9 +159,43 @@ void ClassList::saveToFile(const std::string &filename)
             outFile << student.toString() << std::endl;
         }
 
-        outFile << "====" << std::endl; // Đánh dấu kết thúc thông tin lớp
+        outFile << std::endl; // Đánh dấu kết thúc thông tin lớp
     }
 
     outFile.close();
-    std::cout << "Danh sách lớp và sinh viên đã được lưu thành công!" << std::endl;
+}
+
+void ClassList::readFromFile(const std::string &filename)
+{
+    std::ifstream inFile(filename); // Open file to read data
+
+    if (!inFile)
+        return;
+
+    classCount = 0;
+
+    std::string line;
+    while (std::getline(inFile, line))
+    {
+        // Read class ID and name
+        std::istringstream classStream(line);
+        std::string classID, className;
+        classStream >> classID >> std::ws;
+        std::getline(classStream, className);
+
+        Lop *classItem = new Lop(classID, className);
+
+        // Read students for this class
+        while (std::getline(inFile, line) && !line.empty())
+        {
+            SinhVien student;
+            student.fromString(line); // Assume `fromString` parses a student's details
+            classItem->addStudent(student);
+        }
+
+        // Add the class to the list
+        addClass(*classItem);
+    }
+
+    inFile.close();
 }

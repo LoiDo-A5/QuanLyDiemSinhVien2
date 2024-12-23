@@ -22,6 +22,7 @@ public:
     bool removeClassByCode(const std::string &malop);                             // Xóa lớp bằng mã lớp
     SinhVien *findSinhVienById(const std::string &maSV);                          // Lấy thông tin sinh viên bằng mã sinh viên
     void saveToFile(const std::string &filename);
+    void readFromFile(const std::string &filename);
 };
 
 #endif // CLASSLIST_H

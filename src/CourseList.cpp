@@ -1,5 +1,6 @@
 #include "CourseList.h"
 #include <iostream>
+#include "IsValid.h"
 
 CourseList::CourseList() : root(nullptr) {}
 
@@ -71,15 +72,21 @@ void CourseList::updateCourse(const string &mamh)
         {
             cout << "Nhập thông tin môn học mới:" << endl;
             MonHoc updatedCourse;
+
             cout << "Nhập mã môn học: ";
             cin >> updatedCourse.MAMH;
+            isValidCode(updatedCourse.MAMH, 3);
+
             cout << "Nhập tên môn học: ";
             cin.ignore();
-            getline(cin, updatedCourse.TENMH);
+            isValidString(updatedCourse.TENMH);
+
             cout << "Nhập số tín chỉ lý thuyết: ";
-            cin >> updatedCourse.STCLT;
+            isValidNumber(updatedCourse.STCLT);
+
             cout << "Nhập số tín chỉ thực hành: ";
-            cin >> updatedCourse.STCTH;
+            isValidNumber(updatedCourse.STCTH);
+
             current->data = updatedCourse; // Cập nhật thông tin môn học
             std::cout << "Cập nhật môn học " << mamh << " thành công!" << std::endl;
             return;

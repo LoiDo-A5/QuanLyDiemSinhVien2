@@ -203,13 +203,17 @@ int main()
             cout << "Nhập mã môn học: ";
             cin >> newCourse.MAMH;
             isValidCode(newCourse.MAMH);
+
             cout << "Nhập tên môn học: ";
             cin.ignore();
-            getline(cin, newCourse.TENMH);
+            isValidString(newCourse.TENMH);
+
             cout << "Nhập số tín chỉ lý thuyết: ";
-            cin >> newCourse.STCLT;
+            isValidNumber(newCourse.STCLT);
+
             cout << "Nhập số tín chỉ thực hành: ";
-            cin >> newCourse.STCTH;
+            isValidNumber(newCourse.STCTH);
+
             courseList.insert(newCourse);
             break;
         }

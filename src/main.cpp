@@ -325,23 +325,69 @@ int main()
                     int hocKy, nhom, soSvMin, soSvMax;
                     bool huyLop;
 
+                    // Kiểm tra mã môn học
                     cout << "Nhập mã môn học: ";
                     cin >> maMH;
+                    while (!isValidCode(maMH, 2))
+                    {
+                        cout << "Mã môn học không hợp lệ. Vui lòng nhập lại: ";
+                        cin >> maMH;
+                    }
+
+                    // Kiểm tra tên lớp
                     cout << "Nhập tên lớp: ";
-                    cin.ignore();
-                    getline(cin, tenLop);
-                    cout << "Nhập niên khóa: ";
-                    cin >> nienKhoa;
+                    cin.ignore(); // Để bỏ qua newline còn lại trong bộ đệm
+                    while (!isValidString(tenLop))
+                    {
+                        cout << "Tên lớp không hợp lệ. Vui lòng nhập lại: ";
+                        getline(cin, tenLop);
+                    }
+
+                    // Kiểm tra niên khóa
+                    cout << "Nhập niên khóa (YYYY-YYYY): ";
+                    while (!isValidYear(nienKhoa))
+                    {
+                        cout << "Niên khóa không hợp lệ. Vui lòng nhập lại: ";
+                        cin >> nienKhoa;
+                    }
+
+                    // Kiểm tra học kỳ
                     cout << "Nhập học kỳ: ";
-                    cin >> hocKy;
+                    while (!isValidNumber(hocKy))
+                    {
+                        cout << "Học kỳ không hợp lệ. Vui lòng nhập lại: ";
+                    }
+
+                    // Kiểm tra nhóm
                     cout << "Nhập nhóm: ";
-                    cin >> nhom;
+                    while (!isValidNumber(nhom) || nhom <= 0)
+                    {
+                        cout << "Nhóm phải là số nguyên dương. Vui lòng nhập lại: ";
+                    }
+
+                    // Kiểm tra số sinh viên tối thiểu
                     cout << "Nhập số sinh viên tối thiểu: ";
                     cin >> soSvMin;
+                    // Kiểm tra số sinh viên tối đa
                     cout << "Nhập số sinh viên tối đa: ";
                     cin >> soSvMax;
+                    while (soSvMin <= 0 || soSvMax <= 0 || soSvMin > soSvMax)
+                    {
+                        cout << "Số sinh viên tối thiểu và tối đa không hợp lệ. Vui lòng nhập lại:\n";
+                        cout << "Số sinh viên tối thiểu: ";
+                        cin >> soSvMin;
+                        cout << "Số sinh viên tối đa: ";
+                        cin >> soSvMax;
+                    }
+
+                    // Kiểm tra trạng thái hủy lớp
                     cout << "Lớp này có bị hủy không? (1: Có, 0: Không): ";
                     cin >> huyLop;
+                    while (huyLop != 0 && huyLop != 1)
+                    {
+                        cout << "Trạng thái hủy lớp không hợp lệ. Vui lòng nhập lại (1: Có, 0: Không): ";
+                        cin >> huyLop;
+                    }
 
                     // Cập nhật thông tin lớp tín chỉ
                     creditClass->setMAMH(maMH);
@@ -353,6 +399,7 @@ int main()
                     creditClass->setSoSvMax(soSvMax);
                     creditClass->setHuyLop(huyLop);
 
+                    cout << "Cập nhật thông tin lớp tín chỉ thành công!" << endl;
                     break;
                 }
                 case 4:

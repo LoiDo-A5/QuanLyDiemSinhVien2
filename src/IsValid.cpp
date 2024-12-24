@@ -63,37 +63,32 @@ bool isValidCMND(std::string &str)
     }
 }
 
-bool isValidCode(std::string &code, int length)
-{
-    while (true)
-    {
-        // Đảm bảo chuỗi có chiều dài hợp lệ và bắt đầu bằng chữ cái
-        if (code.length() >= length && isalpha(code[0]))
-        {
-            bool isValid = true;
+bool isValidCode(std::string &code, int length) {
+    while (true) {
+        bool isValid = true;
 
-            // Kiểm tra tất cả các ký tự trong chuỗi
-            for (char c : code)
-            {
-                // Kiểm tra nếu ký tự không phải là chữ cái hoặc chữ số
-                if (!isalnum(c))
-                {
+        // Kiểm tra chiều dài tối thiểu và mã phải bắt đầu bằng chữ cái
+        if (code.length() >= length && isalpha(code[0])) {
+            // Kiểm tra tất cả các ký tự trong chuỗi có phải là chữ cái hoặc chữ số không
+            for (char c : code) {
+                if (!isalnum(c)) {  // Nếu ký tự không phải là chữ cái hoặc chữ số
                     isValid = false;
                     break;
                 }
             }
+        } else {
+            isValid = false;  // Nếu không bắt đầu bằng chữ cái hoặc mã quá ngắn
+        }
 
-            // Nếu tất cả ký tự hợp lệ, trả về true
-            if (isValid)
-            {
-                return true;
-            }
+        // Nếu mã hợp lệ, trả về true
+        if (isValid) {
+            return true;
         }
 
         // Nếu mã không hợp lệ, yêu cầu người dùng nhập lại
-        std::cout << "Mã không hợp lệ. Vui lòng nhập lại (ví dụ: cs101): ";
-        std::cin.clear();                                         // Xóa trạng thái lỗi
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Loại bỏ ký tự thừa trong bộ đệm
+        std::cout << "Mã không hợp lệ. Vui lòng nhập lại (ví dụ: t1, mh30, cs101): ";
+        std::cin.clear();  // Xóa trạng thái lỗi
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Loại bỏ ký tự thừa trong bộ đệm
         std::cin >> code;
     }
 }

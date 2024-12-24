@@ -253,23 +253,31 @@ int main()
                 {
                     int malopTC, hocKy, nhom, soSvMin, soSvMax;
                     string maMH, nienKhoa, tenLop;
+
                     cout << "Nhập mã lớp tín chỉ: ";
-                    cin >> malopTC;
+                    isValidNumber(malopTC);
+
                     cout << "Nhập mã môn học: ";
-                    cin >> maMH;
+                    isValidCode(maMH, 3);
+
                     cout << "Nhập tên lớp: ";
                     cin.ignore();
-                    getline(cin, tenLop);
+                    isValidString(tenLop);
+
                     cout << "Nhập niên khóa: ";
-                    cin >> nienKhoa;
+                    isValidYear(nienKhoa);
+
                     cout << "Nhập học kỳ: ";
-                    cin >> hocKy;
+                    isValidNumber(hocKy);
+
                     cout << "Nhập nhóm: ";
-                    cin >> nhom;
+                    isValidNumber(nhom);
+
                     cout << "Nhập số sinh viên tối thiểu: ";
-                    cin >> soSvMin;
+                    isValidNumber(soSvMin);
+
                     cout << "Nhập số sinh viên tối đa: ";
-                    cin >> soSvMax;
+                    isValidNumber(soSvMax);
 
                     // Tạo lớp tín chỉ mới
                     CreditClass *newCreditClass = new CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
@@ -281,7 +289,7 @@ int main()
                 {
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ cần xóa: ";
-                    cin >> malopTC;
+                    isValidNumber(malopTC);
                     creditClassList.removeCreditClass(malopTC); // Sử dụng instance creditClassList
                     break;
                 }

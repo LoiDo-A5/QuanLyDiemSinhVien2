@@ -298,7 +298,7 @@ int main()
                 {
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ cần hiệu chỉnh: ";
-                    cin >> malopTC;
+                    isValidNumber(malopTC);
 
                                         // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
                     CreditClass *creditClass = creditClassList.findCreditClassByMALOPTC(malopTC);
@@ -408,7 +408,7 @@ int main()
                     // In danh sách sinh viên đăng ký theo niên khóa, học kỳ, nhóm, mã môn học
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ để in danh sách sinh viên: ";
-                    cin >> malopTC;
+                    isValidNumber(malopTC);
 
                     // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
                     CreditClass *creditClass = creditClassList.findCreditClassByMALOPTC(malopTC);
@@ -458,6 +458,7 @@ int main()
                     string maSV;
                     cout << "Nhập mã sinh viên để đăng ký tín chỉ: ";
                     cin >> maSV;
+                    isValidCode(maSV);
                     SinhVien *sv = classList.findSinhVienById(maSV);
                     if (sv == nullptr)
                     {

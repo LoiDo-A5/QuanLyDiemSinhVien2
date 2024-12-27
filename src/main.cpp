@@ -202,7 +202,7 @@ int main()
             MonHoc newCourse;
             cout << "Nhập mã môn học: ";
             cin >> newCourse.MAMH;
-            isValidCode(newCourse.MAMH);
+            isValidCode(newCourse.MAMH, 3);
 
             cout << "Nhập tên môn học: ";
             cin.ignore();
@@ -258,6 +258,7 @@ int main()
                     isValidNumber(malopTC);
 
                     cout << "Nhập mã môn học: ";
+                    cin >> maMH;
                     isValidCode(maMH, 3);
 
                     cout << "Nhập tên lớp: ";
@@ -299,7 +300,7 @@ int main()
                     cout << "Nhập mã lớp tín chỉ cần hiệu chỉnh: ";
                     cin >> malopTC;
 
-                    // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
+                                        // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
                     CreditClass *creditClass = creditClassList.findCreditClassByMALOPTC(malopTC);
                     if (creditClass == nullptr)
                     {
@@ -328,7 +329,7 @@ int main()
                     // Kiểm tra mã môn học
                     cout << "Nhập mã môn học: ";
                     cin >> maMH;
-                    while (!isValidCode(maMH, 2))
+                    while (!isValidCode(maMH, 3))
                     {
                         cout << "Mã môn học không hợp lệ. Vui lòng nhập lại: ";
                         cin >> maMH;

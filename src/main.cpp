@@ -300,7 +300,7 @@ int main()
                     cout << "Nhập mã lớp tín chỉ cần hiệu chỉnh: ";
                     isValidNumber(malopTC);
 
-                                        // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
+                    // Tìm lớp tín chỉ theo mã lớp tín chỉ (malopTC)
                     CreditClass *creditClass = creditClassList.findCreditClassByMALOPTC(malopTC);
                     if (creditClass == nullptr)
                     {
@@ -368,10 +368,10 @@ int main()
 
                     // Kiểm tra số sinh viên tối thiểu
                     cout << "Nhập số sinh viên tối thiểu: ";
-                    cin >> soSvMin;
+                    isValidNumber(soSvMin);
                     // Kiểm tra số sinh viên tối đa
                     cout << "Nhập số sinh viên tối đa: ";
-                    cin >> soSvMax;
+                    isValidNumber(soSvMax);
                     while (soSvMin <= 0 || soSvMax <= 0 || soSvMin > soSvMax)
                     {
                         cout << "Số sinh viên tối thiểu và tối đa không hợp lệ. Vui lòng nhập lại:\n";

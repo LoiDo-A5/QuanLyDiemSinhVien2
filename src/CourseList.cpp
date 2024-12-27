@@ -23,10 +23,10 @@ void CourseList::insert(MonHoc course)
         {
             parent = current;
 
-            // So sánh theo tên môn hoc
-            if (course.TENMH < current->data.TENMH)
+            // So sánh theo mã môn hoc
+            if (course.MAMH < current->data.MAMH)
             {
-                current = current->left; // nếu tên môn học nhỏ hơn tên trong nút hiện tại, di chuyển sang trái
+                current = current->left; // nếu mã môn học nhỏ hơn mã trong nút hiện tại, di chuyển sang trái
                 if (current == nullptr)
                 {
                     parent->left = newNode; // parent là nút cha của current. Nếu current là nullptr, ta biết rằng parent chính là nút có thể chứa con trái trống.
@@ -35,7 +35,7 @@ void CourseList::insert(MonHoc course)
             }
             else
             {
-                current = current->right; // nếu tên môn học lớn hơn hoặc bằng tên trong nút hiện tại, di chuyển sang phải
+                current = current->right; // mã tên môn học lớn hơn hoặc bằng mã trong nút hiện tại, di chuyển sang phải
                 if (current == nullptr)
                 {
                     parent->right = newNode; // chèn vào bên phải
@@ -101,4 +101,25 @@ void CourseList::updateCourse(const string &mamh)
         }
     }
     std::cout << "Không tìm thấy môn học " << mamh << "." << std::endl;
+}
+
+bool CourseList::isCourseExisted(const string &maMH)
+{
+    CourseNode *currentNode = root;
+    while (currentNode != nullptr)
+    {
+        if (root->data.MAMH == maMH)
+        {
+            return true; // Tìm thấy môn học
+        }
+        if (maMH < root->data.MAMH)
+        {
+            currentNode = root->left;
+        }
+        else
+        {
+            currentNode = root->right;
+        }
+    }
+    return false;
 }

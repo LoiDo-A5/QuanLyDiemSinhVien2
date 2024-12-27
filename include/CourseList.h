@@ -23,6 +23,7 @@ public:
     void printInOrder(CourseNode *node);   // In danh sách môn học theo thứ tự
     CourseNode *getRoot();                 // Lấy gốc cây
     void updateCourse(const string &mamh); // Cập nhật thông tin môn học
+    bool isCourseExisted(const string &maMH);
 };
 
 #endif

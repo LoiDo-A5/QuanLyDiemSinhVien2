@@ -231,7 +231,7 @@ int main()
             break;
         }
         case 5:
-        { // Mở lớp tín chỉ
+        {
             int subChoice;
             do
             {
@@ -261,28 +261,35 @@ int main()
                     cin >> maMH;
                     isValidCode(maMH, 3);
 
-                    cout << "Nhập tên lớp: ";
-                    cin.ignore();
-                    isValidString(tenLop);
+                    if (courseList.isCourseExisted(maMH))
+                    {
+                        cout << "Nhập tên lớp: ";
+                        cin.ignore();
+                        isValidString(tenLop);
 
-                    cout << "Nhập niên khóa: ";
-                    isValidYear(nienKhoa);
+                        cout << "Nhập niên khóa: ";
+                        isValidYear(nienKhoa);
 
-                    cout << "Nhập học kỳ: ";
-                    isValidNumber(hocKy);
+                        cout << "Nhập học kỳ: ";
+                        isValidNumber(hocKy);
 
-                    cout << "Nhập nhóm: ";
-                    isValidNumber(nhom);
+                        cout << "Nhập nhóm: ";
+                        isValidNumber(nhom);
 
-                    cout << "Nhập số sinh viên tối thiểu: ";
-                    isValidNumber(soSvMin);
+                        cout << "Nhập số sinh viên tối thiểu: ";
+                        isValidNumber(soSvMin);
 
-                    cout << "Nhập số sinh viên tối đa: ";
-                    isValidNumber(soSvMax);
+                        cout << "Nhập số sinh viên tối đa: ";
+                        isValidNumber(soSvMax);
 
-                    // Tạo lớp tín chỉ mới
-                    CreditClass *newCreditClass = new CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
-                    creditClassList.addCreditClass(newCreditClass); // Thêm lớp tín chỉ vào danh sách
+                        // Tạo lớp tín chỉ mới
+                        CreditClass *newCreditClass = new CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
+                        creditClassList.addCreditClass(newCreditClass); // Thêm lớp tín chỉ vào danh sách
+                    }
+                    else
+                    {
+                        cout << "Không tìm thấy môn học " << maMH << "." << endl;
+                    }
                     break;
                 }
 

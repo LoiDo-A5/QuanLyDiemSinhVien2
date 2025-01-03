@@ -1,6 +1,8 @@
 #include "CourseList.h"
 #include <iostream>
 #include "IsValid.h"
+#include <fstream> // Để sử dụng ofstream
+#include <sstream>
 
 CourseList::CourseList() : root(nullptr) {}
 
@@ -122,4 +124,69 @@ bool CourseList::isCourseExisted(const string &maMH)
         }
     }
     return false;
+}
+
+void CourseList::saveToFile(const std::string &filename)
+{
+    std::ofstream outFile(filename); // Mở file để ghi dữ liệu
+
+    if (!outFile)
+    {
+        return;
+    }
+
+    // Hàm đệ quy để ghi dữ liệu cây vào file
+    std::function<void(CourseNode *)> saveNode = [&](CourseNode *node)
+    {
+        if (node == nullptr)
+            return;
+
+        // Ghi thông tin môn học theo một định dạng
+        outFile << node->data.MAMH << " "
+                << node->data.TENMH << " "
+                << node->data.STCLT << " "
+                << node->data.STCTH << std::endl;
+
+        // Ghi thông tin các nút con
+        saveNode(node->left);
+        saveNode(node->right);
+    };
+
+    // Ghi toàn bộ cây bắt đầu từ nút gốc
+    saveNode(root);
+
+    outFile.close();
+}
+
+void CourseList::readFromFile(const std::string &filename)
+{
+    std::ifstream inFile(filename); // Mở file để đọc dữ liệu
+
+    if (!inFile)
+    {
+        return;
+    }
+
+    root = nullptr; // Xóa cây hiện tại (nếu có)
+
+    std::string line;
+    while (std::getline(inFile, line))
+    {
+        std::istringstream stream(line);
+        std::string maMH, tenMH, STCLT, STCTH;
+
+        // Phân tích dữ liệu từ dòng
+        std::getline(stream, maMH, ' ');
+        std::getline(stream, tenMH, ' ');
+        std::getline(stream, STCLT, ' ');
+        std::getline(stream, STCTH);
+
+        // Tạo một đối tượng MonHoc mới
+        MonHoc course(maMH, tenMH, std::stoi(STCLT), std::stoi(STCTH));
+
+        // Thêm môn học vào cây
+        insert(course);
+    }
+
+    inFile.close();
 }

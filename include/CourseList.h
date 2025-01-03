@@ -24,6 +24,8 @@ public:
     CourseNode *getRoot();                 // Lấy gốc cây
     void updateCourse(const string &mamh); // Cập nhật thông tin môn học
     bool isCourseExisted(const string &maMH);
+    void saveToFile(const std::string &filename);
+    void readFromFile(const std::string &filename);
 };
 
 #endif

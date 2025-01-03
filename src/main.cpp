@@ -9,12 +9,16 @@
 
 using namespace std;
 
+const std::string COURSES_FILE = "courses.txt";
+const std::string CLASSES_FILE = "classes.txt";
+
 int main()
 {
     ClassList classList;             // Danh sách lớp
     CourseList courseList;           // Danh sách môn học
     CreditClassList creditClassList; // Tạo một thể hiện của CreditClassList
-    classList.readFromFile("classList.txt");
+    classList.readFromFile(CLASSES_FILE);
+    courseList.readFromFile(COURSES_FILE);
     int choice;
     do
     {
@@ -60,7 +64,7 @@ int main()
                     isValidString(tenlop);
                     Lop newClass(malop, tenlop);
                     classList.addClass(newClass);
-                    classList.saveToFile("classList.txt");
+                    classList.saveToFile(CLASSES_FILE);
                     break;
                 }
                 case 2: // Xóa lớp
@@ -78,7 +82,7 @@ int main()
                     if (classList.removeClassByCode(malop))
                     {
                         cout << "Đã xóa thành công lớp có mã lớp là " << malop << endl;
-                        classList.saveToFile("classList.txt"); // Lưu sau khi xóa lớp
+                        classList.saveToFile(CLASSES_FILE); // Lưu sau khi xóa lớp
                     }
                     break;
                 }
@@ -93,7 +97,7 @@ int main()
                     updatedClass.nhapThongTin();
                     classList.updateClass(malop, updatedClass);
 
-                    classList.saveToFile("classList.txt"); // Lưu sau khi chỉnh sửa lớp
+                    classList.saveToFile(CLASSES_FILE); // Lưu sau khi chỉnh sửa lớp
                     break;
                 }
 
@@ -114,7 +118,7 @@ int main()
                     newStudent.nhapThongTin();
                     classList.addStudentToClass(malop, newStudent);
 
-                    classList.saveToFile("classList.txt"); // Lưu sau khi thêm sinh viên
+                    classList.saveToFile(CLASSES_FILE); // Lưu sau khi thêm sinh viên
                     break;
                 }
                 case 6: // Xóa sinh viên
@@ -144,7 +148,7 @@ int main()
                     if (removed)
                     {
                         cout << "Xóa sinh viên thành công!" << endl;
-                        classList.saveToFile("classList.txt"); // Lưu sau khi xóa sinh viên
+                        classList.saveToFile(CLASSES_FILE); // Lưu sau khi xóa sinh viên
                     }
                     else
                     {
@@ -187,7 +191,7 @@ int main()
                     student->nhapThongTin(); // Nhập lại thông tin sinh viên
 
                     cout << "Chỉnh sửa sinh viên thành công!" << endl;
-                    classList.saveToFile("classList.txt"); // Lưu sau khi chỉnh sửa sinh viên
+                    classList.saveToFile(CLASSES_FILE); // Lưu sau khi chỉnh sửa sinh viên
                     break;
                 }
 
@@ -215,6 +219,7 @@ int main()
             isValidNumber(newCourse.STCTH);
 
             courseList.insert(newCourse);
+            courseList.saveToFile(COURSES_FILE);
             break;
         }
         case 3:
@@ -228,6 +233,7 @@ int main()
             cout << "Nhập mã môn học cần cập nhật: ";
             cin >> mamh;
             courseList.updateCourse(mamh);
+            courseList.saveToFile(COURSES_FILE);
             break;
         }
         case 5:

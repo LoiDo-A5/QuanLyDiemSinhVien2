@@ -11,6 +11,7 @@ using namespace std;
 
 const std::string COURSES_FILE = "courses.txt";
 const std::string CLASSES_FILE = "classes.txt";
+const std::string CREDIT_CLASSES_FILE = "credit_classes.txt";
 
 int main()
 {
@@ -19,6 +20,7 @@ int main()
     CreditClassList creditClassList; // Tạo một thể hiện của CreditClassList
     classList.readFromFile(CLASSES_FILE);
     courseList.readFromFile(COURSES_FILE);
+    creditClassList.readFromFile(CREDIT_CLASSES_FILE);
     int choice;
     do
     {
@@ -291,6 +293,7 @@ int main()
                         // Tạo lớp tín chỉ mới
                         CreditClass *newCreditClass = new CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
                         creditClassList.addCreditClass(newCreditClass); // Thêm lớp tín chỉ vào danh sách
+                        creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                     }
                     else
                     {
@@ -305,6 +308,7 @@ int main()
                     cout << "Nhập mã lớp tín chỉ cần xóa: ";
                     isValidNumber(malopTC);
                     creditClassList.removeCreditClass(malopTC); // Sử dụng instance creditClassList
+                    creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                     break;
                 }
                 case 3:
@@ -504,6 +508,7 @@ int main()
                             cout << "Nhập mã môn học cần đăng ký: ";
                             cin >> maMH;
                             bool ketQuaDangKy = creditClassList.registerStudent(maMH, *sv);
+                            creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                             if (ketQuaDangKy == true)
                             {
                                 cout << "Đăng ký thành công" << endl;
@@ -514,11 +519,13 @@ int main()
                             }
                         }
                     }
+                    break;
                 }
 
                 case 7:
                 {
                     creditClassList.cancelCreditClasses();
+                    creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                     break;
                 }
 

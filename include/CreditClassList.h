@@ -34,6 +34,9 @@ public:
                                                    int hocKy);
 
     bool registerStudent(const std::string &maMH, const SinhVien &sinhVien);
+
+    void saveToFile(const std::string &filename);
+    void readFromFile(const std::string &filename);
 };
 
 #endif // CREDIT_CLASS_LIST_H

@@ -3,6 +3,8 @@
 #include "CreditClassList.h"
 #include "CreditClass.h"
 #include <iostream>
+#include <fstream> // Để sử dụng ofstream
+#include <sstream>
 
 CreditClassList::CreditClassList() {}
 
@@ -114,4 +116,85 @@ bool CreditClassList::registerStudent(const std::string &maMH, const SinhVien &s
         }
     }
     return daDangKy;
+}
+
+void CreditClassList::saveToFile(const std::string &filename)
+{
+    std::ofstream outFile(filename); // Open file to save data
+
+    if (!outFile)
+    {
+        return;
+    }
+
+    // Save credit classes
+    for (const auto &creditClass : creditClasses)
+    {
+        if (creditClass == nullptr)
+            continue;
+
+        // Write class details
+        outFile << creditClass->getMALOPTC() << " "
+                << creditClass->getMAMH() << " "
+                << creditClass->getTenLop() << " "
+                << creditClass->getNienKhoa() << " "
+                << creditClass->getHocKy() << " "
+                << creditClass->getNhom() << " "
+                << creditClass->getSoSvMin() << " "
+                << creditClass->getSoSvMax() << " "
+                << creditClass->isHuyLop() << std::endl;
+
+        // Write student details
+        const auto &students = creditClass->getDSSVDK();
+        for (const auto &student : students)
+        {
+            outFile << student.toString() << std::endl; // Save student info
+        }
+
+        outFile << std::endl; // Mark the end of the class
+    }
+
+    outFile.close(); // Close file
+}
+
+void CreditClassList::readFromFile(const std::string &filename)
+{
+    std::ifstream inFile(filename); // Open file to read data
+
+    if (!inFile)
+    {
+        return;
+    }
+
+    std::string line;
+    while (std::getline(inFile, line))
+    {
+        if (line.empty())
+            continue;
+
+        std::istringstream classStream(line);
+
+        // Read class details
+        int MALOPTC, hocKy, nhom, soSvMin, soSvMax;
+        std::string MAMH, tenLop, nienKhoa;
+        bool huyLop;
+
+        classStream >> MALOPTC >> MAMH >> tenLop >> nienKhoa >> hocKy >> nhom >> soSvMin >> soSvMax >> huyLop;
+
+        // Create CreditClass instance
+        auto *creditClass = new CreditClass(MALOPTC, MAMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
+
+        // Read student details
+        while (std::getline(inFile, line) && !line.empty())
+        {
+            SinhVien student;
+            student.fromString(line);         // Parse student details
+            creditClass->addStudent(student); // Add student to class
+        }
+
+        // Add class to the vector
+        creditClasses.push_back(creditClass);
+    }
+
+    inFile.close(); // Close file
 }

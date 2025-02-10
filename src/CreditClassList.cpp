@@ -35,23 +35,19 @@ void CreditClassList::displayCreditClasses()
     }
 }
 
-void CreditClassList::removeCreditClass(int malopTC, bool isAuto)
+void CreditClassList::removeCreditClass(int malopTC)
 {
     for (auto it = creditClasses.begin(); it != creditClasses.end(); ++it)
     {
         if ((*it)->getMALOPTC() == malopTC)
         {
+            delete *it; // Free memory
             creditClasses.erase(it);
-            if (!isAuto)
-            {
-                ::cout << "Lớp tín chỉ với mã " << malopTC << " đã được xóa." << std::endl;
-                delete *it; // Free memory
-            }
+            ::cout << "Lớp tín chỉ với mã " << malopTC << " đã được xóa." << std::endl;
             return;
         }
     }
-    if (!isAuto)
-        std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
+    std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
 }
 
 CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)

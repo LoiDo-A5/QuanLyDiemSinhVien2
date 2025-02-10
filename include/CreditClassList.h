@@ -21,7 +21,7 @@ public:
     void displayCreditClasses();
 
     // Xóa một lớp tín chỉ theo mã của nó (malopTC)
-    void removeCreditClass(int malopTC, bool isAuto);
+    void removeCreditClass(int malopTC);
 
     // Tìm và trả về một lớp tín dụng theo mã của nó (malopTC)
     CreditClass *findCreditClassByMALOPTC(int malopTC);

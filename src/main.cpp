@@ -352,7 +352,7 @@ int main()
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ cần xóa: ";
                     isValidNumber(malopTC);
-                    creditClassList.removeCreditClass(malopTC, false); // Sử dụng instance creditClassList
+                    creditClassList.removeCreditClass(malopTC); // Sử dụng instance creditClassList
                     creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                     break;
                 }
@@ -624,17 +624,6 @@ int main()
                         endwin();
                         cin.ignore();
                         creditClass->capNhatDSSV(dssv);
-                        for (SinhVien sv : creditClass->getDSSVDK())
-                        {
-                            cout << sv.toString();
-                        }
-                        creditClassList.removeCreditClass(creditClass->getMALOPTC(), true);
-                        for (SinhVien sv : creditClass->getDSSVDK())
-                        {
-                            cout << sv.toString();
-                        }
-                        cout << creditClass;
-                        creditClassList.addCreditClass(creditClass);
                         creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                     }
                     else

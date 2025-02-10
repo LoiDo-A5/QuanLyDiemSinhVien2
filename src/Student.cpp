@@ -6,8 +6,8 @@
 SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
 
 // Constructor có tham số
-SinhVien::SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd, float diem)
-    : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioiTinh), CMND(cmnd), DIEM(diem) {}
+SinhVien::SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd)
+    : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioiTinh), CMND(cmnd), DIEM(0.0) {}
 
 // Hàm nhập thông tin sinh viên
 void SinhVien::nhapThongTin()
@@ -30,10 +30,6 @@ void SinhVien::nhapThongTin()
     cout << "Nhập số CMND: ";
     cin >> CMND;
     isValidCMND(CMND);
-
-    cout << "Nhập điểm: ";
-    cin >> DIEM;
-    isValidFloat(DIEM);
 }
 
 // Hàm in thông tin sinh viên

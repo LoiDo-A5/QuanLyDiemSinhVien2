@@ -21,7 +21,7 @@ public:
     SinhVien();
 
     // Constructor có tham số
-    SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd, float diem);
+    SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd);
 
     // Hàm nhập thông tin sinh viên
     void nhapThongTin();

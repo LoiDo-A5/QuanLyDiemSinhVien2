@@ -21,7 +21,7 @@ public:
     void displayCreditClasses();
 
     // Xóa một lớp tín chỉ theo mã của nó (malopTC)
-    void removeCreditClass(int malopTC);
+    void removeCreditClass(int malopTC, bool isAuto);
 
     // Tìm và trả về một lớp tín dụng theo mã của nó (malopTC)
     CreditClass *findCreditClassByMALOPTC(int malopTC);
@@ -29,7 +29,7 @@ public:
     // Hủy các lớp tín chỉ không đủ sinh viên đăng ký
     void cancelCreditClasses();
 
-    // Tìm lớp tín chỉ dựa trên các tham số khác nhau (nienKhoa, hocKy, nhom, maMH)
+    // Tìm lớp tín chỉ dựa trên các tham số khác nhau (nienKhoa, hocKy)
     std::vector<CreditClass *> findClassesByParams(const std::string &nienKhoa,
                                                    int hocKy);
 
@@ -37,6 +37,9 @@ public:
 
     void saveToFile(const std::string &filename);
     void readFromFile(const std::string &filename);
+    // Tìm lớp tín chỉ dựa trên các tham số khác nhau (nienKhoa, hocKy, nhom, maMH)
+    CreditClass *findClass(const std::string &nienKhoa,
+                           int hocKy, int nhom, const std::string &maM);
 };
 
 #endif // CREDIT_CLASS_LIST_H

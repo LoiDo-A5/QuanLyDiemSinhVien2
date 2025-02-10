@@ -35,19 +35,23 @@ void CreditClassList::displayCreditClasses()
     }
 }
 
-void CreditClassList::removeCreditClass(int malopTC)
+void CreditClassList::removeCreditClass(int malopTC, bool isAuto)
 {
     for (auto it = creditClasses.begin(); it != creditClasses.end(); ++it)
     {
         if ((*it)->getMALOPTC() == malopTC)
         {
-            delete *it; // Free memory
             creditClasses.erase(it);
-            std::cout << "Lớp tín chỉ với mã " << malopTC << " đã được xóa." << std::endl;
+            if (!isAuto)
+            {
+                ::cout << "Lớp tín chỉ với mã " << malopTC << " đã được xóa." << std::endl;
+                delete *it; // Free memory
+            }
             return;
         }
     }
-    std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
+    if (!isAuto)
+        std::cerr << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << std::endl;
 }
 
 CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
@@ -104,6 +108,19 @@ std::vector<CreditClass *> CreditClassList::findClassesByParams(const std::strin
     return result;
 }
 
+CreditClass *CreditClassList::findClass(const std::string &nienKhoa,
+                                        int hocKy, int nhom, const std::string &maMH)
+{
+    for (auto &creditClass : creditClasses)
+    {
+        if (creditClass->getNienKhoa() == nienKhoa && creditClass->getHocKy() == hocKy && creditClass->getNhom() == nhom && creditClass->getMAMH() == maMH)
+        {
+            return creditClass;
+        }
+    }
+    return nullptr;
+}
+
 bool CreditClassList::registerStudent(const std::string &maMH, const SinhVien &sinhVien)
 {
     bool daDangKy = false;
@@ -111,7 +128,7 @@ bool CreditClassList::registerStudent(const std::string &maMH, const SinhVien &s
     {
         if (maMH == creditClass->getMAMH())
         {
-            creditClass->addStudent(sinhVien);
+            creditClass->addStudent(sinhVien, false);
             daDangKy = true;
         }
     }
@@ -188,8 +205,8 @@ void CreditClassList::readFromFile(const std::string &filename)
         while (std::getline(inFile, line) && !line.empty())
         {
             SinhVien student;
-            student.fromString(line);         // Parse student details
-            creditClass->addStudent(student); // Add student to class
+            student.fromString(line);               // Parse student details
+            creditClass->addStudent(student, true); // Add student to class
         }
 
         // Add class to the vector

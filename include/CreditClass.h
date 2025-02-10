@@ -34,7 +34,7 @@ public:
     int getSoSvMax() const;
     bool isHuyLop() const;
     std::vector<SinhVien> &getDSSVDK();
-
+    void capNhatDSSV(vector<SinhVien> dssv);
     void setMAMH(const std::string &maMH);
     void setTenLop(const std::string &tenLop);
     void setNienKhoa(const std::string &nienKhoa);
@@ -44,7 +44,7 @@ public:
     void setSoSvMax(int soSvMax);
     void setHuyLop(bool huy);
 
-    void addStudent(const SinhVien &student);
+    void addStudent(const SinhVien &student, bool docFile);
 };
 
 #endif // CREDIT_CLASS_H

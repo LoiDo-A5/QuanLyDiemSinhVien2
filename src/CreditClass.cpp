@@ -104,15 +104,22 @@ void CreditClass::setHuyLop(bool huy)
 }
 
 // addStudent method
-void CreditClass::addStudent(const SinhVien &student)
+void CreditClass::addStudent(const SinhVien &student, bool docFile)
 {
     if (DSSVDK.size() < soSvMax)
     {
         DSSVDK.push_back(student); // Add student to the list
-        std::cout << "Sinh viên " << student.getHo() << " " << student.getTen() << " đã được thêm vào lớp tín chỉ." << std::endl;
+        if (!docFile)
+            std::cout << "Sinh viên " << student.getHo() << " " << student.getTen() << " đã được thêm vào lớp tín chỉ." << std::endl;
     }
     else
     {
-        std::cout << "Lớp tín chỉ đã đầy sinh viên." << std::endl;
+        if (!docFile)
+            std::cout << "Lớp tín chỉ đã đầy sinh viên." << std::endl;
     }
+}
+
+void CreditClass::capNhatDSSV(vector<SinhVien> dssv)
+{
+    DSSVDK = dssv;
 }

@@ -6,12 +6,56 @@
 #include "Class.h"
 #include "CreditClassList.h"
 #include "IsValid.h"
+#include <iomanip>
+#include <ncurses.h> // Thư viện hỗ trợ di chuyển con trỏ trên console
 
 using namespace std;
 
 const std::string COURSES_FILE = "courses.txt";
 const std::string CLASSES_FILE = "classes.txt";
 const std::string CREDIT_CLASSES_FILE = "credit_classes.txt";
+
+// In danh sách sinh viên với con trỏ
+void hienThiDanhSach(vector<SinhVien> &ds, int pos)
+{
+    clear(); // Xóa màn hình
+    printw("%-5s %-10s %-10s %-10s %-6s\n", "STT", "MASV", "HO", "TEN", "DIEM");
+    printw("------------------------------------------------\n");
+
+    for (size_t i = 0; i < ds.size(); i++)
+    {
+        if (i == pos)
+        {                      // Hiển thị dòng được chọn
+            attron(A_REVERSE); // Đảo màu dòng hiện tại
+        }
+        printw("%-5d %-10s %-10s %-10s %-6s\n", i + 1, ds[i].getMaSV().c_str(), ds[i].getHo().c_str(), ds[i].getTen().c_str(),
+               to_string(ds[i].getDiem()).c_str());
+        if (i == pos)
+        {
+            attroff(A_REVERSE); // Tắt đảo màu
+        }
+    }
+    refresh(); // Cập nhật màn hình
+}
+
+// Hàm nhập điểm cho sinh viên khi chọn dòng
+void nhapDiem(vector<SinhVien> &ds, int pos)
+{
+    echo(); // Hiện ký tự nhập
+    float diemMoi;
+    move(pos + 2, 40); // Di chuyển con trỏ đến cột "DIEM"
+    // cin >> diemMoi;
+    scanw("%f", &diemMoi);
+    if (diemMoi >= 0 && diemMoi <= 10)
+    {
+        ds[pos].capNhatDiem(diemMoi);
+    }
+    else
+    {
+        printw("\nĐiểm không hợp lệ!");
+    }
+    noecho(); // Tắt hiện ký tự nhập
+}
 
 int main()
 {
@@ -251,6 +295,7 @@ int main()
                 cout << "5. In danh sách lớp tín chỉ" << endl;
                 cout << "6. Đăng ký tín chỉ" << endl;
                 cout << "7. Huỷ các lớp tín chỉ không đủ sinh viên" << endl;
+                cout << "8. Nhập điểm theo lớp" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -307,7 +352,7 @@ int main()
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ cần xóa: ";
                     isValidNumber(malopTC);
-                    creditClassList.removeCreditClass(malopTC); // Sử dụng instance creditClassList
+                    creditClassList.removeCreditClass(malopTC, false); // Sử dụng instance creditClassList
                     creditClassList.saveToFile(CREDIT_CLASSES_FILE);
                     break;
                 }
@@ -526,6 +571,76 @@ int main()
                 {
                     creditClassList.cancelCreditClasses();
                     creditClassList.saveToFile(CREDIT_CLASSES_FILE);
+                    break;
+                }
+
+                case 8:
+                {
+                    string nienKhoa, maMH;
+                    int hocKy, nhom;
+                    cout << "Nhập niên khóa: ";
+                    cin >> nienKhoa;
+                    cout << "Nhập học kỳ: ";
+                    cin >> hocKy;
+                    cout << "Nhập nhóm: ";
+                    cin >> nhom;
+                    cout << "Nhập mã môn học: ";
+                    cin >> maMH;
+                    CreditClass *creditClass = creditClassList.findClass(nienKhoa, hocKy, nhom, maMH);
+                    vector<SinhVien> dssv = creditClass->getDSSVDK();
+                    if (dssv.size() > 0)
+                    {
+                        initscr();            // Khởi tạo ncurses
+                        keypad(stdscr, TRUE); // Bật phím mũi tên
+                        noecho();             // Tắt nhập ký tự trên màn hình
+                        int pos = 0;          // Vị trí dòng hiện tại
+                        int key;
+                        bool dangChinhSua = true;
+                        while (dangChinhSua)
+                        {
+                            hienThiDanhSach(dssv, pos);
+
+                            key = getch(); // Đọc phím nhập
+                            switch (key)
+                            {
+                            case KEY_UP:
+                                if (pos > 0)
+                                    pos--; // Di chuyển lên
+                                break;
+                            case KEY_DOWN:
+                                if (pos < dssv.size() - 1)
+                                    pos++; // Di chuyển xuống
+                                break;
+                            case '\n': // Nhấn Enter để nhập điểm
+                                nhapDiem(dssv, pos);
+                                break;
+                            case 27: // Nhấn ESC để thoát
+                                dangChinhSua = false;
+                                break;
+                            }
+                        }
+                        move(0, 0);
+                        refresh();
+                        endwin();
+                        cin.ignore();
+                        creditClass->capNhatDSSV(dssv);
+                        for (SinhVien sv : creditClass->getDSSVDK())
+                        {
+                            cout << sv.toString();
+                        }
+                        creditClassList.removeCreditClass(creditClass->getMALOPTC(), true);
+                        for (SinhVien sv : creditClass->getDSSVDK())
+                        {
+                            cout << sv.toString();
+                        }
+                        cout << creditClass;
+                        creditClassList.addCreditClass(creditClass);
+                        creditClassList.saveToFile(CREDIT_CLASSES_FILE);
+                    }
+                    else
+                    {
+                        cout << "Lớp trống hoặc không tìm thấy lớp!" << endl;
+                    }
                     break;
                 }
 

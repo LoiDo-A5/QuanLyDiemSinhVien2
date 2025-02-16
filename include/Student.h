@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -14,7 +15,10 @@ private:
     string TEN;      // Tên sinh viên
     string GIOITINH; // Giới tính
     string CMND;     // Số chứng minh nhân dân
-    float DIEM;      // Điểm của sinh viên
+    float DIEM;      // Điểm của sinh viên (Điểm tổng kết)
+
+    // Map lưu điểm cho từng môn học
+    map<string, float> diemMonHoc;
 
 public:
     // Constructor mặc định
@@ -41,7 +45,7 @@ public:
     // Hàm lấy tên
     string getTen() const;
 
-    // Hàm lấy điểm của sinh viên
+    // Hàm lấy điểm tổng kết của sinh viên
     float getDiem() const;
 
     // Hàm cập nhật điểm sinh viên
@@ -57,6 +61,12 @@ public:
     string toString() const;
 
     void fromString(const string &data);
+
+    // Hàm lấy điểm cao nhất của sinh viên cho một môn học
+    float getDiemCaoNhat(const string &monHoc) const;
+
+    // Hàm thêm điểm cho một môn học
+    void themDiemMonHoc(const string &monHoc, float diem);
 };
 
 #endif // STUDENT_H

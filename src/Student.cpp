@@ -1,6 +1,7 @@
 #include "Student.h"
 #include "IsValid.h"
 #include <sstream>
+#include <stdexcept>
 
 // Constructor mặc định
 SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
@@ -66,7 +67,7 @@ string SinhVien::getTen() const
 // Hàm lấy điểm của sinh viên
 float SinhVien::getDiem() const
 {
-    return DIEM; // Trả về điểm của sinh viên
+    return DIEM; // Trả về điểm tổng kết của sinh viên
 }
 
 // Hàm cập nhật điểm sinh viên
@@ -93,15 +94,35 @@ string SinhVien::toString() const
     return MASV + " " + HO + " " + TEN + " " + GIOITINH + " " + CMND + " " + to_string(DIEM);
 }
 
-void SinhVien::fromString(const std::string &data)
+void SinhVien::fromString(const string &data)
 {
-    std::istringstream stream(data);
+    istringstream stream(data); // Tạo một string stream từ dữ liệu đầu vào
 
-    // Extract each field from the string
+    // Trích xuất từng trường dữ liệu từ chuỗi
     stream >> MASV >> HO >> TEN >> GIOITINH >> CMND >> DIEM;
 
-    if (stream.fail())
+    if (stream.fail()) // Kiểm tra lỗi khi trích xuất
     {
-        throw std::runtime_error("Invalid data format for SinhVien");
+        throw runtime_error("Định dạng dữ liệu không hợp lệ cho SinhVien");
     }
+}
+
+// Hàm lấy điểm cao nhất của sinh viên cho một môn học
+float SinhVien::getDiemCaoNhat(const string &monHoc) const
+{
+    auto it = diemMonHoc.find(monHoc); // Tìm môn học trong map
+    if (it != diemMonHoc.end())
+    {
+        return it->second; // Trả về điểm của môn học
+    }
+    else
+    {
+        return -1; // Nếu không tìm thấy, trả về -1 để chỉ không có điểm cho môn này
+    }
+}
+
+// Hàm thêm điểm cho một môn học
+void SinhVien::themDiemMonHoc(const string &monHoc, float diem)
+{
+    diemMonHoc[monHoc] = diem; // Thêm hoặc cập nhật điểm cho môn học
 }

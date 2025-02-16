@@ -19,22 +19,29 @@ const std::string CREDIT_CLASSES_FILE = "credit_classes.txt";
 void hienThiDanhSach(vector<SinhVien> &ds, int pos)
 {
     clear(); // Xóa màn hình
+
+    // Hiển thị tiêu đề cột
     printw("%-5s %-10s %-10s %-10s %-6s\n", "STT", "MASV", "HO", "TEN", "DIEM");
     printw("------------------------------------------------\n");
 
+    // Hiển thị danh sách sinh viên
     for (size_t i = 0; i < ds.size(); i++)
     {
         if (i == pos)
         {                      // Hiển thị dòng được chọn
             attron(A_REVERSE); // Đảo màu dòng hiện tại
         }
-        printw("%-5d %-10s %-10s %-10s %-6s\n", i + 1, ds[i].getMaSV().c_str(), ds[i].getHo().c_str(), ds[i].getTen().c_str(),
-               to_string(ds[i].getDiem()).c_str());
+
+        // In thông tin sinh viên
+        printw("%-5zu %-10s %-10s %-10s %-6.2f\n", i + 1, ds[i].getMaSV().c_str(), ds[i].getHo().c_str(),
+               ds[i].getTen().c_str(), ds[i].getDiem());
+
         if (i == pos)
         {
             attroff(A_REVERSE); // Tắt đảo màu
         }
     }
+
     refresh(); // Cập nhật màn hình
 }
 
@@ -296,6 +303,7 @@ int main()
                 cout << "6. Đăng ký tín chỉ" << endl;
                 cout << "7. Huỷ các lớp tín chỉ không đủ sinh viên" << endl;
                 cout << "8. Nhập điểm theo lớp" << endl;
+                cout << "9. In bảng điểm môn học" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -629,6 +637,109 @@ int main()
                     else
                     {
                         cout << "Lớp trống hoặc không tìm thấy lớp!" << endl;
+                    }
+                    break;
+                }
+                case 9:
+                { // Case mới cho việc in bảng điểm môn học
+                    string nienKhoa, maMH;
+                    int hocKy, nhom;
+
+                    // Nhập thông tin lớp tín chỉ
+                    cout << "Nhập niên khóa: ";
+                    cin >> nienKhoa;
+                    cout << "Nhập học kỳ: ";
+                    cin >> hocKy;
+                    cout << "Nhập nhóm: ";
+                    cin >> nhom;
+                    cout << "Nhập mã môn học: ";
+                    cin >> maMH;
+
+                    // Tìm lớp tín chỉ theo các thông tin nhập vào
+                    CreditClass *creditClass = creditClassList.findClass(nienKhoa, hocKy, nhom, maMH);
+                    if (creditClass == nullptr)
+                    {
+                        cout << "Không tìm thấy lớp tín chỉ với thông tin trên!" << endl;
+                    }
+                    else
+                    {
+                        // Lấy danh sách sinh viên trong lớp tín chỉ
+                        vector<SinhVien> dssv = creditClass->getDSSVDK();
+                        if (dssv.empty())
+                        {
+                            cout << "Lớp trống, không có sinh viên nào!" << endl;
+                        }
+                        else
+                        {
+                            // In thông tin bảng điểm
+                            cout << "BẢNG ĐIỂM MÔN HỌC " << creditClass->getTenLop() << endl;
+                            cout << "Niên khóa: " << nienKhoa << " Học kỳ: " << hocKy << " Nhóm: " << nhom << endl;
+                            cout << "\nSTT\tMASV\tHO\tTEN\t\tDIEM" << endl;
+
+                            int stt = 1;
+                            for (const auto &sv : dssv)
+                            {
+                                cout << stt++ << "\t";
+                                cout << sv.getMaSV() << "\t";
+                                cout << sv.getHo() << "\t";
+                                cout << sv.getTen() << "\t";
+                                // Sử dụng getDiem từ SinhVien để lấy điểm
+                                cout << sv.getDiem() << endl; // In điểm của sinh viên
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 10:
+                {
+                    // Nhập thông tin lớp tín chỉ
+                    string nienKhoa, maMH;
+                    int hocKy, nhom;
+
+                    cout << "Nhập niên khóa: ";
+                    cin >> nienKhoa;
+                    cout << "Nhập học kỳ: ";
+                    cin >> hocKy;
+                    cout << "Nhập nhóm: ";
+                    cin >> nhom;
+                    cout << "Nhập mã môn học: ";
+                    cin >> maMH;
+
+                    // Tìm lớp tín chỉ theo các thông tin nhập vào
+                    CreditClass *creditClass = creditClassList.findClass(nienKhoa, hocKy, nhom, maMH);
+                    if (creditClass == nullptr)
+                    {
+                        cout << "Không tìm thấy lớp tín chỉ với thông tin trên!" << endl;
+                    }
+                    else
+                    {
+                        // Lấy danh sách sinh viên trong lớp tín chỉ
+                        vector<SinhVien> dssv = creditClass->getDSSVDK();
+                        if (dssv.empty())
+                        {
+                            cout << "Lớp trống, không có sinh viên nào!" << endl;
+                        }
+                        else
+                        {
+                            // In thông tin bảng thống kê điểm trung bình
+                            cout << "BẢNG THỐNG KÊ ĐIỂM TRUNG BÌNH KHÓA HỌC" << endl;
+                            cout << "Lớp: " << creditClass->getTenLop() << endl;
+                            cout << "\nSTT\tMASV\tHO\tTEN\tĐiểm TB" << endl;
+
+                            int stt = 1;
+                            for (const auto &sv : dssv)
+                            {
+                                cout << stt++ << "\t";
+                                cout << sv.getMaSV() << "\t";
+                                cout << sv.getHo() << "\t";
+                                cout << sv.getTen() << "\t";
+
+                                // Tính điểm trung bình kết thúc khóa học
+                                // Giả sử lớp tín chỉ có một số tín chỉ, bạn cần cập nhật hàm tính điểm trung bình
+                                float diemTB = sv.getDiem(); // Lấy điểm của sinh viên, có thể thay đổi nếu tính điểm trung bình từ nhiều môn
+                                cout << diemTB << endl;
+                            }
+                        }
                     }
                     break;
                 }

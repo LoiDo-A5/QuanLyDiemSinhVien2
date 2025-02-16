@@ -3,6 +3,7 @@
 #include "IsValid.h"
 #include <fstream> // Để sử dụng ofstream
 #include <sstream>
+#include <functional>
 
 CourseList::CourseList() : root(nullptr) {}
 

@@ -16,18 +16,6 @@ std::vector<SinhVien> &CreditClass::getDSSVDK()
     return DSSVDK;
 }
 
-// Thêm môn học vào danh sách
-void CreditClass::addMonHoc(const std::string &monHoc)
-{
-    danhSachMonHoc.push_back(monHoc);
-}
-
-// Phương thức trả về danh sách môn học
-std::vector<std::string> CreditClass::getDanhSachMonHoc() const
-{
-    return danhSachMonHoc;
-}
-
 // Các phương thức getter và setter khác
 
 int CreditClass::getMALOPTC() const
@@ -133,7 +121,7 @@ void CreditClass::addStudent(const SinhVien &student, bool docFile)
 }
 
 // Phương thức cập nhật danh sách sinh viên
-void CreditClass::capNhatDSSV(const std::vector<SinhVien> &dssv)
+void CreditClass::capNhatDSSV(vector<SinhVien> dssv)
 {
     DSSVDK = dssv; // Cập nhật danh sách sinh viên
 }

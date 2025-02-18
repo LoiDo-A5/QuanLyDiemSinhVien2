@@ -643,11 +643,11 @@ int main()
                     break;
                 }
                 case 9:
-                { // Case mới cho việc in bảng điểm môn học
+                {
+                    // Nhập thông tin lớp tín chỉ
                     string nienKhoa, maMH;
                     int hocKy, nhom;
 
-                    // Nhập thông tin lớp tín chỉ
                     cout << "Nhập niên khóa: ";
                     cin >> nienKhoa;
                     cout << "Nhập học kỳ: ";
@@ -673,25 +673,43 @@ int main()
                         }
                         else
                         {
-                            // In thông tin bảng điểm
-                            cout << "BẢNG ĐIỂM MÔN HỌC " << creditClass->getTenLop() << endl;
-                            cout << "Niên khóa: " << nienKhoa << " Học kỳ: " << hocKy << " Nhóm: " << nhom << endl;
-                            cout << "\nSTT\tMASV\tHO\tTEN\t\tDIEM" << endl;
+                            // Hiển thị bảng điểm sử dụng hàm hienThiDanhSach
+                            initscr();            // Khởi tạo ncurses
+                            keypad(stdscr, TRUE); // Bật phím mũi tên
+                            noecho();             // Tắt nhập ký tự trên màn hình
+                            int pos = 0;          // Vị trí dòng hiện tại
+                            int key;
 
-                            int stt = 1;
-                            for (const auto &sv : dssv)
+                            bool dangChinhSua = true;
+                            while (dangChinhSua)
                             {
-                                cout << stt++ << "\t";
-                                cout << sv.getMaSV() << "\t";
-                                cout << sv.getHo() << "\t";
-                                cout << sv.getTen() << "\t";
-                                // Sử dụng getDiem từ SinhVien để lấy điểm
-                                cout << sv.getDiem() << endl; // In điểm của sinh viên
+                                hienThiDanhSach(dssv, pos); // Hiển thị danh sách sinh viên
+
+                                key = getch(); // Đọc phím nhập
+                                switch (key)
+                                {
+                                case KEY_UP:
+                                    if (pos > 0)
+                                        pos--; // Di chuyển lên
+                                    break;
+                                case KEY_DOWN:
+                                    if (pos < dssv.size() - 1)
+                                        pos++; // Di chuyển xuống
+                                    break;
+                                case 27: // Nhấn ESC để thoát
+                                    dangChinhSua = false;
+                                    break;
+                                }
                             }
+                            move(0, 0);
+                            refresh();
+                            endwin();
+                            cin.ignore();
                         }
                     }
                     break;
                 }
+
                 case 10:
                 {
                     // Nhập thông tin lớp tín chỉ

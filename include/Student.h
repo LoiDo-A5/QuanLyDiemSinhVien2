@@ -57,6 +57,8 @@ public:
     string toString() const;
 
     void fromString(const string &data);
+
+    void setDiem(float diemMoi);
 };
 
 #endif // STUDENT_H

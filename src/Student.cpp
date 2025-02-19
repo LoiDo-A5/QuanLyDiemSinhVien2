@@ -105,3 +105,8 @@ void SinhVien::fromString(const std::string &data)
         throw std::runtime_error("Invalid data format for SinhVien");
     }
 }
+
+void SinhVien::setDiem(float diemMoi)
+{
+    DIEM = diemMoi; // Cập nhật điểm mới
+}

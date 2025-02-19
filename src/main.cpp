@@ -744,13 +744,10 @@ int main()
                             // Cập nhật điểm trung bình cho sinh viên
                             for (auto &sv : dssv)
                             {
-                                // Tính điểm trung bình của sinh viên (giả sử điểm trung bình là điểm môn học)
-                                // Nếu bạn cần tính điểm trung bình từ nhiều môn, bạn sẽ phải thay đổi logic này.
                                 float diemTB = sv.getDiem(); // Lấy điểm hiện tại của sinh viên
                                 sv.setDiem(diemTB);          // Cập nhật lại điểm trung bình (nếu có cần tính lại)
                             }
 
-                            // Hiển thị bảng thống kê điểm trung bình sử dụng hàm hienThiDanhSach
                             initscr();            // Khởi tạo ncurses
                             keypad(stdscr, TRUE); // Bật phím mũi tên
                             noecho();             // Tắt nhập ký tự trên màn hình
@@ -774,17 +771,20 @@ int main()
                                     if (pos < dssv.size() - 1)
                                         pos++; // Di chuyển xuống
                                     break;
-                                case 27:      // Nhấn ESC để thoát
-                                    endwin(); // Kết thúc ncurses
-                                    return 0; // Thoát khỏi hàm và kết thúc
+                                case 27: // Nhấn ESC để thoát
+                                    break;
                                 }
                             }
+                            move(0, 0);
+                            refresh();
+                            endwin();
+                            cin.ignore();
                         }
                     }
                     break;
                 }
 
-                             default:
+                default:
                     break;
                 }
             } while (subChoice != 0); // Kết thúc vòng lặp con cho lớp tín chỉ

@@ -7,7 +7,7 @@
 class ClassList
 {
 private:
-    Lop *classes[1000]; // Mảng lớp tối đa 1000 lớp
+    Lop *classes[1000]; //  Mảng con trỏ tối đa 1000 phần tử // một danh sách tuyến tính
     int classCount;
 
 public:

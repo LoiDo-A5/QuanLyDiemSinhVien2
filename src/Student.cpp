@@ -5,9 +5,10 @@
 // Constructor mặc định
 SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), DIEM(0.0) {}
 
-// Constructor có tham số
 SinhVien::SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd)
-    : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioiTinh), CMND(cmnd), DIEM(0.0) {}
+    : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioiTinh), CMND(cmnd), DIEM(0.0)
+{
+}
 
 // Hàm nhập thông tin sinh viên
 void SinhVien::nhapThongTin()
@@ -109,4 +110,9 @@ void SinhVien::fromString(const std::string &data)
 void SinhVien::setDiem(float diemMoi)
 {
     DIEM = diemMoi; // Cập nhật điểm mới
+}
+
+int SinhVien::getSoTinChi() const
+{
+    return monHoc.STCLT + monHoc.STCTH; // Tổng số tín chỉ (lý thuyết + thực hành)
 }

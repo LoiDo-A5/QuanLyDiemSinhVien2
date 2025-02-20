@@ -5,6 +5,7 @@
 #include <iostream>
 
 using namespace std;
+#include "Course.h" // Include course.h để sử dụng MonHoc
 
 class SinhVien
 {
@@ -15,6 +16,7 @@ private:
     string GIOITINH; // Giới tính
     string CMND;     // Số chứng minh nhân dân
     float DIEM;      // Điểm của sinh viên (Điểm tổng kết)
+    MonHoc monHoc;   // Thêm môn học mà sinh viên đăng ký
 
 public:
     // Constructor mặc định
@@ -59,6 +61,7 @@ public:
     void fromString(const string &data);
 
     void setDiem(float diemMoi);
+    int getSoTinChi() const;
 };
 
 #endif // STUDENT_H

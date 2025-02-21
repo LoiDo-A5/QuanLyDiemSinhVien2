@@ -40,6 +40,8 @@ public:
     // Tìm lớp tín chỉ dựa trên các tham số khác nhau (nienKhoa, hocKy, nhom, maMH)
     CreditClass *findClass(const std::string &nienKhoa,
                            int hocKy, int nhom, const std::string &maM);
+
+    std::vector<CreditClass *> findClassesByMsv(const std::string &msv);
 };
 
 #endif // CREDIT_CLASS_LIST_H

@@ -211,3 +211,20 @@ void CreditClassList::readFromFile(const std::string &filename)
 
     inFile.close(); // Close file
 }
+
+std::vector<CreditClass *> CreditClassList::findClassesByMsv(const std::string &msv)
+{
+    std::vector<CreditClass *> result;
+    for (auto &creditClass : creditClasses)
+    {
+        const auto &students = creditClass->getDSSVDK();
+        for (auto &student : students)
+        {
+            if (student.getMaSV() == msv)
+            {
+                result.push_back(creditClass);
+            }
+        }
+    }
+    return result;
+}

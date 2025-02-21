@@ -709,100 +709,57 @@ int main()
                     }
                     break;
                 }
-
                 case 10:
                 {
-                    // Nhập thông tin lớp tín chỉ
-                    string nienKhoa, maMH;
-                    int hocKy, nhom;
-                
-                    cout << "Nhập niên khóa: ";
-                    cin >> nienKhoa;
-                    cout << "Nhập học kỳ: ";
-                    cin >> hocKy;
-                    cout << "Nhập nhóm: ";
-                    cin >> nhom;
-                    cout << "Nhập mã môn học: ";
-                    cin >> maMH;
-                
-                    // Tìm lớp tín chỉ theo các thông tin nhập vào
-                    CreditClass *creditClass = creditClassList.findClass(nienKhoa, hocKy, nhom, maMH);
-                    if (creditClass == nullptr)
+                    string malop;
+                    cout << "Nhập mã lớp: ";
+                    cin >> malop;
+                    isValidCode(malop);
+
+                    // Tìm lớp theo mã lớp
+                    Lop *lop = classList.findClassByCode(malop);
+                    cout << "Mã lớp: " << lop << endl;
+
+                    vector<SinhVien> dssv = lop->getStudents();
+                    cout << "BẢNG THỐNG KÊ ĐIỂM TRUNG BÌNH KHÓA HỌC" << endl;
+                    cout << "Lớp 	 : " << malop << endl;
+
+                    // In tiêu đề bảng
+                    cout << left << setw(5) << "STT" << setw(0) << "MASV" << setw(10) << "HO" << setw(10) << "TEN" << setw(6) << "DIEM" << endl;
+                    cout << "------------------------------------------------" << endl;
+
+                    for (size_t i = 0; i < dssv.size(); i++)
                     {
-                        cout << "Không tìm thấy lớp tín chỉ với thông tin trên!" << endl;
-                    }
-                    else
-                    {
-                        // Lấy danh sách sinh viên trong lớp tín chỉ
-                        vector<SinhVien> dssv = creditClass->getDSSVDK();
-                        if (dssv.empty())
+                        cout << left << setw(5) << i + 1
+                             << setw(20) << dssv[i].getMaSV()
+                             << setw(10) << dssv[i].getHo()
+                             << setw(10) << dssv[i].getTen() << " ";
+
+                        vector<CreditClass *> classes = creditClassList.findClassesByMsv(dssv[i].getMaSV());
+                        float tongDiem = 0;
+                        int totalCredits = 0; // Tổng số tín chỉ để tính điểm trung bình
+
+                        for (const auto &creditClass : classes)
                         {
-                            cout << "Lớp trống, không có sinh viên nào!" << endl;
-                        }
-                        else
-                        {
-                            // Hiển thị bảng thống kê điểm trung bình khóa học
-                            float totalWeightedPoints = 0.0; // Tổng điểm có trọng số (điểm * tín chỉ)
-                            int totalCredits = 0;            // Tổng số tín chỉ
-                
-                            // Tính tổng điểm có trọng số và tổng số tín chỉ của lớp
-                            for (auto &sv : dssv)
+                            vector<SinhVien> &students = creditClass->getDSSVDK();
+                            int tongTinChi = courseList.getTotalCredit(creditClass->getMAMH());
+                            float diem = 0;
+
+                            // Tính tổng điểm cho sinh viên trong lớp tín chỉ này
+                            for (const auto &student : students)
                             {
-                                float diemTB = sv.getDiem();     // Lấy điểm hiện tại của sinh viên
-                                int soTínChi = sv.getSoTinChi(); // Lấy tổng số tín chỉ (lý thuyết + thực hành)
-                
-                                totalWeightedPoints += diemTB * soTínChi; // Cộng điểm có trọng số
-                                totalCredits += soTínChi;                 // Cộng số tín chỉ
-                            }
-                
-                            // Tính điểm trung bình có trọng số
-                            float averageGPA = (totalCredits > 0) ? totalWeightedPoints / totalCredits : 0.0;
-                
-                            // In ra bảng thống kê
-                            initscr();            // Khởi tạo ncurses
-                            keypad(stdscr, TRUE); // Bật phím mũi tên
-                            noecho();             // Tắt nhập ký tự trên màn hình
-                            clear();              // Dọn dẹp màn hình trước khi hiển thị
-                            int pos = 0;          // Vị trí dòng hiện tại
-                
-                            // Tiêu đề bảng thống kê điểm trung bình khóa học
-                            printw("BẢNG THỐNG KÊ ĐIỂM TRUNG BÌNH KHÓA HỌC\n");
-                            printw("Lớp: %s, Mã môn học: %s\n", maMH.c_str(), maMH.c_str());
-                            printw("Điểm trung bình của toàn khóa học (theo số tín chỉ): %.2f\n", averageGPA);
-                            printw("\n");
-                
-                            // Tiêu đề bảng
-                            printw("%-5s %-10s %-10s %-10s %-6s\n", "STT", "MASV", "HO", "TEN", "Điểm TB");
-                            printw("------------------------------------------------\n");
-                
-                            // In danh sách sinh viên với điểm của họ
-                            for (size_t i = 0; i < dssv.size(); i++)
-                            {
-                                printw("%-5zu %-10s %-10s %-10s %-6.2f\n", i + 1, dssv[i].getMaSV().c_str(), dssv[i].getHo().c_str(),
-                                       dssv[i].getTen().c_str(), dssv[i].getDiem());
-                            }
-                
-                            // Đợi người dùng bấm phím để thoát
-                            int key;
-                            bool dangChinhSua = true;
-                            while (dangChinhSua)
-                            {
-                                key = getch(); // Đọc phím nhập
-                                if (key == 27) // Nhấn ESC để thoát
+                                if (student.getMaSV() == dssv[i].getMaSV())
                                 {
-                                    dangChinhSua = false;
+                                    tongDiem += student.getDiem();
                                 }
                             }
-                
-                            move(0, 0);
-                            refresh();
-                            endwin();
-                            cin.ignore(); // Đảm bảo kết thúc đúng cách
                         }
+
+                        cout << fixed << setprecision(2) << tongDiem / classes.size() << endl;
                     }
+
                     break;
                 }
-                
 
                 default:
                     break;

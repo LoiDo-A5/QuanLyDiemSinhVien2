@@ -191,3 +191,24 @@ void CourseList::readFromFile(const std::string &filename)
 
     inFile.close();
 }
+
+int CourseList::getTotalCredit(const string &maMH)
+{
+    CourseNode *currentNode = root;
+    while (currentNode != nullptr)
+    {
+        if (root->data.MAMH == maMH)
+        {
+            return root->data.STCLT + root->data.STCTH;
+        }
+        if (maMH < root->data.MAMH)
+        {
+            currentNode = root->left;
+        }
+        else
+        {
+            currentNode = root->right;
+        }
+    }
+    return -1;
+}

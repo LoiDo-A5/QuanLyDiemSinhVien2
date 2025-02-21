@@ -26,6 +26,7 @@ public:
     bool isCourseExisted(const string &maMH);
     void saveToFile(const std::string &filename);
     void readFromFile(const std::string &filename);
+    int getTotalCredit(const string &maMH);
 };
 
 #endif

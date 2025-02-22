@@ -3,65 +3,92 @@
 
 #include <string>
 #include <iostream>
+#include <map>
 
 using namespace std;
-#include "Course.h" // Include course.h để sử dụng MonHoc
 
 class SinhVien
 {
 private:
-    string MASV;     // Mã sinh viên
-    string HO;       // Họ sinh viên
-    string TEN;      // Tên sinh viên
-    string GIOITINH; // Giới tính
-    string CMND;     // Số chứng minh nhân dân
-    float DIEM;      // Điểm của sinh viên (Điểm tổng kết)
-    MonHoc monHoc;   // Thêm môn học mà sinh viên đăng ký
+    string MASV;
+    string HO;
+    string TEN;
+    string GIOITINH;
+    string CMND;
+    string SODT;
+    map<string, float> DIEM;
+
+    struct DangKy
+    {
+        string MASV;
+        float DIEM;
+        bool huyDangKy;
+        DangKy* next;
+
+        DangKy(string masv, float diem, bool huy)
+            : MASV(masv), DIEM(diem), huyDangKy(huy), next(nullptr) {}
+    };
+    DangKy* dsdangky;
 
 public:
-    // Constructor mặc định
-    SinhVien();
+    SinhVien(const string &masv, const string &ho, const string &ten, 
+             const string &gioitinh, const string &cmnd, const string &sodt)
+        : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioitinh), CMND(cmnd), SODT(sodt), dsdangky(nullptr) {}
 
-    // Constructor có tham số
-    SinhVien(const string &masv, const string &ho, const string &ten, const string &gioiTinh, const string &cmnd);
+    string getMASV() const { return MASV; }
+    string getHO() const { return HO; }
+    string getTEN() const { return TEN; }
+    string getGIOITINH() const { return GIOITINH; }
+    string getCMND() const { return CMND; }
+    string getSODT() const { return SODT; }
 
-    // Hàm nhập thông tin sinh viên
-    void nhapThongTin();
+    void setMASV(const string &masv) { MASV = masv; }
+    void setHO(const string &ho) { HO = ho; }
+    void setTEN(const string &ten) { TEN = ten; }
+    void setGIOITINH(const string &gioitinh) { GIOITINH = gioitinh; }
+    void setCMND(const string &cmnd) { CMND = cmnd; }
+    void setSODT(const string &sodt) { SODT = sodt; }
 
-    // Hàm in thông tin sinh viên
-    void inThongTin() const;
+    void capNhatDiem(const string &maMH, float diemMoi) {
+        DIEM[maMH] = diemMoi;
+    }
 
-    // Hàm lấy mã sinh viên
-    string getMaSV() const;
+    float getDiem(const string &maMH) const {
+        auto it = DIEM.find(maMH);
+        if (it != DIEM.end()) {
+            return it->second;
+        }
+        return -1.0f;
+    }
 
-    // Hàm lấy tên sinh viên (họ và tên)
-    string getName() const;
+    void inDiem() const {
+        for (const auto &entry : DIEM) {
+            cout << "Môn học: " << entry.first << " - Điểm: " << entry.second << endl;
+        }
+    }
 
-    // Hàm lấy họ
-    string getHo() const;
+    void themDangKy(float diem, bool huy) {
+        DangKy* newDangKy = new DangKy(MASV, diem, huy);
+        newDangKy->next = dsdangky;
+        dsdangky = newDangKy;
+    }
 
-    // Hàm lấy tên
-    string getTen() const;
+    void inDanhSachDangKy() const {
+        DangKy* temp = dsdangky;
+        while (temp != nullptr) {
+            cout << "Mã SV: " << temp->MASV << ", Điểm: " << temp->DIEM 
+                 << ", Hủy đăng ký: " << (temp->huyDangKy ? "Có" : "Không") << endl;
+            temp = temp->next;
+        }
+    }
 
-    // Hàm lấy điểm của sinh viên
-    float getDiem() const;
-
-    // Hàm cập nhật điểm sinh viên
-    void capNhatDiem(float diemMoi);
-
-    // Hàm lấy giới tính
-    string getGioiTinh() const;
-
-    // Hàm lấy CMND
-    string getCMND() const;
-
-    // Hàm chuyển thông tin sinh viên thành chuỗi
-    string toString() const;
-
-    void fromString(const string &data);
-
-    void setDiem(float diemMoi);
-    int getSoTinChi() const;
+    ~SinhVien() {
+        while (dsdangky != nullptr) {
+            DangKy* temp = dsdangky;
+            dsdangky = dsdangky->next;
+            delete temp;
+        }
+    }
 };
 
 #endif // STUDENT_H

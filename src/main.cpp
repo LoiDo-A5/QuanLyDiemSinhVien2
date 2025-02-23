@@ -10,7 +10,8 @@ void menu()
     cout << "2. Xoa lop tin chi\n";
     cout << "3. Hieu chinh lop tin chi\n";
     cout << "4. Hien thi danh sach lop tin chi\n";
-    cout << "5. Thoat\n";
+    cout << "5. Hien thi danh sach sinh vien theo lop tin chi\n";
+    cout << "6. Thoat\n";
     cout << "Lua chon: ";
 }
 
@@ -108,12 +109,40 @@ int main()
             classList.displayCreditClasses();
             break;
         case 5:
+        {
+            string nienKhoa, maMH;
+            int hocKy, nhom;
+            bool found = false;
+
+            do
+            {
+                cout << "Nhap nien khoa: ";
+                cin.ignore();
+                getline(cin, nienKhoa);
+                cout << "Nhap hoc ky: ";
+                cin >> hocKy;
+                cout << "Nhap nhom: ";
+                cin >> nhom;
+                cout << "Nhap ma mon hoc: ";
+                cin.ignore();
+                getline(cin, maMH);
+
+                found = classList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH);
+                if (!found)
+                {
+                    cout << "Khong tim thay lop tin chi nao voi cac tham so da nhap! Vui long thu lai.\n";
+                }
+            } while (!found);
+
+            break;
+        }
+        case 6:
             cout << "Thoat chuong trinh!\n";
             break;
         default:
             cout << "Lua chon khong hop le!\n";
         }
-    } while (choice != 5);
+    } while (choice != 6);
 
     return 0;
 }

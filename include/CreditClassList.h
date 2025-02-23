@@ -5,10 +5,11 @@
 #include "Student.h"
 #include <string>
 
-class CreditClassList {
+class CreditClassList
+{
 private:
     CreditClass creditClasses[10000]; // Mảng lớp tín chỉ với kích thước cố định
-    int count; // Số lượng lớp tín chỉ hiện có
+    int count;                        // Số lượng lớp tín chỉ hiện có
 
 public:
     // Constructor
@@ -49,6 +50,8 @@ public:
 
     // Lấy số lượng lớp tín chỉ
     int getCount() const;
+
+    bool displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH) const;
 };
 
 #endif // CREDIT_CLASS_LIST_H

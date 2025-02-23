@@ -1,11 +1,10 @@
-// Class.cpp
 #include "Class.h"
 
 // Hàm khởi tạo mặc định
-Lop::Lop() : MALOP(""), TENLOP("") {}
+Lop::Lop() : MALOP(""), TENLOP(""), danhSachSinhVien(nullptr) {}
 
 // Hàm khởi tạo có tham số
-Lop::Lop(const std::string &malop, const std::string &tenlop) : MALOP(malop), TENLOP(tenlop) {}
+Lop::Lop(const std::string &malop, const std::string &tenlop) : MALOP(malop), TENLOP(tenlop), danhSachSinhVien(nullptr) {}
 
 // Hàm lấy mã lớp
 std::string Lop::getCode()
@@ -13,12 +12,28 @@ std::string Lop::getCode()
     return MALOP;
 }
 
+// Hàm kiểm tra tính hợp lệ của mã lớp (có thể thêm quy tắc kiểm tra tùy theo yêu cầu)
+bool Lop::isValidCode(const std::string &code)
+{
+    // Ví dụ: Mã lớp phải có độ dài lớn hơn 0 và không chứa ký tự đặc biệt
+    if (code.empty())
+    {
+        std::cout << "Mã lớp không được để trống!" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 // Phương thức để nhập thông tin lớp
 void Lop::nhapThongTin()
 {
     std::cout << "Nhập mã lớp: ";
     std::cin >> MALOP;
-    isValidCode(MALOP); // Kiểm tra tính hợp lệ của mã lớp
+    if (!isValidCode(MALOP))
+    {
+        std::cout << "Mã lớp không hợp lệ, vui lòng nhập lại!" << std::endl;
+        return;
+    }
     std::cout << "Nhập tên lớp: ";
     std::cin.ignore();              // Xóa bỏ ký tự newline còn lại trong bộ đệm
     std::getline(std::cin, TENLOP); // Đọc toàn bộ dòng văn bản, bao gồm cả khoảng trắng
@@ -27,7 +42,20 @@ void Lop::nhapThongTin()
 // Phương thức để thêm sinh viên vào danh sách
 void Lop::addStudent(const SinhVien &student)
 {
-    danhSachSinhVien.push_back(student);
+    SinhVienNode *newNode = new SinhVienNode(student); // Tạo node mới chứa sinh viên
+    if (danhSachSinhVien == nullptr)
+    {
+        danhSachSinhVien = newNode; // Nếu danh sách rỗng, đặt node mới làm đầu danh sách
+    }
+    else
+    {
+        SinhVienNode *current = danhSachSinhVien;
+        while (current->next != nullptr)
+        {
+            current = current->next; // Tìm đến node cuối cùng
+        }
+        current->next = newNode; // Đặt node mới vào cuối danh sách
+    }
 }
 
 // Phương thức để in thông tin lớp
@@ -35,9 +63,12 @@ void Lop::printClassInfo() const
 {
     std::cout << "Mã lớp: " << MALOP << ", Tên lớp: " << TENLOP << std::endl;
     std::cout << "Danh sách sinh viên: " << std::endl;
-    for (const auto &student : danhSachSinhVien)
+
+    SinhVienNode *current = danhSachSinhVien;
+    while (current != nullptr)
     {
-        student.inThongTin(); // Giả sử lớp SinhVien có phương thức inThongTin()
+        current->student.inThongTin(); // In thông tin sinh viên
+        current = current->next;       // Di chuyển đến sinh viên kế tiếp
     }
 }
 
@@ -52,22 +83,29 @@ std::string Lop::getClassName() const
     return TENLOP;
 }
 
-// Getter cho danh sách sinh viên (nếu cần, nhưng không khuyến khích truy cập trực tiếp)
-const std::vector<SinhVien> &Lop::getStudents() const
-{
-    return danhSachSinhVien;
-}
-
 // Phương thức xóa sinh viên theo mã sinh viên
 bool Lop::removeStudent(const std::string &maSV)
 {
-    for (auto it = danhSachSinhVien.begin(); it != danhSachSinhVien.end(); ++it)
+    SinhVienNode *current = danhSachSinhVien;
+    SinhVienNode *previous = nullptr;
+
+    while (current != nullptr)
     {
-        if (it->getMaSV() == maSV) // Tìm sinh viên theo mã
+        if (current->student.getMaSV() == maSV)
         {
-            danhSachSinhVien.erase(it); // Xóa sinh viên khỏi danh sách
+            if (previous == nullptr)
+            { // Nếu sinh viên cần xóa là sinh viên đầu tiên
+                danhSachSinhVien = current->next;
+            }
+            else
+            {
+                previous->next = current->next; // Bỏ qua node cần xóa
+            }
+            delete current; // Xóa node
             return true;
         }
+        previous = current;
+        current = current->next;
     }
     return false; // Không tìm thấy sinh viên
 }
@@ -75,12 +113,14 @@ bool Lop::removeStudent(const std::string &maSV)
 // Phương thức tìm sinh viên theo mã sinh viên
 SinhVien *Lop::findStudent(const std::string &maSV)
 {
-    for (auto &student : danhSachSinhVien)
+    SinhVienNode *current = danhSachSinhVien;
+    while (current != nullptr)
     {
-        if (student.getMaSV() == maSV)
+        if (current->student.getMaSV() == maSV)
         {
-            return &student; // Trả về con trỏ đến sinh viên
+            return &current->student; // Trả về con trỏ đến sinh viên
         }
+        current = current->next;
     }
     return nullptr; // Không tìm thấy sinh viên
 }

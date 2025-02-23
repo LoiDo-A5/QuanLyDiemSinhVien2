@@ -113,3 +113,50 @@ bool CreditClass::hasStudent(const std::string &msv) const
     }
     return false; // Không tìm thấy sinh viên
 }
+
+SinhVien *CreditClass::findStudent(const std::string &maSV)
+{
+    SinhVienNode *current = dssvdk;
+    while (current != nullptr)
+    {
+        if (current->student.getMASV() == maSV)
+        {
+            return &current->student; // Trả về con trỏ đến sinh viên tìm thấy
+        }
+        current = current->next;
+    }
+    return nullptr; // Không tìm thấy
+}
+
+// Hàm xóa sinh viên theo mã số
+bool CreditClass::removeStudent(const std::string &maSV)
+{
+    if (dssvdk == nullptr)
+        return false; // Danh sách rỗng
+
+    SinhVienNode *current = dssvdk;
+    SinhVienNode *previous = nullptr;
+
+    // Tìm sinh viên trong danh sách liên kết
+    while (current != nullptr)
+    {
+        if (current->student.getMASV() == maSV)
+        {
+            if (previous == nullptr)
+            {
+                // Nếu sinh viên cần xóa là node đầu tiên
+                dssvdk = current->next;
+            }
+            else
+            {
+                // Nếu sinh viên cần xóa ở giữa hoặc cuối danh sách
+                previous->next = current->next;
+            }
+            delete current; // Giải phóng bộ nhớ
+            return true;    // Xóa thành công
+        }
+        previous = current;
+        current = current->next;
+    }
+    return false; // Không tìm thấy sinh viên
+}

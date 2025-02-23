@@ -35,6 +35,7 @@ public:
     SinhVien();
     SinhVien(const string &masv, const string &ho, const string &ten,
              const string &gioitinh, const string &cmnd, const string &sodt);
+    SinhVien(const string &masv, const string &hoTen); // Constructor mới
 
     // Getter methods
     string getMASV() const;

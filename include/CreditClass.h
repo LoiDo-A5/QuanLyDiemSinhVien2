@@ -67,6 +67,8 @@ public:
     SinhVienNode *getDSSVDK() const; // Trả về con trỏ đến danh sách sinh viên
     int getSoLuongSinhVien() const;
     bool hasStudent(const std::string &msv) const;
+    bool removeStudent(const std::string &maSV);
+    SinhVien *findStudent(const std::string &maSV);
 
     ~CreditClass();
 };

@@ -23,18 +23,21 @@ private:
         string MASV;
         float DIEM;
         bool huyDangKy;
-        DangKy* next;
+        DangKy *next;
 
         DangKy(string masv, float diem, bool huy)
             : MASV(masv), DIEM(diem), huyDangKy(huy), next(nullptr) {}
     };
-    DangKy* dsdangky;
+    DangKy *dsdangky;
 
 public:
-    SinhVien(const string &masv, const string &ho, const string &ten, 
+    SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), SODT("") {}
+
+    SinhVien(const string &masv, const string &ho, const string &ten,
              const string &gioitinh, const string &cmnd, const string &sodt)
         : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioitinh), CMND(cmnd), SODT(sodt), dsdangky(nullptr) {}
 
+    // Getter methods
     string getMASV() const { return MASV; }
     string getHO() const { return HO; }
     string getTEN() const { return TEN; }
@@ -42,6 +45,7 @@ public:
     string getCMND() const { return CMND; }
     string getSODT() const { return SODT; }
 
+    // Setter methods
     void setMASV(const string &masv) { MASV = masv; }
     void setHO(const string &ho) { HO = ho; }
     void setTEN(const string &ten) { TEN = ten; }
@@ -49,45 +53,37 @@ public:
     void setCMND(const string &cmnd) { CMND = cmnd; }
     void setSODT(const string &sodt) { SODT = sodt; }
 
-    void capNhatDiem(const string &maMH, float diemMoi) {
-        DIEM[maMH] = diemMoi;
-    }
+    // Cập nhật điểm
+    void capNhatDiem(const string &maMH, float diemMoi);
 
-    float getDiem(const string &maMH) const {
-        auto it = DIEM.find(maMH);
-        if (it != DIEM.end()) {
-            return it->second;
-        }
-        return -1.0f;
-    }
+    // Lấy điểm của môn học
+    float getDiem(const string &maMH) const;
 
-    void inDiem() const {
-        for (const auto &entry : DIEM) {
-            cout << "Môn học: " << entry.first << " - Điểm: " << entry.second << endl;
-        }
-    }
+    // In thông tin sinh viên
+    void inThongTin() const;
 
-    void themDangKy(float diem, bool huy) {
-        DangKy* newDangKy = new DangKy(MASV, diem, huy);
-        newDangKy->next = dsdangky;
-        dsdangky = newDangKy;
-    }
+    // In điểm các môn học
+    void inDiem() const;
 
-    void inDanhSachDangKy() const {
-        DangKy* temp = dsdangky;
-        while (temp != nullptr) {
-            cout << "Mã SV: " << temp->MASV << ", Điểm: " << temp->DIEM 
-                 << ", Hủy đăng ký: " << (temp->huyDangKy ? "Có" : "Không") << endl;
-            temp = temp->next;
-        }
-    }
+    // Thêm đăng ký môn học
+    void themDangKy(float diem, bool huy);
 
-    ~SinhVien() {
-        while (dsdangky != nullptr) {
-            DangKy* temp = dsdangky;
-            dsdangky = dsdangky->next;
-            delete temp;
-        }
+    // In danh sách đăng ký môn học
+    void inDanhSachDangKy() const;
+
+    // Destructor để giải phóng bộ nhớ
+    ~SinhVien();
+
+    std::string toString() const
+    {
+        // Chuyển thông tin sinh viên thành chuỗi
+        return "Mã SV: " + MASV + ", Họ: " + HO + ", Tên: " + TEN +
+               ", Giới tính: " + GIOITINH + ", CMND: " + CMND + ", Số điện thoại: " + SODT;
+    }
+    void fromString(const std::string &str)
+    {
+        std::istringstream ss(str);
+        ss >> MASV >> HO >> TEN >> GIOITINH >> CMND >> SODT;
     }
 };
 

@@ -1,4 +1,5 @@
 #include "Class.h"
+#include "IsValid.h"
 
 // Hàm khởi tạo mặc định
 Lop::Lop() : MALOP(""), TENLOP(""), danhSachSinhVien(nullptr) {}
@@ -10,18 +11,6 @@ Lop::Lop(const std::string &malop, const std::string &tenlop) : MALOP(malop), TE
 std::string Lop::getCode()
 {
     return MALOP;
-}
-
-// Hàm kiểm tra tính hợp lệ của mã lớp (có thể thêm quy tắc kiểm tra tùy theo yêu cầu)
-bool Lop::isValidCode(const std::string &code)
-{
-    // Ví dụ: Mã lớp phải có độ dài lớn hơn 0 và không chứa ký tự đặc biệt
-    if (code.empty())
-    {
-        std::cout << "Mã lớp không được để trống!" << std::endl;
-        return false;
-    }
-    return true;
 }
 
 // Phương thức để nhập thông tin lớp
@@ -91,7 +80,7 @@ bool Lop::removeStudent(const std::string &maSV)
 
     while (current != nullptr)
     {
-        if (current->student.getMaSV() == maSV)
+        if (current->student.getMASV() == maSV)
         {
             if (previous == nullptr)
             { // Nếu sinh viên cần xóa là sinh viên đầu tiên
@@ -116,7 +105,7 @@ SinhVien *Lop::findStudent(const std::string &maSV)
     SinhVienNode *current = danhSachSinhVien;
     while (current != nullptr)
     {
-        if (current->student.getMaSV() == maSV)
+        if (current->student.getMASV() == maSV)
         {
             return &current->student; // Trả về con trỏ đến sinh viên
         }

@@ -5,10 +5,11 @@
 #include <string>
 #include "Student.h"
 
-class SinhVienNode {
+class SinhVienNode
+{
 public:
-    SinhVien student;           // Sinh viên
-    SinhVienNode *next;         // Con trỏ đến sinh viên tiếp theo
+    SinhVien student;   // Sinh viên
+    SinhVienNode *next; // Con trỏ đến sinh viên tiếp theo
 
     SinhVienNode(const SinhVien &student) : student(student), next(nullptr) {}
 };
@@ -16,8 +17,8 @@ public:
 class Lop
 {
 private:
-    std::string MALOP;  // Mã lớp
-    std::string TENLOP; // Tên lớp
+    std::string MALOP;              // Mã lớp
+    std::string TENLOP;             // Tên lớp
     SinhVienNode *danhSachSinhVien; // Danh sách sinh viên trong lớp (danh sách liên kết đơn)
 
 public:
@@ -32,6 +33,11 @@ public:
     std::string getClassName() const;
     bool removeStudent(const std::string &maSV);
     SinhVien *findStudent(const std::string &maSV);
+    
+    const SinhVienNode *getStudents() const
+    {
+        return danhSachSinhVien;
+    }
 };
 
 #endif // CLASS_H

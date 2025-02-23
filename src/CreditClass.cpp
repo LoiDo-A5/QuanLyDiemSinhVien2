@@ -1,12 +1,26 @@
 #include "CreditClass.h"
 #include <iostream>
 
+CreditClass::CreditClass(int MALOPTC, const std::string &MAMH, const std::string &tenLop,
+                         const std::string &nienKhoa, int hocKy, int nhom,
+                         int soSvMin, int soSvMax)
+    : MALOPTC(MALOPTC), MAMH(MAMH), tenLop(tenLop), nienKhoa(nienKhoa),
+      hocKy(hocKy), nhom(nhom), soSvMin(soSvMin), soSvMax(soSvMax), huyLop(false), dssvdk(nullptr) {}
+
 // Constructor
-CreditClass::CreditClass(int malopTC, const std::string &maMH, const std::string &tenLop,
-                         const std::string &nienKhoa, int hocKy, int nhom, int minSv, int maxSv)
-    : MALOPTC(malopTC), MAMH(maMH), tenLop(tenLop), nienKhoa(nienKhoa),
-      hocKy(hocKy), nhom(nhom), soSvMin(minSv), soSvMax(maxSv), huyLop(false), dssvdk(nullptr)
+CreditClass::CreditClass()
+    : MALOPTC(0), MAMH(""), tenLop(""), nienKhoa(""),
+      hocKy(0), nhom(0), soSvMin(0), soSvMax(0), huyLop(false), dssvdk(nullptr) {}
+
+CreditClass::~CreditClass()
 {
+    SinhVienNode *current = dssvdk;
+    while (current != nullptr)
+    {
+        SinhVienNode *temp = current;
+        current = current->next;
+        delete temp;
+    }
 }
 
 // Getter và Setter cho các trường thông tin khác
@@ -84,4 +98,18 @@ int CreditClass::getSoLuongSinhVien() const
         current = current->next;
     }
     return count;
+}
+
+bool CreditClass::hasStudent(const std::string &msv) const
+{
+    SinhVienNode *current = dssvdk; // Bắt đầu từ đầu danh sách liên kết
+    while (current != nullptr)
+    {
+        if (current->student.getMASV() == msv)
+        {
+            return true; // Tìm thấy sinh viên
+        }
+        current = current->next; // Di chuyển đến node tiếp theo
+    }
+    return false; // Không tìm thấy sinh viên
 }

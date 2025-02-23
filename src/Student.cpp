@@ -1,11 +1,11 @@
-#include "Student.h"
+#include "../include/Student.h"
 
-// Constructor
+SinhVien::SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), SODT(""), dsdangky(nullptr) {}
+
 SinhVien::SinhVien(const string &masv, const string &ho, const string &ten,
                    const string &gioitinh, const string &cmnd, const string &sodt)
     : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioitinh), CMND(cmnd), SODT(sodt), dsdangky(nullptr) {}
 
-// Getter methods
 string SinhVien::getMASV() const { return MASV; }
 string SinhVien::getHO() const { return HO; }
 string SinhVien::getTEN() const { return TEN; }
@@ -13,7 +13,6 @@ string SinhVien::getGIOITINH() const { return GIOITINH; }
 string SinhVien::getCMND() const { return CMND; }
 string SinhVien::getSODT() const { return SODT; }
 
-// Setter methods
 void SinhVien::setMASV(const string &masv) { MASV = masv; }
 void SinhVien::setHO(const string &ho) { HO = ho; }
 void SinhVien::setTEN(const string &ten) { TEN = ten; }
@@ -21,67 +20,70 @@ void SinhVien::setGIOITINH(const string &gioitinh) { GIOITINH = gioitinh; }
 void SinhVien::setCMND(const string &cmnd) { CMND = cmnd; }
 void SinhVien::setSODT(const string &sodt) { SODT = sodt; }
 
-// Method to update grades
 void SinhVien::capNhatDiem(const string &maMH, float diemMoi)
 {
     DIEM[maMH] = diemMoi;
 }
 
-// Method to get grades for a subject
 float SinhVien::getDiem(const string &maMH) const
 {
     auto it = DIEM.find(maMH);
-    if (it != DIEM.end())
-    {
-        return it->second;
-    }
-    return -1.0f; // If not found, return -1.0 as invalid grade
+    return (it != DIEM.end()) ? it->second : -1; // Trả về -1 nếu không tìm thấy điểm
 }
 
-// Method to display grades
+void SinhVien::inThongTin() const
+{
+    cout << "Mã SV: " << MASV << ", Họ: " << HO << ", Tên: " << TEN
+         << ", Giới tính: " << GIOITINH << ", CMND: " << CMND
+         << ", Số điện thoại: " << SODT << endl;
+}
+
 void SinhVien::inDiem() const
 {
-    for (const auto &entry : DIEM)
+    cout << "Điểm các môn của " << MASV << ":\n";
+    for (const auto &pair : DIEM)
     {
-        cout << "Môn học: " << entry.first << " - Điểm: " << entry.second << endl;
+        cout << "Môn: " << pair.first << ", Điểm: " << pair.second << endl;
     }
 }
 
-// Method to add a registration (DangKy)
 void SinhVien::themDangKy(float diem, bool huy)
 {
-    DangKy *newDangKy = new DangKy(MASV, diem, huy);
-    newDangKy->next = dsdangky; // Add to the front of the linked list
-    dsdangky = newDangKy;
+    DangKy *moi = new DangKy(MASV, diem, huy);
+    moi->next = dsdangky;
+    dsdangky = moi;
 }
 
-// Method to display the registration list
 void SinhVien::inDanhSachDangKy() const
 {
-    DangKy *temp = dsdangky;
-    while (temp != nullptr)
+    DangKy *current = dsdangky;
+    while (current)
     {
-        cout << "Mã SV: " << temp->MASV << ", Điểm: " << temp->DIEM
-             << ", Hủy đăng ký: " << (temp->huyDangKy ? "Có" : "Không") << endl;
-        temp = temp->next;
+        cout << "Mã SV: " << current->MASV << ", Điểm: " << current->DIEM
+             << ", Hủy đăng ký: " << (current->huyDangKy ? "Có" : "Không") << endl;
+        current = current->next;
     }
 }
 
-// Destructor to clean up the DangKy linked list
 SinhVien::~SinhVien()
 {
-    while (dsdangky != nullptr)
+    while (dsdangky)
     {
         DangKy *temp = dsdangky;
         dsdangky = dsdangky->next;
-        delete temp; // Delete each DangKy node
+        delete temp;
     }
 }
 
-// Method to display student info
-void SinhVien::inThongTin() const
+string SinhVien::toString() const
 {
-    cout << "Mã sinh viên: " << MASV << ", Họ tên: " << HO << " " << TEN
-         << ", Giới tính: " << GIOITINH << ", CMND: " << CMND
-         << ", Số điện thoại: " << SODT << endl;
+    stringstream ss;
+    ss << MASV << " " << HO << " " << TEN << " " << GIOITINH << " " << CMND << " " << SODT;
+    return ss.str();
+}
+
+void SinhVien::fromString(const string &str)
+{
+    istringstream ss(str);
+    ss >> MASV >> HO >> TEN >> GIOITINH >> CMND >> SODT;
 }

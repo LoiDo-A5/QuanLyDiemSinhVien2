@@ -66,6 +66,9 @@ public:
     // Getter cho danh sách sinh viên đăng ký
     SinhVienNode *getDSSVDK() const; // Trả về con trỏ đến danh sách sinh viên
     int getSoLuongSinhVien() const;
+    bool hasStudent(const std::string &msv) const;
+
+    ~CreditClass();
 };
 
 #endif // CREDIT_CLASS_H

@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <sstream>
 
 using namespace std;
 
@@ -31,27 +32,24 @@ private:
     DangKy *dsdangky;
 
 public:
-    SinhVien() : MASV(""), HO(""), TEN(""), GIOITINH(""), CMND(""), SODT("") {}
-
+    SinhVien();
     SinhVien(const string &masv, const string &ho, const string &ten,
-             const string &gioitinh, const string &cmnd, const string &sodt)
-        : MASV(masv), HO(ho), TEN(ten), GIOITINH(gioitinh), CMND(cmnd), SODT(sodt), dsdangky(nullptr) {}
+             const string &gioitinh, const string &cmnd, const string &sodt);
 
     // Getter methods
-    string getMASV() const { return MASV; }
-    string getHO() const { return HO; }
-    string getTEN() const { return TEN; }
-    string getGIOITINH() const { return GIOITINH; }
-    string getCMND() const { return CMND; }
-    string getSODT() const { return SODT; }
+    string getMASV() const;
+    string getHO() const;
+    string getTEN() const;
+    string getGIOITINH() const;
+    string getCMND() const;
+    string getSODT() const;
 
-    // Setter methods
-    void setMASV(const string &masv) { MASV = masv; }
-    void setHO(const string &ho) { HO = ho; }
-    void setTEN(const string &ten) { TEN = ten; }
-    void setGIOITINH(const string &gioitinh) { GIOITINH = gioitinh; }
-    void setCMND(const string &cmnd) { CMND = cmnd; }
-    void setSODT(const string &sodt) { SODT = sodt; }
+    void setMASV(const string &masv);
+    void setHO(const string &ho);
+    void setTEN(const string &ten);
+    void setGIOITINH(const string &gioitinh);
+    void setCMND(const string &cmnd);
+    void setSODT(const string &sodt);
 
     // Cập nhật điểm
     void capNhatDiem(const string &maMH, float diemMoi);
@@ -74,17 +72,8 @@ public:
     // Destructor để giải phóng bộ nhớ
     ~SinhVien();
 
-    std::string toString() const
-    {
-        // Chuyển thông tin sinh viên thành chuỗi
-        return "Mã SV: " + MASV + ", Họ: " + HO + ", Tên: " + TEN +
-               ", Giới tính: " + GIOITINH + ", CMND: " + CMND + ", Số điện thoại: " + SODT;
-    }
-    void fromString(const std::string &str)
-    {
-        std::istringstream ss(str);
-        ss >> MASV >> HO >> TEN >> GIOITINH >> CMND >> SODT;
-    }
+    string toString() const;
+    void fromString(const string &str);
 };
 
 #endif // STUDENT_H

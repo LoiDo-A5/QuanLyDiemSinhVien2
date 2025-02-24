@@ -13,6 +13,14 @@ void CreditClassList::addCreditClass(const CreditClass &creditClass)
     if (count < 10000)
     {
         creditClasses[count++] = creditClass;
+        cout << "DEBUG: Da them lop tin chi - Ma MH: " << creditClass.getMAMH()
+             << ", Nien khoa: " << creditClass.getNienKhoa()
+             << ", Hoc ky: " << creditClass.getHocKy()
+             << ", Nhom: " << creditClass.getNhom() << endl;
+    }
+    else
+    {
+        cout << "Danh sach lop tin chi da day!" << endl;
     }
 }
 
@@ -86,12 +94,16 @@ CreditClass *CreditClassList::findClass(const string &nienKhoa, int hocKy, int n
 {
     for (int i = 0; i < count; ++i)
     {
-        if (creditClasses[i].getNienKhoa() == nienKhoa && creditClasses[i].getHocKy() == hocKy &&
-            creditClasses[i].getNhom() == nhom && creditClasses[i].getMAMH() == maMH)
+        if (creditClasses[i].getNienKhoa() == nienKhoa &&
+            creditClasses[i].getHocKy() == hocKy &&
+            creditClasses[i].getNhom() == nhom &&
+            creditClasses[i].getMAMH() == maMH)
         {
+            cout << "DEBUG: Tim thay lop tin chi!" << endl;
             return &creditClasses[i];
         }
     }
+    cout << "DEBUG: Khong tim thay lop tin chi nao!" << endl;
     return nullptr;
 }
 
@@ -102,10 +114,13 @@ bool CreditClassList::registerStudent(const string &maMH, const SinhVien &sinhVi
     {
         if (creditClasses[i].getMAMH() == maMH)
         {
-            creditClasses[i].addStudent(sinhVien);
+            creditClasses[i].addStudent(sinhVien); // Thêm sinh viên vào lớp tín chỉ
+            cout << "Sinh viên " << sinhVien.getHO() << " " << sinhVien.getTEN() << " đã đăng ký lớp tín chỉ "
+                 << maMH << " thành công!" << endl;
             return true;
         }
     }
+    cout << "Không tìm thấy lớp tín chỉ với mã môn học: " << maMH << endl;
     return false;
 }
 
@@ -179,25 +194,33 @@ int CreditClassList::getCount() const
     return count;
 }
 
+// Hiển thị danh sách sinh viên đã đăng ký lớp tín chỉ theo các tham số: niên khóa, học kỳ, nhóm, mã môn học
 bool CreditClassList::displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH) const
 {
     bool found = false;
+    // Duyệt qua tất cả các lớp tín chỉ
     for (int i = 0; i < count; ++i)
     {
+        // Kiểm tra các tham số niên khóa, học kỳ, nhóm và mã môn học
         if (creditClasses[i].getNienKhoa() == nienKhoa &&
             creditClasses[i].getHocKy() == hocKy &&
             creditClasses[i].getNhom() == nhom &&
             creditClasses[i].getMAMH() == maMH)
         {
             found = true;
-            cout << "Danh sach sinh vien trong lop " << creditClasses[i].getTenLop() << ":\n";
-            creditClasses[i].inDSSV();
+            // Hiển thị danh sách sinh viên trong lớp tín chỉ
+            cout << "Danh sách sinh viên trong lớp tín chỉ " << creditClasses[i].getTenLop() << " ("
+                 << creditClasses[i].getMAMH() << ") - Nhóm: " << nhom << ", Niên khóa: "
+                 << nienKhoa << ", Học kỳ: " << hocKy << ":\n";
+            creditClasses[i].inDSSV(); // In danh sách sinh viên đã đăng ký trong lớp tín chỉ
         }
     }
+
+    // Nếu không tìm thấy lớp tín chỉ phù hợp
     if (!found)
     {
-        cout << "Khong tim thay lop tin chi nao voi cac tham so da nhap!\n";
+        cout << "Không tìm thấy lớp tín chỉ nào với các tham số đã nhập!" << endl;
     }
 
-    return found; // Thêm câu lệnh return để đảm bảo hàm có giá trị trả về
+    return found;
 }

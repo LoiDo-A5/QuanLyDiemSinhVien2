@@ -109,60 +109,60 @@ int main()
         case 4:
             classList.displayCreditClasses();
             break;
-        case 5:
+        case 5: // In danh sách sinh viên đã đăng ký lớp tín chỉ
         {
             string nienKhoa, maMH;
             int hocKy, nhom;
             bool found = false;
 
-            do
-            {
-                cout << "Nhap nien khoa: ";
-                cin.ignore();
-                getline(cin, nienKhoa);
-                cout << "Nhap hoc ky: ";
-                cin >> hocKy;
-                cout << "Nhap nhom: ";
-                cin >> nhom;
-                cout << "Nhap ma mon hoc: ";
-                cin.ignore();
-                getline(cin, maMH);
+            // Yêu cầu người dùng nhập thông tin về niên khóa, học kỳ, nhóm và mã môn học
+            cout << "Nhập niên khóa: ";
+            cin >> nienKhoa;
+            cout << "Nhập học kỳ: ";
+            cin >> hocKy;
+            cout << "Nhập nhóm: ";
+            cin >> nhom;
+            cout << "Nhập mã môn học: ";
+            cin.ignore();
+            getline(cin, maMH);
 
-                found = classList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH);
-                if (!found)
-                {
-                    cout << "Khong tim thay lop tin chi nao voi cac tham so da nhap! Vui long thu lai.\n";
-                }
-            } while (!found);
+            // Gọi phương thức để hiển thị danh sách sinh viên theo các tham số đã nhập
+            found = classList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH);
+            if (!found)
+            {
+                cout << "Không tìm thấy lớp tín chỉ nào với các tham số đã nhập!\n";
+            }
 
             break;
         }
-        case 6: // Cập nhật sinh viên của lớp
+
+        case 6: // Cập nhật sinh viên của lớp tín chỉ
         {
             int maloptc;
-            cout << "Nhap ma lop tin chi: ";
+            cout << "Nhập mã lớp tín chỉ: ";
             cin >> maloptc;
             cin.ignore();
 
             CreditClass *foundClass = classList.findCreditClassByMALOPTC(maloptc);
             if (!foundClass)
             {
-                cout << "Khong tim thay lop tin chi!\n";
+                cout << "Không tìm thấy lớp tín chỉ!\n";
                 break;
             }
 
             string masv, hoten;
             int svChoice;
-            SinhVien *sv = nullptr; // Khai báo biến SinhVien* trước switch
+            SinhVien newSv;
+            SinhVien *sv = nullptr; // Khai báo biến sv ở ngoài switch
 
             do
             {
-                cout << "\n=== QUAN LY SINH VIEN CUA LOP ===\n";
-                cout << "1. Them sinh vien\n";
-                cout << "2. Xoa sinh vien\n";
-                cout << "3. Hieu chinh thong tin sinh vien\n";
-                cout << "4. Thoat\n";
-                cout << "Lua chon: ";
+                cout << "\n=== QUẢN LÝ SINH VIÊN CỦA LỚP ===\n";
+                cout << "1. Thêm sinh viên\n";
+                cout << "2. Xóa sinh viên\n";
+                cout << "3. Hiệu chỉnh thông tin sinh viên\n";
+                cout << "4. Thoát\n";
+                cout << "Lựa chọn: ";
                 cin >> svChoice;
                 cin.ignore();
 
@@ -171,60 +171,86 @@ int main()
                 case 1: // Thêm sinh viên
                     do
                     {
-                        cout << "Nhap ma sinh vien (Nhap rong de dung): ";
+                        cout << "Nhập mã sinh viên (Nhập rỗng để dừng): ";
                         getline(cin, masv);
                         if (masv.empty())
                             break;
 
-                        cout << "Nhap ho ten sinh vien: ";
+                        cout << "Nhập họ tên sinh viên: ";
                         getline(cin, hoten);
+                        newSv = SinhVien(masv, hoten, "", "", "", ""); // Tạo đối tượng sinh viên mới
 
-                        SinhVien newSv(masv, hoten, "", "", "", ""); // Truyền đầy đủ 6 tham số
-                        foundClass->addStudent(newSv);
-                        cout << "Da them sinh vien!\n";
+                        // Đăng ký sinh viên vào lớp tín chỉ
+                        if (classList.registerStudent(foundClass->getMAMH(), newSv))
+                        {
+                            cout << "Đã thêm sinh viên!\n";
+                        }
                     } while (!masv.empty());
                     break;
 
                 case 2: // Xóa sinh viên
-                    cout << "Nhap ma sinh vien can xoa: ";
+                    cout << "Nhập mã sinh viên cần xóa: ";
                     getline(cin, masv);
                     if (foundClass->removeStudent(masv))
                     {
-                        cout << "Da xoa sinh vien!\n";
+                        cout << "Đã xóa sinh viên!\n";
                     }
                     else
                     {
-                        cout << "Khong tim thay sinh vien!\n";
+                        cout << "Không tìm thấy sinh viên!\n";
                     }
                     break;
 
                 case 3: // Hiệu chỉnh sinh viên
-                    cout << "Nhap ma sinh vien can hieu chinh: ";
+                    cout << "Nhập mã sinh viên cần hiệu chỉnh: ";
                     getline(cin, masv);
                     sv = foundClass->findStudent(masv); // Sử dụng biến sv đã khai báo trước đó
                     if (sv)
                     {
-                        cout << "Nhap ho ten moi: ";
+                        cout << "Nhập họ tên mới: ";
                         getline(cin, hoten);
                         sv->setTEN(hoten);
-                        cout << "Da cap nhat thong tin sinh vien!\n";
+                        cout << "Đã cập nhật thông tin sinh viên!\n";
                     }
                     else
                     {
-                        cout << "Khong tim thay sinh vien!\n";
+                        cout << "Không tìm thấy sinh viên!\n";
                     }
                     break;
 
                 case 4:
-                    cout << "Thoat quan ly sinh vien!\n";
+                    cout << "Thoát quản lý sinh viên!\n";
                     break;
 
                 default:
-                    cout << "Lua chon khong hop le!\n";
+                    cout << "Lựa chọn không hợp lệ!\n";
                 }
             } while (svChoice != 4);
+
+            // Sau khi đã nhập/xóa/sửa sinh viên, in danh sách sinh viên
+            string nienKhoa, maMH;
+            int hocKy, nhom;
+            bool found = false;
+
+            cout << "Nhập niên khóa: ";
+            cin >> nienKhoa;
+            cout << "Nhập học kỳ: ";
+            cin >> hocKy;
+            cout << "Nhập nhóm: ";
+            cin >> nhom;
+            cout << "Nhập mã môn học: ";
+            cin.ignore();
+            getline(cin, maMH);
+
+            found = classList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH); // Hiển thị danh sách sinh viên đã đăng ký
+            if (!found)
+            {
+                cout << "Không tìm thấy lớp tín chỉ nào với các tham số đã nhập!\n";
+            }
+
             break;
         }
+
         case 7:
             cout << "Thoat chuong trinh!\n";
             break;

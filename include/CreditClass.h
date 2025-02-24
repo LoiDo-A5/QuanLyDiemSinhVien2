@@ -4,33 +4,34 @@
 #include <string>
 #include "Student.h"
 
-// Định nghĩa SinhVienNode (dùng cho danh sách liên kết đơn)
-struct SinhVienNode
+class DangKyNode
 {
-    SinhVien student;   // Thông tin sinh viên
-    SinhVienNode *next; // Con trỏ đến phần tử tiếp theo trong danh sách
+public:
+    string MASV;
+    float DIEM;
+    bool huyDangKy;
+    DangKyNode *next;
 
-    // Constructor cho node
-    SinhVienNode(const SinhVien &sv) : student(sv), next(nullptr) {}
+    DangKyNode(string masv, float diem, bool huy)
+        : MASV(masv), DIEM(diem), huyDangKy(huy), next(nullptr) {}
 };
 
 class CreditClass
 {
 private:
-    int MALOPTC;          // Mã lớp tín chỉ
+    int MALOPTC;          // Mã lớp tín chỉ (số nguyên tự động tăng)
     std::string MAMH;     // Mã môn học
-    std::string tenLop;   // Tên lớp
     std::string nienKhoa; // Niên khóa
     int hocKy;            // Học kỳ
     int nhom;             // Nhóm
     int soSvMin;          // Số sinh viên tối thiểu
     int soSvMax;          // Số sinh viên tối đa
     bool huyLop;          // Trạng thái hủy lớp
-    SinhVienNode *dssvdk; // Danh sách sinh viên đăng ký lớp tín chỉ (danh sách liên kết đơn)
+    DangKyNode *dssvdk;   // Danh sách sinh viên đăng ký lớp tín chỉ (danh sách liên kết đơn)
 
 public:
     // Constructor
-    CreditClass(int MALOPTC, const std::string &MAMH, const std::string &tenLop,
+    CreditClass(const std::string &MAMH,
                 const std::string &nienKhoa, int hocKy, int nhom,
                 int soSvMin, int soSvMax);
 
@@ -38,14 +39,13 @@ public:
     CreditClass();
 
     // Getter và Setter
-    void addStudent(const SinhVien &student); // Thêm sinh viên vào danh sách đăng ký
-    void capNhatDSSV(SinhVienNode *dssv);     // Cập nhật danh sách sinh viên
-    void inDSSV() const;                      // In danh sách sinh viên đăng ký
+    void addStudent(const DangKyNode &student); // Thêm sinh viên vào danh sách đăng ký
+    void capNhatDSSV(DangKyNode *dssv);         // Cập nhật danh sách sinh viên
+    void inDSSV() const;                        // In danh sách sinh viên đăng ký
 
     // Getter các thông tin khác
     int getMALOPTC() const;
     std::string getMAMH() const;
-    std::string getTenLop() const;
     std::string getNienKhoa() const;
     int getHocKy() const;
     int getNhom() const;
@@ -55,7 +55,6 @@ public:
 
     // Setters cho các trường
     void setMAMH(const std::string &maMH);
-    void setTenLop(const std::string &tenLop);
     void setNienKhoa(const std::string &nienKhoa);
     void setHocKy(int hocKy);
     void setNhom(int nhom);
@@ -64,11 +63,11 @@ public:
     void setHuyLop(bool huy);
 
     // Getter cho danh sách sinh viên đăng ký
-    SinhVienNode *getDSSVDK() const; // Trả về con trỏ đến danh sách sinh viên
+    DangKyNode *getDSSVDK() const; // Trả về con trỏ đến danh sách sinh viên
     int getSoLuongSinhVien() const;
     bool hasStudent(const std::string &msv) const;
     bool removeStudent(const std::string &maSV);
-    SinhVien *findStudent(const std::string &maSV);
+    DangKyNode *findStudent(const std::string &maSV);
 
     ~CreditClass();
 };

@@ -42,13 +42,13 @@ bool isValidFloat(float &num)
     return true;
 }
 
-// Hàm kiểm tra chuỗi CMND có hợp lệ không
-bool isValidCMND(std::string &str)
+// Hàm kiểm tra chuỗi SDT có hợp lệ không
+bool isValidSDT(std::string &str)
 {
     while (true)
     {
         // Kiểm tra nếu độ dài không phải 9 hoặc 12 ký tự
-        if (str.length() == 9 || str.length() == 12)
+        if (str.length() == 10)
         {
             bool isValid = true;
 
@@ -70,7 +70,7 @@ bool isValidCMND(std::string &str)
         }
 
         // Nếu chuỗi không hợp lệ, yêu cầu người dùng nhập lại
-        std::cout << "CMND không hợp lệ. Vui lòng nhập lại (CMND phải có 9 hoặc 12 chữ số): ";
+        std::cout << "SDT không hợp lệ. Vui lòng nhập lại (SDT phải có 10 chữ số): ";
         std::cin >> str;
     }
 }

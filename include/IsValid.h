@@ -11,6 +11,6 @@ bool isValidFloat(float &num);                       // Kiểm tra số hợp l�
 bool isValidString(std::string &str);                // Kiểm tra chuỗi hợp lệ (không rỗng)
 bool isValidCode(std::string &code, int length = 5); // Kiểm tra mã hợp lệ (mặc định chiều dài là 5)
 bool isValidYear(std::string &year);                 // Kiểm tra năm hợp lệ (ví dụ năm hiện tại)
-bool isValidCMND(std::string &str);
+bool isValidSDT(std::string &str);
 
 #endif // ISVALID_H

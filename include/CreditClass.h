@@ -12,8 +12,8 @@ public:
     bool huyDangKy;
     DangKyNode *next;
 
-    DangKyNode(string masv, float diem, bool huy)
-        : MASV(masv), DIEM(diem), huyDangKy(huy), next(nullptr) {}
+    DangKyNode(string masv)
+        : MASV(masv), DIEM(0), huyDangKy(false), next(nullptr) {}
 };
 
 class CreditClass
@@ -39,9 +39,9 @@ public:
     CreditClass();
 
     // Getter và Setter
-    void addStudent(const DangKyNode &student); // Thêm sinh viên vào danh sách đăng ký
-    void capNhatDSSV(DangKyNode *dssv);         // Cập nhật danh sách sinh viên
-    void inDSSV() const;                        // In danh sách sinh viên đăng ký
+    void addStudent(const std::string maSV); // Thêm sinh viên vào danh sách đăng ký
+    void capNhatDSSV(DangKyNode *dssv);      // Cập nhật danh sách sinh viên
+    void inDSSV() const;                     // In danh sách sinh viên đăng ký
 
     // Getter các thông tin khác
     int getMALOPTC() const;
@@ -54,6 +54,7 @@ public:
     bool isHuyLop() const;
 
     // Setters cho các trường
+    void setMaLopTC(int maLopTC);
     void setMAMH(const std::string &maMH);
     void setNienKhoa(const std::string &nienKhoa);
     void setHocKy(int hocKy);

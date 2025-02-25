@@ -28,13 +28,14 @@ public:
     std::string getCode();
     void nhapThongTin();
     void addStudent(const SinhVien &student);
+    void setStudents(SinhVienNode *students);
     void printClassInfo() const;
     std::string getClassID() const;
     std::string getClassName() const;
     bool removeStudent(const std::string &maSV);
     SinhVien *findStudent(const std::string &maSV);
-    
-    const SinhVienNode *getStudents() const
+
+    SinhVienNode *getStudents() const
     {
         return danhSachSinhVien;
     }

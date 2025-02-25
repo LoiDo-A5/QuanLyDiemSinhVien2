@@ -1,23 +1,23 @@
 #include "CreditClass.h"
 #include <iostream>
 
-CreditClass::CreditClass(int MALOPTC, const std::string &MAMH, const std::string &tenLop,
-                         const std::string &nienKhoa, int hocKy, int nhom,
-                         int soSvMin, int soSvMax)
-    : MALOPTC(MALOPTC), MAMH(MAMH), tenLop(tenLop), nienKhoa(nienKhoa),
-      hocKy(hocKy), nhom(nhom), soSvMin(soSvMin), soSvMax(soSvMax), huyLop(false), dssvdk(nullptr) {}
+CreditClass::CreditClass(const std::string &maMH,
+                         const std::string &nk, int hk, int n,
+                         int min, int max)
+    : MALOPTC(0), MAMH(maMH), nienKhoa(nk),
+      hocKy(hk), nhom(n), soSvMin(min), soSvMax(max), huyLop(false), dssvdk(nullptr) {}
 
 // Constructor
 CreditClass::CreditClass()
-    : MALOPTC(0), MAMH(""), tenLop(""), nienKhoa(""),
+    : MALOPTC(0), MAMH(""), nienKhoa(""),
       hocKy(0), nhom(0), soSvMin(0), soSvMax(0), huyLop(false), dssvdk(nullptr) {}
 
 CreditClass::~CreditClass()
 {
-    SinhVienNode *current = dssvdk;
+    DangKyNode *current = dssvdk;
     while (current != nullptr)
     {
-        SinhVienNode *temp = current;
+        DangKyNode *temp = current;
         current = current->next;
         delete temp;
     }
@@ -26,7 +26,6 @@ CreditClass::~CreditClass()
 // Getter và Setter cho các trường thông tin khác
 int CreditClass::getMALOPTC() const { return MALOPTC; }
 std::string CreditClass::getMAMH() const { return MAMH; }
-std::string CreditClass::getTenLop() const { return tenLop; }
 std::string CreditClass::getNienKhoa() const { return nienKhoa; }
 int CreditClass::getHocKy() const { return hocKy; }
 int CreditClass::getNhom() const { return nhom; }
@@ -35,8 +34,8 @@ int CreditClass::getSoSvMax() const { return soSvMax; }
 bool CreditClass::isHuyLop() const { return huyLop; }
 
 // Setters
+void CreditClass::setMaLopTC(int maLopTC) { MALOPTC = maLopTC; }
 void CreditClass::setMAMH(const std::string &maMH) { MAMH = maMH; }
-void CreditClass::setTenLop(const std::string &tenLop) { this->tenLop = tenLop; }
 void CreditClass::setNienKhoa(const std::string &nienKhoa) { this->nienKhoa = nienKhoa; }
 void CreditClass::setHocKy(int hocKy) { this->hocKy = hocKy; }
 void CreditClass::setNhom(int nhom) { this->nhom = nhom; }
@@ -45,118 +44,118 @@ void CreditClass::setSoSvMax(int soSvMax) { this->soSvMax = soSvMax; }
 void CreditClass::setHuyLop(bool huy) { huyLop = huy; }
 
 // Thêm sinh viên vào lớp tín chỉ
-void CreditClass::addStudent(const SinhVien &student)
+void CreditClass::addStudent(const std::string maSV)
 {
     // Kiểm tra nếu lớp chưa đầy
     if (dssvdk == nullptr)
     {
-        dssvdk = new SinhVienNode(student); // Khởi tạo danh sách sinh viên đầu tiên
+        dssvdk = new DangKyNode(maSV); // Khởi tạo danh sách sinh viên đầu tiên
     }
     else
     {
-        SinhVienNode *current = dssvdk;
+        DangKyNode *current = dssvdk;
         // Duyệt đến phần tử cuối cùng trong danh sách
         while (current->next != nullptr)
         {
             current = current->next;
         }
-        current->next = new SinhVienNode(student); // Thêm sinh viên vào cuối danh sách
+        current->next = new DangKyNode(maSV); // Thêm sinh viên vào cuối danh sách
     }
-    std::cout << "Sinh viên " << student.getHO() << " " << student.getTEN() << " đã được thêm vào lớp tín chỉ." << std::endl;
+    std::cout << "Sinh viên " << maSV << " đã được thêm vào lớp tín chỉ." << std::endl;
 }
 
-// Phương thức cập nhật danh sách sinh viên
-void CreditClass::capNhatDSSV(SinhVienNode *dssv)
-{
-    dssvdk = dssv; // Cập nhật danh sách sinh viên
-}
+// // Phương thức cập nhật danh sách sinh viên
+// void CreditClass::capNhatDSSV(SinhVienNode *dssv)
+// {
+//     dssvdk = dssv; // Cập nhật danh sách sinh viên
+// }
 
-// In danh sách sinh viên
-void CreditClass::inDSSV() const
-{
-    SinhVienNode *current = dssvdk;
-    while (current != nullptr)
-    {
-        std::cout << current->student.getHO() << " " << current->student.getTEN() << std::endl;
-        current = current->next;
-    }
-}
+// // In danh sách sinh viên
+// void CreditClass::inDSSV() const
+// {
+//     SinhVienNode *current = dssvdk;
+//     while (current != nullptr)
+//     {
+//         std::cout << current->student.getHO() << " " << current->student.getTEN() << std::endl;
+//         current = current->next;
+//     }
+// }
 
-// Getter cho danh sách sinh viên đăng ký
-SinhVienNode *CreditClass::getDSSVDK() const
-{
-    return dssvdk; // Trả về con trỏ đến danh sách sinh viên
-}
+// // Getter cho danh sách sinh viên đăng ký
+// SinhVienNode *CreditClass::getDSSVDK() const
+// {
+//     return dssvdk; // Trả về con trỏ đến danh sách sinh viên
+// }
 
-int CreditClass::getSoLuongSinhVien() const
-{
-    int count = 0;
-    SinhVienNode *current = dssvdk; // Bắt đầu từ đầu danh sách liên kết
-    while (current != nullptr)
-    {
-        count++;
-        current = current->next;
-    }
-    return count;
-}
+// int CreditClass::getSoLuongSinhVien() const
+// {
+//     int count = 0;
+//     SinhVienNode *current = dssvdk; // Bắt đầu từ đầu danh sách liên kết
+//     while (current != nullptr)
+//     {
+//         count++;
+//         current = current->next;
+//     }
+//     return count;
+// }
 
-bool CreditClass::hasStudent(const std::string &msv) const
-{
-    SinhVienNode *current = dssvdk; // Bắt đầu từ đầu danh sách liên kết
-    while (current != nullptr)
-    {
-        if (current->student.getMASV() == msv)
-        {
-            return true; // Tìm thấy sinh viên
-        }
-        current = current->next; // Di chuyển đến node tiếp theo
-    }
-    return false; // Không tìm thấy sinh viên
-}
+// bool CreditClass::hasStudent(const std::string &msv) const
+// {
+//     SinhVienNode *current = dssvdk; // Bắt đầu từ đầu danh sách liên kết
+//     while (current != nullptr)
+//     {
+//         if (current->student.getMASV() == msv)
+//         {
+//             return true; // Tìm thấy sinh viên
+//         }
+//         current = current->next; // Di chuyển đến node tiếp theo
+//     }
+//     return false; // Không tìm thấy sinh viên
+// }
 
-SinhVien *CreditClass::findStudent(const std::string &maSV)
-{
-    SinhVienNode *current = dssvdk;
-    while (current != nullptr)
-    {
-        if (current->student.getMASV() == maSV)
-        {
-            return &current->student; // Trả về con trỏ đến sinh viên tìm thấy
-        }
-        current = current->next;
-    }
-    return nullptr; // Không tìm thấy
-}
+// SinhVien *CreditClass::findStudent(const std::string &maSV)
+// {
+//     SinhVienNode *current = dssvdk;
+//     while (current != nullptr)
+//     {
+//         if (current->student.getMASV() == maSV)
+//         {
+//             return &current->student; // Trả về con trỏ đến sinh viên tìm thấy
+//         }
+//         current = current->next;
+//     }
+//     return nullptr; // Không tìm thấy
+// }
 
-// Hàm xóa sinh viên theo mã số
-bool CreditClass::removeStudent(const std::string &maSV)
-{
-    if (dssvdk == nullptr)
-        return false; // Danh sách rỗng
+// // Hàm xóa sinh viên theo mã số
+// bool CreditClass::removeStudent(const std::string &maSV)
+// {
+//     if (dssvdk == nullptr)
+//         return false; // Danh sách rỗng
 
-    SinhVienNode *current = dssvdk;
-    SinhVienNode *previous = nullptr;
+//     SinhVienNode *current = dssvdk;
+//     SinhVienNode *previous = nullptr;
 
-    // Tìm sinh viên trong danh sách liên kết
-    while (current != nullptr)
-    {
-        if (current->student.getMASV() == maSV)
-        {
-            if (previous == nullptr)
-            {
-                // Nếu sinh viên cần xóa là node đầu tiên
-                dssvdk = current->next;
-            }
-            else
-            {
-                // Nếu sinh viên cần xóa ở giữa hoặc cuối danh sách
-                previous->next = current->next;
-            }
-            delete current; // Giải phóng bộ nhớ
-            return true;    // Xóa thành công
-        }
-        previous = current;
-        current = current->next;
-    }
-    return false; // Không tìm thấy sinh viên
-}
+//     // Tìm sinh viên trong danh sách liên kết
+//     while (current != nullptr)
+//     {
+//         if (current->student.getMASV() == maSV)
+//         {
+//             if (previous == nullptr)
+//             {
+//                 // Nếu sinh viên cần xóa là node đầu tiên
+//                 dssvdk = current->next;
+//             }
+//             else
+//             {
+//                 // Nếu sinh viên cần xóa ở giữa hoặc cuối danh sách
+//                 previous->next = current->next;
+//             }
+//             delete current; // Giải phóng bộ nhớ
+//             return true;    // Xóa thành công
+//         }
+//         previous = current;
+//         current = current->next;
+//     }
+//     return false; // Không tìm thấy sinh viên
+// }

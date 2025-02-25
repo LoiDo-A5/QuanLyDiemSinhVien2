@@ -51,14 +51,22 @@ void Lop::addStudent(const SinhVien &student)
 void Lop::printClassInfo() const
 {
     std::cout << "Mã lớp: " << MALOP << ", Tên lớp: " << TENLOP << std::endl;
-    std::cout << "Danh sách sinh viên: " << std::endl;
 
     SinhVienNode *current = danhSachSinhVien;
-    while (current != nullptr)
+    if (current != nullptr)
     {
-        current->student.inThongTin(); // In thông tin sinh viên
-        current = current->next;       // Di chuyển đến sinh viên kế tiếp
+        std::cout << "Danh sách sinh viên: " << std::endl;
+        while (current != nullptr)
+        {
+            current->student.inThongTin(); // In thông tin sinh viên
+            current = current->next;       // Di chuyển đến sinh viên kế tiếp
+        }
     }
+}
+
+void Lop::setStudents(SinhVienNode *students)
+{
+    danhSachSinhVien = students;
 }
 
 // Getter cho MALOP và TENLOP

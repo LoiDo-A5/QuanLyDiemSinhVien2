@@ -16,7 +16,7 @@ public:
     CreditClassList();
 
     // Thêm lớp tín chỉ
-    void addCreditClass(const CreditClass &creditClass);
+    void addCreditClass(CreditClass &creditClass);
 
     // Xóa lớp tín chỉ theo mã
     void removeCreditClass(int malopTC);

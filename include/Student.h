@@ -34,6 +34,7 @@ public:
     void setTEN(const string &ten);
     void setGIOITINH(const string &gioitinh);
     void setSODT(const string &sodt);
+    void nhapThongTin();
 
     // In thông tin sinh viên
     void inThongTin() const;
@@ -43,9 +44,6 @@ public:
 
     // In danh sách đăng ký môn học
     void inDanhSachDangKy() const;
-
-    // Destructor để giải phóng bộ nhớ
-    ~SinhVien();
 
     string toString() const;
     void fromString(const string &str);

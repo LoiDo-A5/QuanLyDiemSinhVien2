@@ -17,6 +17,7 @@ void ClassList::addClass(const Lop &newClass)
     {
         // Thêm lớp vào danh sách
         classes[classCount++] = newClass; // Không cần new vì đối tượng đã có sẵn trong tham số
+        cout << "Them thanh cong lop: " << newClass.getClassName() << endl;
     }
     else
     {
@@ -39,13 +40,8 @@ void ClassList::updateClass(const string &malop, Lop updatedClass)
         if (classes[i].getClassID() == malop)
         {
             // Giữ lại sinh viên của lớp cũ bằng cách duyệt qua danh sách sinh viên
-            const SinhVienNode *current = classes[i].getStudents(); // Lấy danh sách sinh viên của lớp hiện tại
-            while (current != nullptr)
-            {
-                updatedClass.addStudent(current->student); // Thêm sinh viên vào lớp mới
-                current = current->next;                   // Di chuyển đến sinh viên tiếp theo
-            }
-
+            SinhVienNode *current = classes[i].getStudents(); // Lấy danh sách sinh viên của lớp hiện tại
+            updatedClass.setStudents(current);
             // Cập nhật lớp mới vào danh sách lớp
             classes[i] = updatedClass;
             cout << "Cập nhật lớp " << malop << " thành công!" << endl;

@@ -7,12 +7,12 @@
 class DangKyNode
 {
 public:
-    string MASV;
+    std::string MASV;
     float DIEM;
     bool huyDangKy;
     DangKyNode *next;
 
-    DangKyNode(string masv)
+    DangKyNode(std::string masv)
         : MASV(masv), DIEM(0), huyDangKy(false), next(nullptr) {}
 };
 
@@ -31,19 +31,14 @@ private:
 
 public:
     // Constructor
+    CreditClass();
     CreditClass(const std::string &MAMH,
                 const std::string &nienKhoa, int hocKy, int nhom,
                 int soSvMin, int soSvMax);
 
-    // Nếu bạn cần constructor mặc định
-    CreditClass();
+    ~CreditClass(); // Destructor để giải phóng bộ nhớ
 
     // Getter và Setter
-    void addStudent(const std::string maSV); // Thêm sinh viên vào danh sách đăng ký
-    void capNhatDSSV(DangKyNode *dssv);      // Cập nhật danh sách sinh viên
-    void inDSSV() const;                     // In danh sách sinh viên đăng ký
-
-    // Getter các thông tin khác
     int getMALOPTC() const;
     std::string getMAMH() const;
     std::string getNienKhoa() const;
@@ -53,7 +48,6 @@ public:
     int getSoSvMax() const;
     bool isHuyLop() const;
 
-    // Setters cho các trường
     void setMaLopTC(int maLopTC);
     void setMAMH(const std::string &maMH);
     void setNienKhoa(const std::string &nienKhoa);
@@ -63,14 +57,13 @@ public:
     void setSoSvMax(int soSvMax);
     void setHuyLop(bool huy);
 
-    // Getter cho danh sách sinh viên đăng ký
-    DangKyNode *getDSSVDK() const; // Trả về con trỏ đến danh sách sinh viên
-    int getSoLuongSinhVien() const;
-    bool hasStudent(const std::string &msv) const;
+    // Quản lý sinh viên trong lớp tín chỉ
+    void addStudent(const std::string maSV);
+    DangKyNode *getDSSVDK() const;      // Lấy danh sách sinh viên đăng ký
+    void capNhatDSSV(DangKyNode *dssv); // Cập nhật danh sách sinh viên đăng ký
     bool removeStudent(const std::string &maSV);
-    DangKyNode *findStudent(const std::string &maSV);
 
-    ~CreditClass();
+    DangKyNode *findStudent(const std::string &maSV);
 };
 
 #endif // CREDIT_CLASS_H

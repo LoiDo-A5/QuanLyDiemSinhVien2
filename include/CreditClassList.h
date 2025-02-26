@@ -19,7 +19,6 @@ public:
     void addCreditClass(CreditClass &creditClass);
 
     // Xóa lớp tín chỉ theo mã
-    void removeCreditClass(int malopTC);
 
     // Tìm lớp tín chỉ theo mã lớp tín chỉ
     CreditClass *findCreditClassByMALOPTC(int malopTC);
@@ -52,6 +51,10 @@ public:
     int getCount() const;
 
     bool displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH) const;
+
+    void addCreditClass(const CreditClass &creditClass);
+    bool removeCreditClass(int malopTC);
+    bool updateCreditClass(int malopTC, const CreditClass &updatedClass);
 };
 
 #endif // CREDIT_CLASS_LIST_H

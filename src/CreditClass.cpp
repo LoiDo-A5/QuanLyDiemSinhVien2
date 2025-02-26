@@ -64,6 +64,18 @@ void CreditClass::addStudent(const std::string maSV)
     std::cout << "Sinh viên " << maSV << " đã được thêm vào lớp tín chỉ." << std::endl;
 }
 
+// Lấy danh sách sinh viên đăng ký
+DangKyNode *CreditClass::getDSSVDK() const
+{
+    return dssvdk;
+}
+
+// Cập nhật danh sách sinh viên đăng ký
+void CreditClass::capNhatDSSV(DangKyNode *dssv)
+{
+    dssvdk = dssv;
+}
+
 // // Phương thức cập nhật danh sách sinh viên
 // void CreditClass::capNhatDSSV(SinhVienNode *dssv)
 // {

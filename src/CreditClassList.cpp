@@ -25,24 +25,6 @@ void CreditClassList::addCreditClass(CreditClass &creditClass)
     }
 }
 
-// Xóa lớp tín chỉ theo mã
-void CreditClassList::removeCreditClass(int malopTC)
-{
-    for (int i = 0; i < count; ++i)
-    {
-        if (creditClasses[i].getMALOPTC() == malopTC)
-        {
-            for (int j = i; j < count - 1; ++j)
-            {
-                creditClasses[j] = creditClasses[j + 1];
-            }
-            --count;
-            cout << "Da xoa lop tin chi: " << malopTC << endl;
-            return;
-        }
-    }
-}
-
 // Tìm lớp tín chỉ theo mã lớp tín chỉ
 CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
 {
@@ -226,3 +208,60 @@ CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
 
 //     return found;
 // }
+
+void CreditClassList::addCreditClass(const CreditClass &creditClass)
+{
+    if (count < 10000) // Kiểm tra số lượng lớp tín chỉ tối đa
+    {
+        creditClasses[count] = creditClass;
+        creditClasses[count].setMaLopTC(count + 1); // Gán mã lớp tự động tăng
+        count++;
+        cout << "Thêm lớp tín chỉ thành công!" << endl;
+    }
+    else
+    {
+        cout << "Danh sách lớp tín chỉ đã đầy!" << endl;
+    }
+}
+
+bool CreditClassList::removeCreditClass(int malopTC)
+{
+    for (int i = 0; i < count; i++)
+    {
+        if (creditClasses[i].getMALOPTC() == malopTC)
+        {
+            // Dịch chuyển các lớp còn lại để giữ danh sách liên tục
+            for (int j = i; j < count - 1; j++)
+            {
+                creditClasses[j] = creditClasses[j + 1];
+            }
+            count--;
+            cout << "Đã xóa lớp tín chỉ có mã: " << malopTC << endl;
+            return true;
+        }
+    }
+    cout << "Không tìm thấy lớp tín chỉ với mã: " << malopTC << endl;
+    return false;
+}
+
+bool CreditClassList::updateCreditClass(int malopTC, const CreditClass &updatedClass)
+{
+    for (int i = 0; i < count; i++)
+    {
+        if (creditClasses[i].getMALOPTC() == malopTC)
+        {
+            // Giữ nguyên danh sách sinh viên đăng ký cũ
+            DangKyNode *oldDSSV = creditClasses[i].getDSSVDK();
+
+            // Cập nhật thông tin lớp tín chỉ
+            creditClasses[i] = updatedClass;
+            creditClasses[i].setMaLopTC(malopTC);  // Đảm bảo mã lớp không thay đổi
+            creditClasses[i].capNhatDSSV(oldDSSV); // Giữ danh sách sinh viên cũ
+
+            cout << "Cập nhật lớp tín chỉ thành công!" << endl;
+            return true;
+        }
+    }
+    cout << "Không tìm thấy lớp tín chỉ có mã: " << malopTC << endl;
+    return false;
+}

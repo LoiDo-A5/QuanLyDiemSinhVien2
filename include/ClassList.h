@@ -23,6 +23,8 @@ public:
     SinhVien *findSinhVienById(const std::string &maSV);                          // Lấy thông tin sinh viên bằng mã sinh viên
     void saveToFile(const std::string &filename);
     void readFromFile(const std::string &filename);
+    void manageStudentsInClass(const std::string &maLop);             // Câu (c)
+    void printStudentsAlphabetically(const std::string &maLop) const; // Câu (d)
 };
 
 #endif // CLASSLIST_H

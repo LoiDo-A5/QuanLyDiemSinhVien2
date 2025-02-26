@@ -4,6 +4,7 @@
 #include "CreditClass.h"
 #include "Student.h"
 #include <string>
+#include "ClassList.h"
 
 class CreditClassList
 {
@@ -50,7 +51,7 @@ public:
     // Lấy số lượng lớp tín chỉ
     int getCount() const;
 
-    bool displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH) const;
+    void displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH, const ClassList &classList) const;
 
     void addCreditClass(const CreditClass &creditClass);
     bool removeCreditClass(int malopTC);

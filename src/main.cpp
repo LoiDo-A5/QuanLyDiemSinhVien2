@@ -273,6 +273,7 @@ int main()
                 cout << "1. Thêm lớp tín chỉ" << endl;
                 cout << "2. Xóa lớp tín chỉ" << endl;
                 cout << "3. Chỉnh sửa lớp tín chỉ" << endl;
+                cout << "4. In danh sách sinh viên theo lớp tín chỉ" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -351,6 +352,23 @@ int main()
 
                     CreditClass updatedClass(maMH, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
                     creditClassList.updateCreditClass(malopTC, updatedClass);
+                    break;
+                }
+                case 4: // In danh sách sinh viên theo lớp tín chỉ
+                {
+                    string nienKhoa, maMH;
+                    int hocKy, nhom;
+
+                    cout << "Nhập niên khóa: ";
+                    cin >> nienKhoa;
+                    cout << "Nhập học kỳ: ";
+                    cin >> hocKy;
+                    cout << "Nhập nhóm: ";
+                    cin >> nhom;
+                    cout << "Nhập mã môn học: ";
+                    cin >> maMH;
+
+                    creditClassList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH, classList);
                     break;
                 }
 

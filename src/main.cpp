@@ -69,25 +69,20 @@ int main()
     ClassList classList;             // Danh sách lớp
     CourseList courseList;           // Danh sách môn học
     CreditClassList creditClassList; // Tạo một thể hiện của CreditClassList
-    // classList.readFromFile(CLASSES_FILE);
-    // courseList.readFromFile(COURSES_FILE);
-    // creditClassList.readFromFile(CREDIT_CLASSES_FILE);
     int choice;
     do
     {
         cout << "==== MENU ====" << endl;
         cout << "1. Menu lớp" << endl;
-        cout << "2. Thêm môn học" << endl;
-        cout << "3. In danh sách môn học" << endl;
-        cout << "4. Cập nhật thông tin môn học" << endl;
-        cout << "5. Menu lớp tín chỉ" << endl;
+        cout << "2. Menu lớp tín chỉ" << endl;
+        cout << "3. Nhập sinh viên vào lớp" << endl;
+        cout << "4. In danh sách sinh viên theo thứ tự alphabet" << endl;
         cout << "0. Thoát" << endl;
         cout << "Chọn chức năng: ";
         cin >> choice;
-
         switch (choice)
         {
-        case 1:
+        case 1: // Menu lớp
         {
             int subChoice;
             do
@@ -106,7 +101,7 @@ int main()
                 cin >> subChoice;
                 switch (subChoice)
                 {
-                case 1:
+                case 1: // Thêm lớp
                 {
                     string malop, tenlop;
                     cout << "Nhập mã lớp: ";
@@ -159,6 +154,7 @@ int main()
                     classList.printClasses();
                     break;
                 }
+
                 case 5: // Thêm sinh viên
                 {
                     string malop;
@@ -174,6 +170,7 @@ int main()
                     classList.saveToFile(CLASSES_FILE); // Lưu sau khi thêm sinh viên
                     break;
                 }
+
                 case 6: // Xóa sinh viên
                 {
                     string malop;
@@ -209,6 +206,7 @@ int main()
                     }
                     break;
                 }
+
                 case 7: // Chỉnh sửa sinh viên
                 {
                     string malop;
@@ -249,14 +247,8 @@ int main()
                 }
 
                 case 8:
-                {
-                    // string maLop;
-                    // cout << "Nhap ma lop: ";
-                    // cin >> maLop;
-                    // Lop *lop = classList.findClassByCode(maLop);
+                    // Không cần xử lý
                     break;
-                }
-
                 default:
                     break;
                 }
@@ -264,7 +256,7 @@ int main()
             break;
         }
 
-        case 5: // **Menu Lớp Tín Chỉ**
+        case 2: // Menu Lớp Tín Chỉ
         {
             int subChoice;
             do
@@ -274,13 +266,14 @@ int main()
                 cout << "2. Xóa lớp tín chỉ" << endl;
                 cout << "3. Chỉnh sửa lớp tín chỉ" << endl;
                 cout << "4. In danh sách sinh viên theo lớp tín chỉ" << endl;
+                cout << "5. Nhập sinh viên vào lớp tín chỉ" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
 
                 switch (subChoice)
                 {
-                case 1: // **Thêm lớp tín chỉ**
+                case 1: // Thêm lớp tín chỉ
                 {
                     string maMH, nienKhoa;
                     int hocKy, nhom, soSvMin, soSvMax;
@@ -303,7 +296,7 @@ int main()
                     break;
                 }
 
-                case 2: // **Xóa lớp tín chỉ**
+                case 2: // Xóa lớp tín chỉ
                 {
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ cần xóa: ";
@@ -312,7 +305,7 @@ int main()
                     break;
                 }
 
-                case 3: // **Chỉnh sửa lớp tín chỉ**
+                case 3: // Chỉnh sửa lớp tín chỉ
                 {
                     int malopTC;
                     cout << "Nhập mã lớp tín chỉ cần chỉnh sửa: ";
@@ -354,6 +347,7 @@ int main()
                     creditClassList.updateCreditClass(malopTC, updatedClass);
                     break;
                 }
+
                 case 4: // In danh sách sinh viên theo lớp tín chỉ
                 {
                     string nienKhoa, maMH;
@@ -371,11 +365,46 @@ int main()
                     creditClassList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH, classList);
                     break;
                 }
+                // case 5: // Nhập sinh viên vào lớp tín chỉ (mới thêm vào)
+                // {
+                //     string malopTC;
+                //     cout << "Nhập mã lớp tín chỉ: ";
+                //     cin >> malopTC;
+                //     // Tìm lớp tín chỉ theo mã
+                //     CreditClass *classToAddStudent = creditClassList.findCreditClassByMALOPTC(malopTC);
+                //     if (classToAddStudent == nullptr)
+                //     {
+                //         cout << "Không tìm thấy lớp tín chỉ này!" << endl;
+                //         break;
+                //     }
+
+                //     SinhVien newStudent;
+                //     cout << "Nhập thông tin sinh viên:" << endl;
+                //     newStudent.nhapThongTin();
+                //     classToAddStudent->addStudent(newStudent); // Giả sử addStudent là phương thức thêm sinh viên vào lớp tín chỉ
+                //     cout << "Thêm sinh viên vào lớp tín chỉ thành công!" << endl;
+                //     break;
+                // }
 
                 default:
                     break;
                 }
             } while (subChoice != 0); // Kết thúc vòng lặp con cho lớp tín chỉ
+            break;
+        }
+
+        case 3: // Nhập sinh viên vào lớp
+        {
+            classList.nhapSinhVienVaoLop();
+            break;
+        }
+
+        case 4: // In danh sách sinh viên theo thứ tự alphabet
+        {
+            string malop;
+            cout << "Nhập mã lớp: ";
+            cin >> malop;
+            classList.inDanhSachSVTheoAlphabet(malop);
             break;
         }
         }

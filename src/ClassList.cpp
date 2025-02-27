@@ -3,6 +3,8 @@
 #include <fstream> // Để sử dụng ofstream
 #include <sstream>
 using namespace std;
+#include <vector>    // Bổ sung thư viện vector
+#include <algorithm> // Cần cho std::sort
 
 ClassList::ClassList() : classCount(0) {}
 
@@ -195,4 +197,80 @@ void ClassList::readFromFile(const string &filename)
     }
 
     inFile.close(); // Đóng file
+}
+
+void ClassList::nhapSinhVienVaoLop()
+{
+    std::string malop;
+    std::cout << "Nhập mã lớp: ";
+    std::cin >> malop;
+    std::cin.ignore(); // Loại bỏ ký tự xuống dòng tránh lỗi getline()
+
+    Lop *lop = findClassByCode(malop);
+    if (lop == nullptr)
+    {
+        std::cout << "Không tìm thấy lớp!" << std::endl;
+        return;
+    }
+
+    while (true)
+    {
+        std::string masv;
+        std::cout << "Nhập mã sinh viên (Nhập rỗng để dừng): ";
+        std::getline(std::cin, masv); // Dùng getline để tránh lỗi nhập liệu
+        if (masv.empty())
+            break; // Thoát vòng lặp nếu nhập rỗng
+
+        // Kiểm tra nếu sinh viên đã tồn tại trong lớp
+        SinhVien *existingStudent = lop->findStudent(masv);
+        if (existingStudent)
+        {
+            std::cout << "Sinh viên đã tồn tại! Bạn có muốn chỉnh sửa? (y/n): ";
+            char choice;
+            std::cin >> choice;
+            std::cin.ignore(); // Loại bỏ newline để tránh lỗi nhập tiếp theo
+
+            if (choice == 'y' || choice == 'Y')
+            {
+                // Cập nhật thông tin sinh viên mà không yêu cầu nhập lại mã sinh viên
+                existingStudent->nhapThongTin();
+                std::cout << "Cập nhật thông tin sinh viên thành công!\n";
+            }
+        }
+        else
+        {
+            SinhVien newStudent;
+            newStudent.setMASV(masv);  // Đảm bảo mã sinh viên chỉ nhập một lần
+            newStudent.nhapThongTin(); // Chỉ yêu cầu nhập thông tin còn lại
+            lop->addStudent(newStudent);
+            std::cout << "Thêm sinh viên thành công!\n";
+        }
+    }
+}
+
+void ClassList::inDanhSachSVTheoAlphabet(const std::string &malop)
+{
+    Lop *lop = findClassByCode(malop);
+    if (lop == nullptr)
+    {
+        std::cout << "Không tìm thấy lớp!" << std::endl;
+        return;
+    }
+
+    std::vector<SinhVien> dsSV;
+    SinhVienNode *current = lop->getStudents();
+    while (current != nullptr)
+    {
+        dsSV.push_back(current->student);
+        current = current->next;
+    }
+
+    std::sort(dsSV.begin(), dsSV.end(), [](const SinhVien &a, const SinhVien &b)
+              { return a.getTEN() + a.getHO() < b.getTEN() + b.getHO(); });
+
+    std::cout << "Danh sách sinh viên theo thứ tự alphabet:\n";
+    for (const auto &sv : dsSV)
+    {
+        sv.inThongTin();
+    }
 }

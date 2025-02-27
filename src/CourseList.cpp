@@ -65,47 +65,6 @@ CourseNode *CourseList::getRoot()
     return root;
 }
 
-void CourseList::updateCourse(const string &mamh)
-{
-    CourseNode *current = root;
-
-    while (current != nullptr)
-    {
-        if (current->data.MAMH == mamh)
-        {
-            cout << "Nhập thông tin môn học mới:" << endl;
-            MonHoc updatedCourse;
-
-            cout << "Nhập mã môn học: ";
-            cin >> updatedCourse.MAMH;
-            isValidCode(updatedCourse.MAMH, 3);
-
-            cout << "Nhập tên môn học: ";
-            cin.ignore();
-            isValidString(updatedCourse.TENMH);
-
-            cout << "Nhập số tín chỉ lý thuyết: ";
-            isValidNumber(updatedCourse.STCLT);
-
-            cout << "Nhập số tín chỉ thực hành: ";
-            isValidNumber(updatedCourse.STCTH);
-
-            current->data = updatedCourse; // Cập nhật thông tin môn học
-            std::cout << "Cập nhật môn học " << mamh << " thành công!" << std::endl;
-            return;
-        }
-        else if (mamh < current->data.MAMH)
-        {
-            current = current->left;
-        }
-        else
-        {
-            current = current->right;
-        }
-    }
-    std::cout << "Không tìm thấy môn học " << mamh << "." << std::endl;
-}
-
 bool CourseList::isCourseExisted(const string &maMH)
 {
     CourseNode *currentNode = root;
@@ -211,4 +170,78 @@ int CourseList::getTotalCredit(const string &maMH)
         }
     }
     return -1;
+}
+
+bool CourseList::removeCourse(string maMH)
+{
+    CourseNode **current = &root, *parent = nullptr;
+    while (*current && (*current)->data.MAMH != maMH)
+    {
+        parent = *current;
+        if (maMH < (*current)->data.MAMH)
+            current = &((*current)->left);
+        else
+            current = &((*current)->right);
+    }
+
+    if (!(*current))
+        return false;
+
+    CourseNode *toDelete = *current;
+    if (!toDelete->left)
+        *current = toDelete->right;
+    else if (!toDelete->right)
+        *current = toDelete->left;
+    else
+    {
+        CourseNode **successor = &(toDelete->right);
+        while ((*successor)->left)
+            successor = &((*successor)->left);
+        toDelete->data = (*successor)->data;
+        CourseNode *temp = *successor;
+        *successor = (*successor)->right;
+        delete temp;
+    }
+    delete toDelete;
+    return true;
+}
+
+void CourseList::updateCourse(const string &mamh, const MonHoc &updatedCourse)
+{
+    CourseNode *current = root;
+    while (current)
+    {
+        if (mamh == current->data.MAMH)
+        {
+            current->data = updatedCourse;
+            return;
+        }
+        else if (mamh < current->data.MAMH)
+            current = current->left;
+        else
+            current = current->right;
+    }
+}
+
+void CourseList::printCoursesSortedByName()
+{
+    vector<MonHoc> courses;
+    function<void(CourseNode *)> inOrderTraversal = [&](CourseNode *node)
+    {
+        if (!node)
+            return;
+        inOrderTraversal(node->left);
+        courses.push_back(node->data);
+        inOrderTraversal(node->right);
+    };
+    inOrderTraversal(root);
+
+    sort(courses.begin(), courses.end(), [](MonHoc a, MonHoc b)
+         { return a.TENMH < b.TENMH; });
+
+    for (const auto &course : courses)
+    {
+        cout << "Mã MH: " << course.MAMH << ", Tên MH: " << course.TENMH
+             << ", LT: " << course.STCLT << ", TH: " << course.STCTH << endl;
+    }
 }

@@ -77,6 +77,7 @@ int main()
         cout << "2. Menu lớp tín chỉ" << endl;
         cout << "3. Nhập sinh viên vào lớp" << endl;
         cout << "4. In danh sách sinh viên theo thứ tự alphabet" << endl;
+        cout << "5. Menu môn học" << endl;
         cout << "0. Thoát" << endl;
         cout << "Chọn chức năng: ";
         cin >> choice;
@@ -439,6 +440,99 @@ int main()
             cout << "Nhập mã lớp: ";
             cin >> malop;
             classList.inDanhSachSVTheoAlphabet(malop);
+            break;
+        }
+
+        case 5: // Menu môn học
+        {
+            int subChoice;
+            do
+            {
+                cout << "==== MENU MÔN HỌC ====" << endl;
+                cout << "1. Thêm môn học" << endl;
+                cout << "2. Xóa môn học" << endl;
+                cout << "3. Cập nhật môn học" << endl;
+                cout << "4. In danh sách môn học (sắp xếp theo tên)" << endl;
+                cout << "0. Quay lại" << endl;
+                cout << "Chọn chức năng: ";
+                cin >> subChoice;
+
+                switch (subChoice)
+                {
+                case 1: // Thêm môn học
+                {
+                    MonHoc newCourse;
+                    cout << "Nhập mã môn học: ";
+                    cin >> newCourse.MAMH;
+                    cout << "Nhập tên môn học: ";
+                    cin.ignore();
+                    getline(cin, newCourse.TENMH);
+                    cout << "Nhập số tín chỉ lý thuyết: ";
+                    cin >> newCourse.STCLT;
+                    cout << "Nhập số tín chỉ thực hành: ";
+                    cin >> newCourse.STCTH;
+
+                    courseList.insert(newCourse);
+                    courseList.saveToFile(COURSES_FILE);
+                    cout << "✅ Đã thêm môn học thành công!" << endl;
+                    break;
+                }
+
+                case 2: // Xóa môn học
+                {
+                    string mamh;
+                    cout << "Nhập mã môn học cần xóa: ";
+                    cin >> mamh;
+
+                    if (courseList.removeCourse(mamh))
+                    {
+                        courseList.saveToFile(COURSES_FILE);
+                        cout << "✅ Đã xóa môn học thành công!" << endl;
+                    }
+                    else
+                    {
+                        cout << "⚠️ Không tìm thấy môn học để xóa!" << endl;
+                    }
+                    break;
+                }
+
+                case 3: // Cập nhật môn học
+                {
+                    string mamh;
+                    cout << "Nhập mã môn học cần cập nhật: ";
+                    cin >> mamh;
+
+                    if (!courseList.isCourseExisted(mamh))
+                    {
+                        cout << "⚠️ Không tìm thấy môn học!" << endl;
+                        break;
+                    }
+
+                    cout << "Nhập thông tin mới cho môn học:" << endl;
+                    MonHoc updatedCourse;
+                    cout << "Nhập tên môn học: ";
+                    cin.ignore();
+                    getline(cin, updatedCourse.TENMH);
+                    cout << "Nhập số tín chỉ lý thuyết: ";
+                    cin >> updatedCourse.STCLT;
+                    cout << "Nhập số tín chỉ thực hành: ";
+                    cin >> updatedCourse.STCTH;
+
+                    courseList.updateCourse(mamh, updatedCourse);
+                    courseList.saveToFile(COURSES_FILE);
+                    cout << "✅ Đã cập nhật môn học thành công!" << endl;
+                    break;
+                }
+
+                case 4: // In danh sách môn học theo thứ tự tên
+                {
+                    cout << "📚 Danh sách môn học:" << endl;
+                    courseList.printCoursesSortedByName();
+                    break;
+                }
+                }
+
+            } while (subChoice != 0);
             break;
         }
         }

@@ -19,14 +19,17 @@ private:
 
 public:
     CourseList();
-    void insert(MonHoc course);            // Thêm môn học
     void printInOrder(CourseNode *node);   // In danh sách môn học theo thứ tự
     CourseNode *getRoot();                 // Lấy gốc cây
-    void updateCourse(const string &mamh); // Cập nhật thông tin môn học
-    bool isCourseExisted(const string &maMH);
     void saveToFile(const std::string &filename);
     void readFromFile(const std::string &filename);
     int getTotalCredit(const string &maMH);
+
+    void insert(MonHoc course);                                         // Thêm môn học
+    bool removeCourse(string maMH);                                     // Xóa môn học
+    void updateCourse(const string &mamh, const MonHoc &updatedCourse); // Cập nhật môn học
+    void printCoursesSortedByName();                                    // In danh sách môn học theo tên
+    bool isCourseExisted(const string &maMH);                           // Kiểm tra môn học đã tồn tại chưa
 };
 
 #endif

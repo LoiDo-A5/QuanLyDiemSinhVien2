@@ -17,7 +17,6 @@ public:
     CreditClassList();
 
     // Thêm lớp tín chỉ
-    void addCreditClass(CreditClass &creditClass);
 
     // Xóa lớp tín chỉ theo mã
 

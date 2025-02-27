@@ -76,6 +76,20 @@ void CreditClass::capNhatDSSV(DangKyNode *dssv)
     dssvdk = dssv;
 }
 
+DangKyNode *CreditClass::findStudent(const std::string &maSV)
+{
+    DangKyNode *current = dssvdk;
+    while (current != nullptr)
+    {
+        if (current->MASV == maSV)
+        {
+            return current; // Trả về con trỏ đến sinh viên nếu tìm thấy
+        }
+        current = current->next;
+    }
+    return nullptr; // Không tìm thấy sinh viên
+}
+
 // // Phương thức cập nhật danh sách sinh viên
 // void CreditClass::capNhatDSSV(SinhVienNode *dssv)
 // {

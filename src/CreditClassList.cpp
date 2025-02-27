@@ -8,23 +8,6 @@ using namespace std;
 // Constructor
 CreditClassList::CreditClassList() : count(0) {}
 
-// Thêm lớp tín chỉ
-void CreditClassList::addCreditClass(CreditClass &creditClass)
-{
-    if (count < 10000)
-    {
-        creditClass.setMaLopTC(++count);
-        creditClasses[count - 1] = creditClass;
-        cout << "DEBUG: Da them lop tin chi - Ma MH: " << creditClass.getMAMH()
-             << ", Nien khoa: " << creditClass.getNienKhoa()
-             << ", Hoc ky: " << creditClass.getHocKy()
-             << ", Nhom: " << creditClass.getNhom() << endl;
-    }
-    else
-    {
-        cout << "Danh sach lop tin chi da day!" << endl;
-    }
-}
 
 // Tìm lớp tín chỉ theo mã lớp tín chỉ
 CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
@@ -210,18 +193,23 @@ CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
 //     return found;
 // }
 
-void CreditClassList::addCreditClass(const CreditClass &creditClass)
+void CreditClassList::addCreditClass(const CreditClass &creditClass) // Thêm const
 {
-    if (count < 10000) // Kiểm tra số lượng lớp tín chỉ tối đa
+    if (count < 10000)
     {
         creditClasses[count] = creditClass;
-        creditClasses[count].setMaLopTC(count + 1); // Gán mã lớp tự động tăng
+        creditClasses[count].setMaLopTC(count + 1); // Gán mã lớp tín chỉ tự động tăng
         count++;
-        cout << "Thêm lớp tín chỉ thành công!" << endl;
+
+        cout << "Da them lop tin chi - MaLopTC: " << creditClasses[count - 1].getMALOPTC()
+             << ", Ma MH: " << creditClasses[count - 1].getMAMH()
+             << ", Nien khoa: " << creditClasses[count - 1].getNienKhoa()
+             << ", Hoc ky: " << creditClasses[count - 1].getHocKy()
+             << ", Nhom: " << creditClasses[count - 1].getNhom() << endl;
     }
     else
     {
-        cout << "Danh sách lớp tín chỉ đã đầy!" << endl;
+        cout << "Danh sach lop tin chi da day!" << endl;
     }
 }
 

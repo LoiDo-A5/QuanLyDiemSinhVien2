@@ -365,26 +365,51 @@ int main()
                     creditClassList.displayStudentsInClass(nienKhoa, hocKy, nhom, maMH, classList);
                     break;
                 }
-                // case 5: // Nhập sinh viên vào lớp tín chỉ (mới thêm vào)
-                // {
-                //     string malopTC;
-                //     cout << "Nhập mã lớp tín chỉ: ";
-                //     cin >> malopTC;
-                //     // Tìm lớp tín chỉ theo mã
-                //     CreditClass *classToAddStudent = creditClassList.findCreditClassByMALOPTC(malopTC);
-                //     if (classToAddStudent == nullptr)
-                //     {
-                //         cout << "Không tìm thấy lớp tín chỉ này!" << endl;
-                //         break;
-                //     }
+                case 5: // Nhập sinh viên vào lớp tín chỉ
+                {
+                    int malopTC;
+                    cout << "Nhập mã lớp tín chỉ: ";
+                    cin >> malopTC;
 
-                //     SinhVien newStudent;
-                //     cout << "Nhập thông tin sinh viên:" << endl;
-                //     newStudent.nhapThongTin();
-                //     classToAddStudent->addStudent(newStudent); // Giả sử addStudent là phương thức thêm sinh viên vào lớp tín chỉ
-                //     cout << "Thêm sinh viên vào lớp tín chỉ thành công!" << endl;
-                //     break;
-                // }
+                    // Tìm lớp tín chỉ theo mã
+                    CreditClass *classToAddStudent = creditClassList.findCreditClassByMALOPTC(malopTC);
+                    if (classToAddStudent == nullptr)
+                    {
+                        cout << "Không tìm thấy lớp tín chỉ này!" << endl;
+                        break;
+                    }
+
+                    while (true)
+                    {
+                        string maSV;
+                        cout << "Nhập mã sinh viên (Nhập rỗng để dừng): ";
+                        cin.ignore();
+                        getline(cin, maSV);
+
+                        if (maSV.empty())
+                            break; // Dừng nhập khi nhập rỗng
+
+                        // Kiểm tra sinh viên đã tồn tại chưa
+                        DangKyNode *existingStudent = classToAddStudent->findStudent(maSV);
+                        if (existingStudent)
+                        {
+                            cout << "Sinh viên đã đăng ký lớp này!" << endl;
+                            continue;
+                        }
+
+                        // Kiểm tra số lượng sinh viên tối đa
+                        if (classToAddStudent->getSoSvMax() > 0 && classToAddStudent->getSoSvMax() <= classToAddStudent->getDSSVDK()->next->MASV.size())
+                        {
+                            cout << "Lớp tín chỉ đã đầy, không thể thêm sinh viên!" << endl;
+                            break;
+                        }
+
+                        // Thêm sinh viên vào danh sách đăng ký
+                        classToAddStudent->addStudent(maSV);
+                        cout << "Sinh viên " << maSV << " đã đăng ký vào lớp tín chỉ " << malopTC << " thành công!" << endl;
+                    }
+                    break;
+                }
 
                 default:
                     break;

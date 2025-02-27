@@ -94,7 +94,8 @@ int main()
                 cout << "5. Thêm sinh viên" << endl;
                 cout << "6. Xóa sinh viên" << endl;
                 cout << "7. Chỉnh sửa sinh viên" << endl;
-                cout << "8. In bảng điểm tổng kết" << endl;
+                cout << "8. In danh sách sinh viên" << endl;
+                cout << "9. In bảng điểm tổng kết" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -130,6 +131,10 @@ int main()
                     {
                         cout << "Đã xóa thành công lớp có mã lớp là " << malop << endl;
                         classList.saveToFile(CLASSES_FILE); // Lưu sau khi xóa lớp
+                    }
+                    else
+                    {
+                        cout << "Không tìm thấy lớp " << malop << endl;
                     }
                     break;
                 }

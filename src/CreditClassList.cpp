@@ -198,8 +198,6 @@ void CreditClassList::addCreditClass(CreditClass *creditClass) // Thêm const
     {
         creditClasses[count] = creditClass;
         creditClasses[count]->setMaLopTC(count + 1); // Gán mã lớp tín chỉ tự động tăng
-        count++;
-
         cout << "Da them lop tin chi - MaLopTC: " << creditClasses[count]->getMALOPTC()
              << ", Ma MH: " << creditClasses[count]->getMAMH()
              << ", Nien khoa: " << creditClasses[count]->getNienKhoa()

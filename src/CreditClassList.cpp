@@ -8,15 +8,14 @@ using namespace std;
 // Constructor
 CreditClassList::CreditClassList() : count(0) {}
 
-
 // Tìm lớp tín chỉ theo mã lớp tín chỉ
 CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
 {
     for (int i = 0; i < count; ++i)
     {
-        if (creditClasses[i].getMALOPTC() == malopTC)
+        if (creditClasses[i]->getMALOPTC() == malopTC)
         {
-            return &creditClasses[i];
+            return creditClasses[i];
         }
     }
     return nullptr;
@@ -193,19 +192,20 @@ CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
 //     return found;
 // }
 
-void CreditClassList::addCreditClass(const CreditClass &creditClass) // Thêm const
+void CreditClassList::addCreditClass(CreditClass *creditClass) // Thêm const
 {
     if (count < 10000)
     {
         creditClasses[count] = creditClass;
-        creditClasses[count].setMaLopTC(count + 1); // Gán mã lớp tín chỉ tự động tăng
+        creditClasses[count]->setMaLopTC(count + 1); // Gán mã lớp tín chỉ tự động tăng
         count++;
 
-        cout << "Da them lop tin chi - MaLopTC: " << creditClasses[count - 1].getMALOPTC()
-             << ", Ma MH: " << creditClasses[count - 1].getMAMH()
-             << ", Nien khoa: " << creditClasses[count - 1].getNienKhoa()
-             << ", Hoc ky: " << creditClasses[count - 1].getHocKy()
-             << ", Nhom: " << creditClasses[count - 1].getNhom() << endl;
+        cout << "Da them lop tin chi - MaLopTC: " << creditClasses[count]->getMALOPTC()
+             << ", Ma MH: " << creditClasses[count]->getMAMH()
+             << ", Nien khoa: " << creditClasses[count]->getNienKhoa()
+             << ", Hoc ky: " << creditClasses[count]->getHocKy()
+             << ", Nhom: " << creditClasses[count]->getNhom() << endl;
+        count++;
     }
     else
     {
@@ -217,7 +217,7 @@ bool CreditClassList::removeCreditClass(int malopTC)
 {
     for (int i = 0; i < count; i++)
     {
-        if (creditClasses[i].getMALOPTC() == malopTC)
+        if (creditClasses[i]->getMALOPTC() == malopTC)
         {
             // Dịch chuyển các lớp còn lại để giữ danh sách liên tục
             for (int j = i; j < count - 1; j++)
@@ -233,19 +233,19 @@ bool CreditClassList::removeCreditClass(int malopTC)
     return false;
 }
 
-bool CreditClassList::updateCreditClass(int malopTC, const CreditClass &updatedClass)
+bool CreditClassList::updateCreditClass(int malopTC, CreditClass *updatedClass)
 {
     for (int i = 0; i < count; i++)
     {
-        if (creditClasses[i].getMALOPTC() == malopTC)
+        if (creditClasses[i]->getMALOPTC() == malopTC)
         {
             // Giữ nguyên danh sách sinh viên đăng ký cũ
-            DangKyNode *oldDSSV = creditClasses[i].getDSSVDK();
+            DangKyNode *oldDSSV = creditClasses[i]->getDSSVDK();
 
             // Cập nhật thông tin lớp tín chỉ
             creditClasses[i] = updatedClass;
-            creditClasses[i].setMaLopTC(malopTC);  // Đảm bảo mã lớp không thay đổi
-            creditClasses[i].capNhatDSSV(oldDSSV); // Giữ danh sách sinh viên cũ
+            creditClasses[i]->setMaLopTC(malopTC);  // Đảm bảo mã lớp không thay đổi
+            creditClasses[i]->capNhatDSSV(oldDSSV); // Giữ danh sách sinh viên cũ
 
             cout << "Cập nhật lớp tín chỉ thành công!" << endl;
             return true;
@@ -261,13 +261,13 @@ void CreditClassList::displayStudentsInClass(const std::string &nienKhoa, int ho
 
     for (int i = 0; i < count; ++i)
     {
-        if (creditClasses[i].getNienKhoa() == nienKhoa &&
-            creditClasses[i].getHocKy() == hocKy &&
-            creditClasses[i].getNhom() == nhom &&
-            creditClasses[i].getMAMH() == maMH)
+        if (creditClasses[i]->getNienKhoa() == nienKhoa &&
+            creditClasses[i]->getHocKy() == hocKy &&
+            creditClasses[i]->getNhom() == nhom &&
+            creditClasses[i]->getMAMH() == maMH)
         {
             found = true;
-            cout << "\nDanh sách sinh viên đăng ký lớp tín chỉ: " << creditClasses[i].getMALOPTC() << endl;
+            cout << "\nDanh sách sinh viên đăng ký lớp tín chỉ: " << creditClasses[i]->getMALOPTC() << endl;
             cout << "---------------------------------------------------------" << endl;
             cout << setw(10) << left << "MASV"
                  << setw(15) << left << "Họ"
@@ -279,7 +279,7 @@ void CreditClassList::displayStudentsInClass(const std::string &nienKhoa, int ho
             cout << "---------------------------------------------------------" << endl;
 
             // Duyệt danh sách sinh viên đăng ký
-            DangKyNode *current = creditClasses[i].getDSSVDK();
+            DangKyNode *current = creditClasses[i]->getDSSVDK();
             int countSV = 0;
             while (current != nullptr)
             {

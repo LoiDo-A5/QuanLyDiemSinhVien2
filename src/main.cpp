@@ -292,7 +292,7 @@ int main()
                     cout << "Nhập số SV tối đa: ";
                     cin >> soSvMax;
 
-                    CreditClass newClass(maMH, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
+                    CreditClass *newClass = new CreditClass(maMH, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
                     creditClassList.addCreditClass(newClass);
                     break;
                 }
@@ -344,7 +344,7 @@ int main()
                     cout << "Nhập số SV tối đa mới: ";
                     cin >> soSvMax;
 
-                    CreditClass updatedClass(maMH, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
+                    CreditClass *updatedClass = new CreditClass(maMH, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
                     creditClassList.updateCreditClass(malopTC, updatedClass);
                     break;
                 }

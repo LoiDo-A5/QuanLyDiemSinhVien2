@@ -227,23 +227,16 @@ void CourseList::updateCourse(const string &mamh, const MonHoc &updatedCourse)
 
 void CourseList::printCoursesSortedByName()
 {
-    vector<MonHoc> courses;
-    function<void(CourseNode *)> inOrderTraversal = [&](CourseNode *node)
-    {
-        if (!node)
-            return;
-        inOrderTraversal(node->left);
-        courses.push_back(node->data);
-        inOrderTraversal(node->right);
-    };
     inOrderTraversal(root);
+}
 
-    sort(courses.begin(), courses.end(), [](MonHoc a, MonHoc b)
-         { return a.TENMH < b.TENMH; });
+// Hàm đệ quy để duyệt cây theo thứ tự in-order (trái -> gốc -> phải)
+void CourseList::inOrderTraversal(CourseNode *root)
+{
+    if (root == nullptr)
+        return;
 
-    for (const auto &course : courses)
-    {
-        cout << "Mã MH: " << course.MAMH << ", Tên MH: " << course.TENMH
-             << ", LT: " << course.STCLT << ", TH: " << course.STCTH << endl;
-    }
+    inOrderTraversal(root->left);     // Duyệt cây con bên trái
+    cout << root->data.TENMH << endl; // In tên môn học
+    inOrderTraversal(root->right);    // Duyệt cây con bên phải
 }

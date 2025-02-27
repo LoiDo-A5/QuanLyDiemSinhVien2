@@ -29,7 +29,8 @@ public:
     bool removeCourse(string maMH);                                     // Xóa môn học
     void updateCourse(const string &mamh, const MonHoc &updatedCourse); // Cập nhật môn học
     void printCoursesSortedByName();                                    // In danh sách môn học theo tên
-    bool isCourseExisted(const string &maMH);                           // Kiểm tra môn học đã tồn tại chưa
+    bool isCourseExisted(const string &maMH);   
+    void inOrderTraversal(CourseNode *root);                        // Kiểm tra môn học đã tồn tại chưa
 };
 
 #endif

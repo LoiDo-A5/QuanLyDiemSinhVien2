@@ -9,8 +9,8 @@
 class CreditClassList
 {
 private:
-    CreditClass creditClasses[10000]; // Mảng lớp tín chỉ với kích thước cố định
-    int count;                        // Số lượng lớp tín chỉ hiện có
+    CreditClass *creditClasses[10000]; // Mảng lớp tín chỉ với kích thước cố định
+    int count;                         // Số lượng lớp tín chỉ hiện có
 
 public:
     // Constructor
@@ -52,9 +52,9 @@ public:
 
     void displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH, const ClassList &classList) const;
 
-    void addCreditClass(const CreditClass &creditClass);
+    void addCreditClass(CreditClass *creditClass);
     bool removeCreditClass(int malopTC);
-    bool updateCreditClass(int malopTC, const CreditClass &updatedClass);
+    bool updateCreditClass(int malopTC, CreditClass *updatedClass);
 };
 
 #endif // CREDIT_CLASS_LIST_H

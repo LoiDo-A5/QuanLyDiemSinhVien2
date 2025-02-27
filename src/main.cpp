@@ -75,9 +75,7 @@ int main()
         cout << "==== MENU ====" << endl;
         cout << "1. Menu lớp" << endl;
         cout << "2. Menu lớp tín chỉ" << endl;
-        cout << "3. Nhập sinh viên vào lớp" << endl;
-        cout << "4. In danh sách sinh viên theo thứ tự alphabet" << endl;
-        cout << "5. Menu môn học" << endl;
+        cout << "3. Menu môn học" << endl;
         cout << "0. Thoát" << endl;
         cout << "Chọn chức năng: ";
         cin >> choice;
@@ -428,22 +426,7 @@ int main()
             break;
         }
 
-        case 3: // Nhập sinh viên vào lớp
-        {
-            classList.nhapSinhVienVaoLop();
-            break;
-        }
-
-        case 4: // In danh sách sinh viên theo thứ tự alphabet
-        {
-            string malop;
-            cout << "Nhập mã lớp: ";
-            cin >> malop;
-            classList.inDanhSachSVTheoAlphabet(malop);
-            break;
-        }
-
-        case 5: // Menu môn học
+        case 3: // Menu môn học
         {
             int subChoice;
             do

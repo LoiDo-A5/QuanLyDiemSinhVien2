@@ -90,6 +90,23 @@ DangKyNode *CreditClass::findStudent(const std::string &maSV)
     return nullptr; // Không tìm thấy sinh viên
 }
 
+int CreditClass::countRegisteredStudents() const
+{
+    int count = 0;
+    DangKyNode *current = dssvdk;
+    while (current != nullptr)
+    {
+        count++;
+        current = current->next;
+    }
+    return count;
+}
+
+void CreditClass::setDSSVDK(DangKyNode *newNode)
+{
+    dssvdk = newNode;
+}
+
 // // Phương thức cập nhật danh sách sinh viên
 // void CreditClass::capNhatDSSV(SinhVienNode *dssv)
 // {

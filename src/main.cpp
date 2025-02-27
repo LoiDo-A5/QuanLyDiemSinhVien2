@@ -375,7 +375,7 @@ int main()
                     CreditClass *classToAddStudent = creditClassList.findCreditClassByMALOPTC(malopTC);
                     if (classToAddStudent == nullptr)
                     {
-                        cout << "Không tìm thấy lớp tín chỉ này!" << endl;
+                        cout << "❌ Không tìm thấy lớp tín chỉ này! Vui lòng kiểm tra lại." << endl;
                         break;
                     }
 
@@ -387,26 +387,35 @@ int main()
                         getline(cin, maSV);
 
                         if (maSV.empty())
-                            break; // Dừng nhập khi nhập rỗng
+                            break; // Thoát nếu nhập chuỗi rỗng
 
-                        // Kiểm tra sinh viên đã tồn tại chưa
-                        DangKyNode *existingStudent = classToAddStudent->findStudent(maSV);
-                        if (existingStudent)
+                        // Kiểm tra nếu danh sách sinh viên đăng ký (`dssvdk`) chưa được khởi tạo
+                        if (classToAddStudent->getDSSVDK() == nullptr)
                         {
-                            cout << "Sinh viên đã đăng ký lớp này!" << endl;
-                            continue;
+                            cout << "🔍 Danh sách sinh viên đăng ký chưa tồn tại, tạo danh sách mới." << endl;
+                            classToAddStudent->capNhatDSSV(new DangKyNode(maSV));
                         }
-
-                        // Kiểm tra số lượng sinh viên tối đa
-                        if (classToAddStudent->getSoSvMax() > 0 && classToAddStudent->getSoSvMax() <= classToAddStudent->getDSSVDK()->next->MASV.size())
+                        else
                         {
-                            cout << "Lớp tín chỉ đã đầy, không thể thêm sinh viên!" << endl;
-                            break;
-                        }
+                            // Kiểm tra sinh viên đã đăng ký chưa
+                            DangKyNode *existingStudent = classToAddStudent->findStudent(maSV);
+                            if (existingStudent)
+                            {
+                                cout << "⚠️ Sinh viên " << maSV << " đã đăng ký lớp này!" << endl;
+                                continue;
+                            }
 
-                        // Thêm sinh viên vào danh sách đăng ký
-                        classToAddStudent->addStudent(maSV);
-                        cout << "Sinh viên " << maSV << " đã đăng ký vào lớp tín chỉ " << malopTC << " thành công!" << endl;
+                            // Kiểm tra giới hạn số lượng sinh viên
+                            if (classToAddStudent->getSoSvMax() > 0 && classToAddStudent->countRegisteredStudents() >= classToAddStudent->getSoSvMax())
+                            {
+                                cout << "⚠️ Lớp tín chỉ đã đầy, không thể thêm sinh viên!" << endl;
+                                break;
+                            }
+
+                            // Thêm sinh viên vào danh sách đăng ký
+                            classToAddStudent->addStudent(maSV);
+                            cout << "✅ Sinh viên " << maSV << " đã đăng ký vào lớp tín chỉ " << malopTC << " thành công!" << endl;
+                        }
                     }
                     break;
                 }

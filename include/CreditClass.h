@@ -64,6 +64,8 @@ public:
     bool removeStudent(const std::string &maSV);
 
     DangKyNode *findStudent(const std::string &maSV);
+    int countRegisteredStudents() const;
+    void setDSSVDK(DangKyNode *newNode);
 };
 
 #endif // CREDIT_CLASS_H

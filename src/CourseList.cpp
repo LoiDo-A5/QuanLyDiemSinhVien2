@@ -213,7 +213,9 @@ void CourseList::updateCourse(const string &mamh, const MonHoc &updatedCourse)
     {
         if (mamh == current->data.MAMH)
         {
-            current->data = updatedCourse;
+            current->data.TENMH = updatedCourse.TENMH;
+            current->data.STCLT = updatedCourse.STCLT;
+            current->data.STCTH = updatedCourse.STCTH;
             return;
         }
         else if (mamh < current->data.MAMH)

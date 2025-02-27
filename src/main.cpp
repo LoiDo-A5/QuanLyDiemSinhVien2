@@ -474,7 +474,7 @@ int main()
 
                     courseList.insert(newCourse);
                     courseList.saveToFile(COURSES_FILE);
-                    cout << "✅ Đã thêm môn học thành công!" << endl;
+                    cout << "Đã thêm môn học thành công!" << endl;
                     break;
                 }
 
@@ -487,11 +487,11 @@ int main()
                     if (courseList.removeCourse(mamh))
                     {
                         courseList.saveToFile(COURSES_FILE);
-                        cout << "✅ Đã xóa môn học thành công!" << endl;
+                        cout << "Đã xóa môn học thành công!" << endl;
                     }
                     else
                     {
-                        cout << "⚠️ Không tìm thấy môn học để xóa!" << endl;
+                        cout << "Không tìm thấy môn học để xóa!" << endl;
                     }
                     break;
                 }
@@ -504,7 +504,7 @@ int main()
 
                     if (!courseList.isCourseExisted(mamh))
                     {
-                        cout << "⚠️ Không tìm thấy môn học!" << endl;
+                        cout << "Không tìm thấy môn học!" << endl;
                         break;
                     }
 
@@ -520,13 +520,13 @@ int main()
 
                     courseList.updateCourse(mamh, updatedCourse);
                     courseList.saveToFile(COURSES_FILE);
-                    cout << "✅ Đã cập nhật môn học thành công!" << endl;
+                    cout << "Đã cập nhật môn học thành công!" << endl;
                     break;
                 }
 
                 case 4: // In danh sách môn học theo thứ tự tên
                 {
-                    cout << "📚 Danh sách môn học:" << endl;
+                    cout << "Danh sách môn học:" << endl;
                     courseList.printCoursesSortedByName();
                     break;
                 }

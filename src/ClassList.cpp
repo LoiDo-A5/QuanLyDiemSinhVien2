@@ -29,9 +29,16 @@ void ClassList::addClass(const Lop &newClass)
 
 void ClassList::printClasses()
 {
-    for (int i = 0; i < classCount; i++)
+    if (classCount == 0)
     {
-        classes[i].printClassInfo(); // Không cần dùng con trỏ vì lớp đã được tạo sẵn
+        cout << "Khong co lop hoc nao!" << endl;
+    }
+    else
+    {
+        for (int i = 0; i < classCount; i++)
+        {
+            classes[i].printClassInfo(); // Không cần dùng con trỏ vì lớp đã được tạo sẵn
+        }
     }
 }
 

@@ -26,8 +26,8 @@ void CourseList::insert(MonHoc course)
         {
             parent = current;
 
-            // So sánh theo mã môn hoc
-            if (course.MAMH < current->data.MAMH)
+            // So sánh theo tên môn hoc
+            if (course.TENMH < current->data.TENMH)
             {
                 current = current->left; // nếu mã môn học nhỏ hơn mã trong nút hiện tại, di chuyển sang trái
                 if (current == nullptr)

@@ -73,8 +73,23 @@ DangKyNode *CreditClass::getDSSVDK() const
 // Cập nhật danh sách sinh viên đăng ký
 void CreditClass::capNhatDSSV(DangKyNode *dssv)
 {
-    dssvdk = dssv;
+    // Nếu danh sách dssvdk chưa có (nullptr), khởi tạo danh sách
+    if (dssvdk == nullptr)
+    {
+        dssvdk = dssv;
+    }
+    else
+    {
+        // Nếu đã có danh sách, cần cập nhật thêm sinh viên vào danh sách
+        DangKyNode *current = dssvdk;
+        while (current->next != nullptr)
+        {
+            current = current->next; // Duyệt đến sinh viên cuối cùng trong danh sách
+        }
+        current->next = dssv; // Thêm sinh viên vào cuối danh sách
+    }
 }
+
 
 DangKyNode *CreditClass::findStudent(const std::string &maSV)
 {

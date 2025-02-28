@@ -9,7 +9,7 @@
 #include <iomanip>
 #include <ncurses.h> // Thư viện hỗ trợ di chuyển con trỏ trên console
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 
 using namespace std;
 
@@ -440,17 +440,18 @@ int main()
                     {
                         string maSV;
                         cout << "Nhập mã sinh viên (Nhập rỗng để dừng): ";
-                        cin.ignore();
+                        cin.ignore(); // Đảm bảo nhập lại thông tin không bị vấn đề newline
                         getline(cin, maSV);
 
                         if (maSV.empty())
                             break; // Thoát nếu nhập chuỗi rỗng
 
-                        // Kiểm tra nếu danh sách sinh viên đăng ký (`dssvdk`) chưa được khởi tạo
+                        // Kiểm tra nếu danh sách sinh viên đăng ký (dssvdk) chưa được khởi tạo
                         if (classToAddStudent->getDSSVDK() == nullptr)
                         {
-                            cout << "🔍 Danh sách sinh viên đăng ký chưa tồn tại, tạo danh sách mới." << endl;
-                            classToAddStudent->capNhatDSSV(new DangKyNode(maSV));
+                            cout << "✅ Sinh viên " << maSV << " đã đăng ký vào lớp tín chỉ " << malopTC << " thành công!" << endl;
+                            // Tạo danh sách mới cho sinh viên đăng ký
+                            classToAddStudent->capNhatDSSV(new DangKyNode(maSV)); // Cập nhật danh sách mới
                         }
                         else
                         {
@@ -469,9 +470,7 @@ int main()
                                 break;
                             }
 
-                            // Thêm sinh viên vào danh sách đăng ký
-                            classToAddStudent->addStudent(maSV);
-                            cout << "✅ Sinh viên " << maSV << " đã đăng ký vào lớp tín chỉ " << malopTC << " thành công!" << endl;
+                            cout << "🔍 Danh sách sinh viên đăng ký chưa tồn tại, tạo danh sách mới." << endl;
                         }
                     }
                     break;

@@ -8,6 +8,8 @@
 #include "IsValid.h"
 #include <iomanip>
 #include <ncurses.h> // Thư viện hỗ trợ di chuyển con trỏ trên console
+#include <vector>
+#include <algorithm> 
 
 using namespace std;
 
@@ -250,9 +252,60 @@ int main()
                     break;
                 }
 
-                case 8:
-                    // Không cần xử lý
+                case 8: // In danh sách sinh viên
+                {
+                    string malop;
+                    cout << "Nhập mã lớp: ";
+                    cin >> malop;
+                    isValidCode(malop); // Kiểm tra mã lớp hợp lệ
+
+                    // Tìm lớp theo mã lớp
+                    Lop *lop = classList.findClassByCode(malop);
+
+                    if (lop == nullptr)
+                    {
+                        cout << "Lớp không tồn tại!" << endl;
+                        break;
+                    }
+
+                    // Lấy danh sách sinh viên trong lớp
+                    SinhVienNode *students = lop->getStudents();
+                    if (students == nullptr)
+                    {
+                        cout << "Lớp này không có sinh viên nào!" << endl;
+                        break;
+                    }
+
+                    // Tạo một vector để lưu danh sách sinh viên
+                    vector<SinhVien> studentList;
+                    SinhVienNode *current = students;
+
+                    // Duyệt qua danh sách liên kết và thêm vào vector
+                    while (current != nullptr)
+                    {
+                        studentList.push_back(current->student);
+                        current = current->next;
+                    }
+
+                    // Sắp xếp sinh viên theo họ và tên
+                    sort(studentList.begin(), studentList.end(), [](const SinhVien &a, const SinhVien &b)
+                         {
+                        // Sắp xếp theo họ, sau đó là tên
+                        if (a.getHO() == b.getHO()) {
+                            return a.getTEN() < b.getTEN();
+                        }
+                        return a.getHO() < b.getHO(); });
+
+                    // In danh sách sinh viên đã sắp xếp
+                    cout << "Danh sách sinh viên lớp " << malop << " theo thứ tự alphabet:" << endl;
+                    for (const auto &student : studentList)
+                    {
+                        student.inThongTin();
+                    }
+
                     break;
+                }
+
                 default:
                     break;
                 }

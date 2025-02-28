@@ -1,4 +1,4 @@
-lh001 loptũa
-sv001 chow khang nam 1231231231
-sv002 do loi nam 1231231231
+cs101 congnghe
+k23dtcn035 do loi nam 0902042424
+k23dtcn036 chow khang nam 0901042324
 

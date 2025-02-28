@@ -34,7 +34,7 @@ public:
     void setTEN(const string &ten);
     void setGIOITINH(const string &gioitinh);
     void setSODT(const string &sodt);
-    void nhapThongTin();
+    bool nhapThongTin();
 
     // In thông tin sinh viên
     void inThongTin() const;

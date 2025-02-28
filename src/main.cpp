@@ -166,14 +166,24 @@ int main()
                     string malop;
                     cout << "Nhập mã lớp: ";
                     cin >> malop;
+                    cin.ignore();
                     isValidCode(malop);
+                    Lop *lop = classList.findClassByCode(malop);
+                    if (lop == nullptr)
+                    {
+                        cout << "Không tìm thấy lớp " << malop << "." << endl;
+                    }
+                    else
+                    {
+                        SinhVien newStudent;
+                        while (newStudent.nhapThongTin())
+                        {
 
-                    SinhVien newStudent;
-                    cout << "Nhập thông tin sinh viên:" << endl;
-                    newStudent.nhapThongTin();
-                    classList.addStudentToClass(malop, newStudent);
+                            classList.addStudentToClass(malop, newStudent);
 
-                    classList.saveToFile(CLASSES_FILE); // Lưu sau khi thêm sinh viên
+                            classList.saveToFile(CLASSES_FILE); // Lưu sau khi thêm sinh viên
+                        }
+                    }
                     break;
                 }
 

@@ -48,13 +48,14 @@ void SinhVien::fromString(const string &str)
     ss >> MASV >> HO >> TEN >> GIOITINH >> SODT;
 }
 
-void SinhVien::nhapThongTin()
+bool SinhVien::nhapThongTin()
 {
-    cout << "Nhập mã sinh viên: ";
-    cin >> MASV;
-    isValidCode(MASV);
-
-    cin.ignore(); // Để xóa ký tự xuống dòng từ mục nhập trước đó
+    cout << "Nhập mã sinh viên (nhập rỗng để dừng): ";
+    std::getline(std::cin, MASV); // Nhập cả dòng
+    if (MASV.empty())
+    {
+        return false; // Thoát khi nhập rỗng
+    }
 
     cout << "Nhập họ: ";
     isValidString(HO);
@@ -68,4 +69,6 @@ void SinhVien::nhapThongTin()
     cout << "Nhập SDT: ";
     cin >> SODT;
     isValidSDT(SODT);
+    cin.ignore();
+    return true;
 }

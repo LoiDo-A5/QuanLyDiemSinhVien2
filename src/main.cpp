@@ -324,6 +324,7 @@ int main()
                 cout << "3. Chỉnh sửa lớp tín chỉ" << endl;
                 cout << "4. In danh sách sinh viên theo lớp tín chỉ" << endl;
                 cout << "5. Nhập sinh viên vào lớp tín chỉ" << endl;
+                cout << "6. Hủy lớp tín chỉ" << endl;
                 cout << "0. Quay lại" << endl;
                 cout << "Chọn chức năng: ";
                 cin >> subChoice;
@@ -473,6 +474,63 @@ int main()
                             cout << "🔍 Danh sách sinh viên đăng ký chưa tồn tại, tạo danh sách mới." << endl;
                         }
                     }
+                    break;
+                }
+                case 6: // Hủy lớp tín chỉ
+                {
+                    string nienKhoa;
+                    int hocKy, nhom;
+                    cout << "Nhập niên khóa: ";
+                    cin >> nienKhoa;
+                    cout << "Nhập học kỳ: ";
+                    cin >> hocKy;
+                    cout << "Nhập nhóm: ";
+                    cin >> nhom;
+
+                    // Duyệt qua tất cả các lớp tín chỉ để kiểm tra số sinh viên đăng ký
+                    bool foundClass = false;
+                    for (int i = 0; i < creditClassList.getClassCount(); ++i)
+                    {
+                        CreditClass *creditClass = creditClassList.getClass(i);
+                        // Kiểm tra niên khóa, học kỳ và nhóm
+                        if (creditClass->getNienKhoa() == nienKhoa && creditClass->getHocKy() == hocKy && creditClass->getNhom() == nhom)
+                        {
+                            foundClass = true;
+
+                            // Kiểm tra nếu số sinh viên đăng ký ít hơn số sinh viên tối thiểu
+                            if (creditClass->countRegisteredStudents() < creditClass->getSoSvMin())
+                            {
+                                cout << "Lớp tín chỉ " << creditClass->getMALOPTC() << " có số sinh viên đăng ký ít hơn số sinh viên tối thiểu." << endl;
+                                cout << "Số sinh viên đã đăng ký: " << creditClass->countRegisteredStudents() << endl;
+                                cout << "Số sinh viên tối thiểu: " << creditClass->getSoSvMin() << endl;
+
+                                // Yêu cầu người dùng xác nhận trước khi hủy
+                                char confirm;
+                                cout << "Bạn có chắc chắn muốn hủy lớp này không? (y/n): ";
+                                cin >> confirm;
+                                if (confirm == 'y' || confirm == 'Y')
+                                {
+                                    // Tiến hành hủy lớp tín chỉ
+                                    creditClass->setHuyLop(true); // Cập nhật trạng thái lớp tín chỉ là "hủy"
+                                    cout << "Lớp tín chỉ " << creditClass->getMALOPTC() << " đã được hủy thành công!" << endl;
+                                }
+                                else
+                                {
+                                    cout << "Lớp tín chỉ không bị hủy." << endl;
+                                }
+                            }
+                            else
+                            {
+                                cout << "Lớp tín chỉ " << creditClass->getMALOPTC() << " không bị hủy vì số sinh viên đã đăng ký đủ." << endl;
+                            }
+                        }
+                    }
+
+                    if (!foundClass)
+                    {
+                        cout << "Không tìm thấy lớp tín chỉ với niên khóa, học kỳ và nhóm đã nhập." << endl;
+                    }
+
                     break;
                 }
 

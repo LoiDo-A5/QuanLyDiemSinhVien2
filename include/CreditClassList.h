@@ -55,6 +55,9 @@ public:
     void addCreditClass(CreditClass *creditClass);
     bool removeCreditClass(int malopTC);
     bool updateCreditClass(int malopTC, CreditClass *updatedClass);
+    int getClassCount() const;
+
+    CreditClass *getClass(int index) const;
 };
 
 #endif // CREDIT_CLASS_LIST_H

@@ -171,6 +171,7 @@ void CreditClassList::displayCreditClasses() const
              << ", Nhóm: " << creditClass->getNhom()
              << ", Số sinh viên đã đăng ký: " << creditClass->countRegisteredStudents()
              << ", Số slot còn trống: " << creditClass->getSoSvMax() - creditClass->countRegisteredStudents()
+             << ", Tình trạng hủy lớp: " << creditClass->isHuyLop()
              << endl;
     }
 }
@@ -196,7 +197,7 @@ std::vector<CreditClass *> CreditClassList::findClassesByParams(const std::strin
     {
         CreditClass *creditClass = creditClasses[i];
         if ((nienKhoa.empty() || creditClass->getNienKhoa() == nienKhoa) &&
-            (hocKy == 0 || creditClass->getHocKy() == hocKy))
+            (hocKy == 0 || creditClass->getHocKy() == hocKy) && creditClass->isHuyLop() == 1)
         {
             result.push_back(creditClass);
         }

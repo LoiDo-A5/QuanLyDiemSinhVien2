@@ -1,7 +1,10 @@
 #include "CreditClassList.h"
+#include "CreditClass.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -21,23 +24,17 @@ CreditClass *CreditClassList::findCreditClassByMALOPTC(int malopTC)
     return nullptr;
 }
 
-void CreditClassList::addCreditClass(CreditClass *creditClass) // Thêm const
+bool CreditClassList::addCreditClass(CreditClass *creditClass) // Thêm const
 {
     if (count < 10000)
     {
         creditClasses[count] = creditClass;
         creditClasses[count]->setMaLopTC(count + 1); // Gán mã lớp tín chỉ tự động tăng
-        cout << "Da them lop tin chi - MaLopTC: " << creditClasses[count]->getMALOPTC()
-             << ", Ma MH: " << creditClasses[count]->getMAMH()
-             << ", Nien khoa: " << creditClasses[count]->getNienKhoa()
-             << ", Hoc ky: " << creditClasses[count]->getHocKy()
-             << ", Nhom: " << creditClasses[count]->getNhom() << endl;
+
         count++;
+        return true;
     }
-    else
-    {
-        cout << "Danh sach lop tin chi da day!" << endl;
-    }
+    return false;
 }
 
 bool CreditClassList::removeCreditClass(int malopTC)
@@ -158,20 +155,25 @@ CreditClass *CreditClassList::getClass(int index) const
     return nullptr; // Return nullptr if index is out of bounds
 }
 
-
 int CreditClassList::getClassCount() const
 {
     return count;
 }
 
-// // Hiển thị danh sách lớp tín chỉ
-// void CreditClassList::displayCreditClasses() const
-// {
-//     for (int i = 0; i < count; ++i)
-//     {
-//         cout << "Mã lớp: " << creditClasses[i].getMALOPTC() << " - Môn: " << creditClasses[i].getMAMH() << endl;
-//     }
-// }
+// Hiển thị danh sách lớp tín chỉ
+void CreditClassList::displayCreditClasses() const
+{
+    for (int i = 0; i < count; ++i)
+    {
+        CreditClass *creditClass = creditClasses[i];
+        cout << "Mã lớp tín chỉ: " << creditClass->getMALOPTC()
+             << ", Mã môn học: " << creditClass->getMAMH()
+             << ", Nhóm: " << creditClass->getNhom()
+             << ", Số sinh viên đã đăng ký: " << creditClass->countRegisteredStudents()
+             << ", Số slot còn trống: " << creditClass->getSoSvMax() - creditClass->countRegisteredStudents()
+             << endl;
+    }
+}
 
 // // Hủy lớp tín chỉ không đủ sinh viên
 // void CreditClassList::cancelCreditClasses()
@@ -186,18 +188,21 @@ int CreditClassList::getClassCount() const
 //     }
 // }
 
-// // Tìm lớp theo niên khóa và học kỳ
-// CreditClass *CreditClassList::findClassesByParams(const string &nienKhoa, int hocKy)
-// {
-//     for (int i = 0; i < count; ++i)
-//     {
-//         if (creditClasses[i].getNienKhoa() == nienKhoa && creditClasses[i].getHocKy() == hocKy)
-//         {
-//             return &creditClasses[i];
-//         }
-//     }
-//     return nullptr;
-// }
+// Tìm lớp theo niên khóa và học kỳ
+std::vector<CreditClass *> CreditClassList::findClassesByParams(const std::string &nienKhoa, int hocKy)
+{
+    std::vector<CreditClass *> result;
+    for (int i = 0; i < count; i++)
+    {
+        CreditClass *creditClass = creditClasses[i];
+        if ((nienKhoa.empty() || creditClass->getNienKhoa() == nienKhoa) &&
+            (hocKy == 0 || creditClass->getHocKy() == hocKy))
+        {
+            result.push_back(creditClass);
+        }
+    }
+    return result;
+}
 
 // // Tìm lớp theo nhiều tham số
 // CreditClass *CreditClassList::findClass(const string &nienKhoa, int hocKy, int nhom, const string &maMH)
@@ -235,55 +240,54 @@ int CreditClassList::getClassCount() const
 // }
 
 // // Lưu danh sách lớp tín chỉ vào file
-// void CreditClassList::saveToFile(const string &filename) const
-// {
-//     ofstream outFile(filename);
-//     if (!outFile)
-//     {
-//         cerr << "Không thể mở file để ghi!" << endl;
-//         return;
-//     }
-//     for (int i = 0; i < count; ++i)
-//     {
-//         outFile << creditClasses[i].getMALOPTC() << " "
-//                 << creditClasses[i].getMAMH() << " "
-//                 << creditClasses[i].getNienKhoa() << " "
-//                 << creditClasses[i].getHocKy() << " "
-//                 << creditClasses[i].getNhom() << " "
-//                 << creditClasses[i].getSoSvMin() << " "
-//                 << creditClasses[i].getSoSvMax() << " "
-//                 << creditClasses[i].isHuyLop() << endl;
-//     }
-//     outFile.close();
-// }
+void CreditClassList::saveToFile(const string &filename) const
+{
+    ofstream outFile(filename);
+    if (!outFile)
+    {
+        cerr << "Không thể mở file để ghi!" << endl;
+        return;
+    }
+    for (int i = 0; i < count; ++i)
+    {
+        outFile << creditClasses[i]->getMALOPTC() << " "
+                << creditClasses[i]->getMAMH() << " "
+                << creditClasses[i]->getNienKhoa() << " "
+                << creditClasses[i]->getHocKy() << " "
+                << creditClasses[i]->getNhom() << " "
+                << creditClasses[i]->getSoSvMin() << " "
+                << creditClasses[i]->getSoSvMax() << " "
+                << creditClasses[i]->isHuyLop() << endl;
+    }
+    outFile.close();
+}
 
-// // Đọc danh sách lớp tín chỉ từ file
-// void CreditClassList::readFromFile(const string &filename)
-// {
-//     ifstream inFile(filename);
-//     if (!inFile)
-//     {
-//         cerr << "Không thể mở file để đọc!" << endl;
-//         return;
-//     }
-//     count = 0;
-//     while (!inFile.eof())
-//     {
-//         int malopTC, hocKy, nhom, soSvMin, soSvMax;
-//         string maMH, tenLop, nienKhoa;
-//         bool huyLop;
+// Đọc danh sách lớp tín chỉ từ file
+void CreditClassList::readFromFile(const string &filename)
+{
+    ifstream inFile(filename);
+    if (!inFile)
+    {
+        return;
+    }
+    count = 0;
+    while (!inFile.eof())
+    {
+        int malopTC, hocKy, nhom, soSvMin, soSvMax;
+        string maMH, tenLop, nienKhoa;
+        bool huyLop;
 
-//         // Đọc dữ liệu từ file
-//         inFile >> malopTC >> maMH >> tenLop >> nienKhoa >> hocKy >> nhom >> soSvMin >> soSvMax >> huyLop;
+        // Đọc dữ liệu từ file
+        inFile >> malopTC >> maMH >> nienKhoa >> hocKy >> nhom >> soSvMin >> soSvMax >> huyLop;
 
-//         // Kiểm tra nếu có dữ liệu hợp lệ
-//         if (inFile)
-//         {
-//             creditClasses[count++] = CreditClass(malopTC, maMH, tenLop, nienKhoa, hocKy, nhom, soSvMin, soSvMax);
-//         }
-//     }
-//     inFile.close();
-// }
+        // Kiểm tra nếu có dữ liệu hợp lệ
+        if (inFile)
+        {
+            addCreditClass(new CreditClass(maMH, nienKhoa, hocKy, nhom, soSvMin, soSvMax));
+        }
+    }
+    inFile.close();
+}
 
 // // Tìm lớp theo mã sinh viên
 // CreditClass *CreditClassList::findClassesByMsv(const string &msv)

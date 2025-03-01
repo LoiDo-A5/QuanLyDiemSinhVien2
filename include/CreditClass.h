@@ -62,7 +62,6 @@ public:
     DangKyNode *getDSSVDK() const;      // Lấy danh sách sinh viên đăng ký
     void capNhatDSSV(DangKyNode *dssv); // Cập nhật danh sách sinh viên đăng ký
     bool removeStudent(const std::string &maSV);
-
     DangKyNode *findStudent(const std::string &maSV);
     int countRegisteredStudents() const;
     void setDSSVDK(DangKyNode *newNode);

@@ -90,7 +90,6 @@ void CreditClass::capNhatDSSV(DangKyNode *dssv)
     }
 }
 
-
 DangKyNode *CreditClass::findStudent(const std::string &maSV)
 {
     DangKyNode *current = dssvdk;

@@ -13,25 +13,22 @@ int ClassList::getClassCount()
     return classCount;
 }
 
-void ClassList::addClass(const Lop &newClass)
+bool ClassList::addClass(const Lop &newClass)
 {
     if (classCount < 1000)
     {
         // Thêm lớp vào danh sách
         classes[classCount++] = newClass; // Không cần new vì đối tượng đã có sẵn trong tham số
-        cout << "Them thanh cong lop: " << newClass.getClassName() << endl;
+        return true;
     }
-    else
-    {
-        cout << "Danh sách lớp đã đầy!" << endl;
-    }
+    return false;
 }
 
 void ClassList::printClasses()
 {
     if (classCount == 0)
     {
-        cout << "Khong co lop hoc nao!" << endl;
+        cout << "Không có lớp học nào!" << endl;
     }
     else
     {
@@ -176,7 +173,6 @@ void ClassList::readFromFile(const string &filename)
 
     if (!inFile)
     {
-        cerr << "Không thể mở file để đọc!" << endl;
         return;
     }
 

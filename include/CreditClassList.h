@@ -30,7 +30,7 @@ public:
     void cancelCreditClasses();
 
     // Tìm lớp tín chỉ theo niên khóa và học kỳ
-    CreditClass *findClassesByParams(const std::string &nienKhoa, int hocKy);
+    std::vector<CreditClass *> findClassesByParams(const std::string &nienKhoa, int hocKy);
 
     // Tìm lớp tín chỉ theo mã môn học, học kỳ, nhóm, niên khóa
     CreditClass *findClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH);
@@ -52,7 +52,7 @@ public:
 
     void displayStudentsInClass(const std::string &nienKhoa, int hocKy, int nhom, const std::string &maMH, const ClassList &classList) const;
 
-    void addCreditClass(CreditClass *creditClass);
+    bool addCreditClass(CreditClass *creditClass);
     bool removeCreditClass(int malopTC);
     bool updateCreditClass(int malopTC, CreditClass *updatedClass);
     int getClassCount() const;

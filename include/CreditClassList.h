@@ -5,6 +5,7 @@
 #include "Student.h"
 #include <string>
 #include "ClassList.h"
+#include <vector>
 
 class CreditClassList
 {
